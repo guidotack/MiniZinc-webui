@@ -37,20 +37,27 @@ var QueensForm = React.createClass({
 
         http.onreadystatechange = function() {
             if (http.readyState === XMLHttpRequest.DONE) {
-                var split = http.responseText.split("{");
-                split.splice(0,1);
-                for (var i = 0; i < split.length; i++) {
-                    split[i] = "{" + split[i];
-                    split[i] = JSON.parse(split[i]);
-                }
+                if (http.responseText !== "{}") {
+                    var split = http.responseText.split("{");
+                    split.splice(0,1);
+                    for (var i = 0; i < split.length; i++) {
+                        split[i] = "{" + split[i];
+                        split[i] = JSON.parse(split[i]);
+                    }
 
+                    this.setState({
+                        result: split
+                    });
+                }
+            }
+            else {
                 this.setState({
-                    result: split
+                    result: []
                 });
             }
         }.bind(this);
 
-        http.open( "GET", "http://localhost:5000/model/queens.json", true);
+        http.open( "GET", "http://localhost:5000/model/queens.json?n=" + this.state.input, true);
         http.send(null);
 
     },
@@ -67,7 +74,7 @@ var QueensForm = React.createClass({
                 {rows}
                 <form onSubmit={this.onSubmit}>
                     <NumberInput min="1" max="10" onUserInput={this.handleUserInput} input={this.state.input} />
-    				<button onClick={this.onSubmit}>Submit</button>
+    				<button className="pure-button" onClick={this.onSubmit}>Submit</button>
     			</form>
             </div>
         )
