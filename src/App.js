@@ -50,6 +50,7 @@ var QueensForm = React.createClass({
                     });
                 }
             }
+            // TODO: Change this, as it makes the UI redraw itself.
             else {
                 this.setState({
                     result: []
@@ -64,18 +65,21 @@ var QueensForm = React.createClass({
 
     render: function() {
         var rows = [];
+        var grids = [];
         // TODO: split into it's own object and assign keys.
         this.state.result.forEach(function(row) {
-            rows.push(<p>{row.q.join(' ')}</p>)
+            rows.push(<p>{row.q.join(' ')}</p>);
+            grids.push(<Grid1D result={row.q}></Grid1D>);
         });
 
         return (
             <div>
-                {rows}
                 <form onSubmit={this.onSubmit}>
                     <NumberInput min="1" max="10" onUserInput={this.handleUserInput} input={this.state.input} />
     				<button className="pure-button" onClick={this.onSubmit}>Submit</button>
     			</form>
+                {grids}
+                {rows}
             </div>
         )
     }
@@ -99,6 +103,33 @@ var NumberInput = React.createClass({
                 <p>{this.props.input}</p>
             </div>
         );
+    }
+});
+
+var Grid1D = React.createClass({
+    render: function() {
+        var items = [];
+        for (var i = 0; i < this.props.result.length; i++) {
+                items.push(<Grid1DRow key={i} result={this.props.result[i]} size={this.props.result.length} />);
+        }
+
+        return <div className="Grid1D">{items}</div>;
+    }
+});
+
+var Grid1DRow = React.createClass({
+    render: function() {
+        var squares = [];
+        for (var i = 1; i <= this.props.size; i++) {
+            if (this.props.result === i) {
+                squares.push(<div key={i} className="WhiteSquare"></div>);
+            }
+            else {
+                squares.push(<div key={i} className="BlackSquare"></div>);
+            }
+        }
+
+        return <div>{squares}</div>;
     }
 });
 
