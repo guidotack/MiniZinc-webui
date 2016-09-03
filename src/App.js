@@ -75,7 +75,7 @@ var QueensForm = React.createClass({
         return (
             <div>
                 <form onSubmit={this.onSubmit}>
-                    <NumberInput min="1" max="10" onUserInput={this.handleUserInput} input={this.state.input} />
+                    <NumberInput min={1} max={10} onUserInput={this.handleUserInput} input={this.state.input} />
     				<button className="pure-button" onClick={this.onSubmit}>Submit</button>
     			</form>
                 {grids}
@@ -86,20 +86,26 @@ var QueensForm = React.createClass({
 });
 
 var NumberInput = React.createClass({
-    getInitialState: function() {
-        return {
-            number: this.props.min
-        };
+    propTypes: {
+        min: React.PropTypes.number,
+        number: React.PropTypes.number.isRequired
     },
 
-    onChange: function() {
-        this.props.onUserInput(this.refs.numberInput.value);
+    getDefaultProps: function() {
+        return {
+            min: 1,
+            number: 1
+        }
+    },
+
+    onChange: function(event) {
+        this.props.onUserInput(event.target.value);
     },
 
     render: function() {
         return (
             <div>
-                <input ref="numberInput" onChange={this.onChange} value={this.props.input} type="range" min={this.props.min} max={this.props.max}></input>
+                <input onChange={this.onChange} value={this.props.input} type="range" min={this.props.min} max={this.props.max}></input>
                 <p>{this.props.input}</p>
             </div>
         );
@@ -107,6 +113,10 @@ var NumberInput = React.createClass({
 });
 
 var Grid1D = React.createClass({
+    propTypes: {
+        result: React.PropTypes.arrayOf(React.PropTypes.number).isRequired
+    },
+
     render: function() {
         var items = [];
         for (var i = 0; i < this.props.result.length; i++) {
@@ -118,6 +128,10 @@ var Grid1D = React.createClass({
 });
 
 var Grid1DRow = React.createClass({
+    propTypes: {
+        result: React.PropTypes.number.isRequired
+    },
+
     render: function() {
         var squares = [];
         for (var i = 1; i <= this.props.size; i++) {
