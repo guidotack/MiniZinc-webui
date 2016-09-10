@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
 
+import { ModelForm } from './Model';
+import { GetURL } from './Utils';
+
 class App extends Component {
   render() {
     return (
@@ -11,7 +14,8 @@ class App extends Component {
           <h2>Welcome to React</h2>
         </div>
 
-        <QueensForm />
+        <ModelForm />
+        {/* <QueensForm /> */}
       </div>
     );
   }
@@ -33,34 +37,19 @@ var QueensForm = React.createClass({
 
     onSubmit: function(e) {
         e.preventDefault();
-        var http = new XMLHttpRequest();
 
-        http.onreadystatechange = function() {
-            if (http.readyState === XMLHttpRequest.DONE) {
-                if (http.responseText !== "{}") {
-                    var split = http.responseText.split("{");
-                    split.splice(0,1);
-                    for (var i = 0; i < split.length; i++) {
-                        split[i] = "{" + split[i];
-                        split[i] = JSON.parse(split[i]);
-                    }
-
-                    this.setState({
-                        result: split
-                    });
-                }
+        GetURL("http://localhost:5000/model/queens?n=" + this.state.input, function(http) {
+            var split = http.responseText.split("{");
+            split.splice(0,1);
+            for (var i = 0; i < split.length; i++) {
+                split[i] = "{" + split[i];
+                split[i] = JSON.parse(split[i]);
             }
-            // TODO: Change this, as it makes the UI redraw itself.
-            else {
-                this.setState({
-                    result: []
-                });
-            }
-        }.bind(this);
 
-        http.open( "GET", "http://localhost:5000/model/queens.json?n=" + this.state.input, true);
-        http.send(null);
-
+            this.setState({
+                result: split
+            });
+        }.bind(this));
     },
 
     render: function() {
@@ -76,7 +65,7 @@ var QueensForm = React.createClass({
             <div>
                 <form onSubmit={this.onSubmit}>
                     <NumberInput min={1} max={10} onUserInput={this.handleUserInput} input={this.state.input} />
-    				<button className="pure-button" onClick={this.onSubmit}>Submit</button>
+    				<button onClick={this.onSubmit}>Submit</button>
     			</form>
                 {grids}
                 {rows}
