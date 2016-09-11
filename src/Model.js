@@ -1,61 +1,29 @@
 import React from 'react';
-import { GetURL } from './Utils';
-
-var API_ROOT = "http://localhost:5000/";
-var API_MODELS = API_ROOT + "models";
-var API_ARGUMENTS = API_ROOT + "models/";
-var API_MODEL_EXAMPLE = "prod_planning";
 
 export var ModelForm = React.createClass({
-    getInitialState: function() {
-        return {
-            args: {},
-            models: [],
-            selectedModel: ""
-        }
-    },
-
-    componentDidMount: function() {
-        GetURL(API_MODELS, function(http) {
-            var modelFiles = JSON.parse(http.responseText);
-            var models = modelFiles.models;
-
-            for (var i = 0; i < models.length; i++) {
-                models[i] = models[i].slice(0, models[i].length - 4);
-            }
-
-            this.setState({ models: models, selectedModel: models[0] });
-        }.bind(this));
-
-        // TODO: abstract the first model loaded.
-        GetURL(API_ARGUMENTS + API_MODEL_EXAMPLE, function(http) {
-            var args = JSON.parse(http.responseText);
-            this.setState({ args: args });
-        }.bind(this));
+    propTypes: {
+        args: React.PropTypes.object.isRequired,
+        models: React.PropTypes.arrayOf(React.PropTypes.string).isRequired,
+        selectedModel: React.PropTypes.string.isRequired,
+        handleModelChange: React.PropTypes.func.isRequired
     },
 
     handleModelChange: function(event) {
-        var value = event.target.value;
-        this.setState({ args: {}, selectedModel: value });
-
-        GetURL(API_ARGUMENTS + value, function(http) {
-            var args = JSON.parse(http.responseText);
-            this.setState({ args: args });
-        }.bind(this));
+        this.props.handleModelChange(event);
     },
 
     render: function() {
         var inputs = [];
-        for (var i = 0; i < Object.keys(this.state.args).length; i++) {
-            var key = Object.keys(this.state.args)[i];
-            var type = this.state.args[key];
+        for (var i = 0; i < Object.keys(this.props.args).length; i++) {
+            var key = Object.keys(this.props.args)[i];
+            var type = this.props.args[key];
             inputs.push(<ModelArgument className="ModelArgument" key={key} argName={key} type={type} />);
         }
 
         return <div className="ModelForm">
-            <ModelSelect models={this.state.models}
-                selectedModel={this.state.selectedModel} handleModelChange={this.handleModelChange} />
-            <ModelDisplay modelName={this.state.selectedModel}/>
+            <ModelSelect models={this.props.models}
+                selectedModel={this.props.selectedModel} handleModelChange={this.handleModelChange} />
+            <ModelDisplay modelName={this.props.selectedModel}/>
             {inputs}
         </div>
     }
