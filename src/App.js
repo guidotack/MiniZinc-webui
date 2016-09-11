@@ -18,7 +18,9 @@ var App = React.createClass({
         return {
             args: {},
             models: [],
-            selectedModel: ""
+            selectedModel: "",
+            selectedArgument: {},
+            mouseOverBar: false
         }
     },
 
@@ -40,14 +42,35 @@ var App = React.createClass({
         }.bind(this));
     },
 
+    handleArgumentClick: function(argName, type) {
+        this.setState({ selectedArgument: { argName: argName, type: type} });
+    },
+
+    handleArgumentDeselect: function() {
+        if (this.state.mouseOverBar === false) {
+            this.setState({
+                selectedArgument: {}
+            });
+        }
+    },
+
     handleModelChange: function(event) {
         var value = event.target.value;
-        this.setState({ args: {}, selectedModel: value });
+        this.setState({ args: {}, selectedModel: value, selectedArgument: {} });
 
         GetURL(API_ARGUMENTS + value, function(http) {
             var args = JSON.parse(http.responseText);
             this.setState({ args: args });
         }.bind(this));
+    },
+
+    handleBarState: function(event) {
+        if (event.type === "mouseenter") {
+            this.setState({ mouseOverBar: true });
+        }
+        else if (event.type === "mouseleave"){
+            this.setState({ mouseOverBar: false });
+        }
     },
 
     render: function() {
@@ -58,10 +81,11 @@ var App = React.createClass({
                     <h2>Welcome to React</h2>
                 </div>
 
-                <InputSelectionBar />
+                <InputSelectionBar filterType={this.state.selectedArgument.type} handleBarState={this.handleBarState} />
 
                 <ModelForm args={this.state.args} models={this.state.models} selectedModel={this.state.selectedModel}
-                    handleModelChange={this.handleModelChange} />
+                    handleModelChange={this.handleModelChange} handleArgumentClick={this.handleArgumentClick} selectedArgument={this.state.selectedArgument} handleArgumentDeselect={this.handleArgumentDeselect}
+                    />
                 {/* <QueensForm /> */}
             </div>
         );

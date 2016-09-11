@@ -3,7 +3,8 @@ import { InputRange, AllInputs } from './Inputs'
 
 export var InputSelectionBar = React.createClass({
     propTypes: {
-        filterType: React.PropTypes.string
+        filterType: React.PropTypes.string,
+        handleBarState: React.PropTypes.func
     },
 
     getDefaultProps: function() {
@@ -16,12 +17,15 @@ export var InputSelectionBar = React.createClass({
         var inputs = [];
         for (var i = 0; i < AllInputs.length; i++) {
             if (this.props.filterType.length === 0 || AllInputs[i].type === this.props.filterType)
-                inputs.push(<InputButton name={AllInputs[i].name} type={AllInputs[i].type} image={AllInputs[i].image} />);
+                inputs.push(<InputButton key={AllInputs[i].name} name={AllInputs[i].name}
+                    type={AllInputs[i].type} image={AllInputs[i].image} />);
         }
 
-        // TODO: If no elements are shown after filter, show text saying select an element.
+        if (inputs.length === 0) {
+            inputs.push(<p key="error">{this.props.filterType} has no inputs!</p>)
+        }
 
-        return <div className="InputSelectionBar">
+        return <div className="InputSelectionBar" onMouseEnter={this.props.handleBarState} onMouseLeave={this.props.handleBarState} >
             {inputs}
         </div>
     }
