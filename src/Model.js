@@ -1,6 +1,11 @@
 import React from 'react';
 import { GetURL } from './Utils';
 
+var API_ROOT = "http://localhost:5000/";
+var API_MODELS = API_ROOT + "models";
+var API_ARGUMENTS = API_ROOT + "models/";
+var API_MODEL_EXAMPLE = "prod_planning";
+
 export var ModelForm = React.createClass({
     getInitialState: function() {
         return {
@@ -11,9 +16,10 @@ export var ModelForm = React.createClass({
     },
 
     componentWillMount: function() {
-        GetURL("http://localhost:5000/", function(http) {
+        GetURL(API_MODELS, function(http) {
             var modelFiles = JSON.parse(http.responseText);
-            var models = modelFiles.result;
+            var models = modelFiles.models;
+            console.log(models);
 
             for (var i = 0; i < models.length; i++) {
                 models[i] = models[i].slice(0, models[i].length - 4);
@@ -23,7 +29,7 @@ export var ModelForm = React.createClass({
         }.bind(this));
 
         // TODO: abstract the first model loaded.
-        GetURL("http://localhost:5000/model/prod_planning", function(http) {
+        GetURL(API_ARGUMENTS + API_MODEL_EXAMPLE, function(http) {
             var args = JSON.parse(http.responseText);
             this.setState({ args: args });
         }.bind(this));
@@ -33,7 +39,7 @@ export var ModelForm = React.createClass({
         var value = event.target.value;
         this.setState({ args: {}, selectedModel: value });
 
-        GetURL("http://localhost:5000/model/" + value, function(http) {
+        GetURL(API_ARGUMENTS + value, function(http) {
             var args = JSON.parse(http.responseText);
             this.setState({ args: args });
         }.bind(this));
