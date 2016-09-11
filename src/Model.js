@@ -15,11 +15,10 @@ export var ModelForm = React.createClass({
         }
     },
 
-    componentWillMount: function() {
+    componentDidMount: function() {
         GetURL(API_MODELS, function(http) {
             var modelFiles = JSON.parse(http.responseText);
             var models = modelFiles.models;
-            console.log(models);
 
             for (var i = 0; i < models.length; i++) {
                 models[i] = models[i].slice(0, models[i].length - 4);
@@ -65,7 +64,8 @@ export var ModelForm = React.createClass({
 var ModelSelect = React.createClass({
     propTypes: {
         selectedModel: React.PropTypes.string.isRequired,
-        models: React.PropTypes.arrayOf(React.PropTypes.string).isRequired
+        models: React.PropTypes.arrayOf(React.PropTypes.string).isRequired,
+        handleModelChange: React.PropTypes.func.isRequired
     },
 
     onChange: function(event) {
