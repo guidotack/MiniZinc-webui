@@ -2,9 +2,10 @@ import React from 'react';
 
 export var InputRange = React.createClass({
     propTypes: {
+        id: React.PropTypes.string.isRequired,
         min: React.PropTypes.number,
         max: React.PropTypes.number,
-        input: React.PropTypes.number.isRequired,
+        value: React.PropTypes.number.isRequired,
         onUserInput: React.PropTypes.func.isRequired
     },
 
@@ -16,19 +17,15 @@ export var InputRange = React.createClass({
     },
 
     onChange: function(event) {
-        this.props.onUserInput(event);
+        this.props.onUserInput(this.props.id, parseInt(event.target.value, 10));
     },
 
     render: function() {
         return (
             <div>
-                <input onChange={this.onChange} value={this.props.input} type="range" min={this.props.min} max={this.props.max}></input>
-                <p>{this.props.input}</p>
+                <div>{this.props.id}</div><p>{this.props.value}</p>
+                <input onChange={this.onChange} value={this.props.value} type="range" min={this.props.min} max={this.props.max}></input>
             </div>
         );
     }
 });
-
-export const AllInputs = [
-    { name: "Slider", type: "int", image: "sliders", component: InputRange, defaultValue: 1 }
-]

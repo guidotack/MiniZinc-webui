@@ -3,7 +3,8 @@ import logo from './logo.svg';
 import './App.css';
 
 import { ModelForm } from './Model';
-import { InputSelectionBar } from './InputSelection';
+import { InputSelectionBar } from './InputSelectionBar/InputSelectionBar';
+import { InputHolder } from './InputHolder'
 import { GetURL } from './Utils';
 
 var API_ROOT = "http://localhost:5000/";
@@ -74,18 +75,33 @@ var App = React.createClass({
         }
     },
 
-    handleInputClick: function(component, defaultValue) {
+    handleInputClick: function(componentName, defaultValue) {
+        if (this.state.selectedArgument.argName != null) {
+            this.setState({
+                inputs: {
+                    ...this.state.inputs,
+
+                    [this.state.selectedArgument.argName]: {
+                        component: componentName,
+                        type: this.state.selectedArgument.type,
+                        value: defaultValue
+                    }
+                }
+            });
+        }
+    },
+
+    handleInputValueChange: function(id, value) {
+        var newObject = this.state.inputs[id];
+        newObject.value = value;
+
         this.setState({
             inputs: {
                 ...this.state.inputs,
 
-                [this.state.selectedArgument.argName]: {
-                    component: component,
-                    type: this.state.selectedArgument.type,
-                    value: defaultValue
-                }
+                [id]: newObject
             }
-        });
+        })
     },
 
     render: function() {
@@ -104,6 +120,7 @@ var App = React.createClass({
                     selectedArgument={this.state.selectedArgument} handleArgumentDeselect={this.handleArgumentDeselect}
                     />
                 {/* <QueensForm /> */}
+                <InputHolder inputs={this.state.inputs} handleInputValueChange={this.handleInputValueChange} />
             </div>
         );
     }
