@@ -20,7 +20,8 @@ var App = React.createClass({
             models: [],
             selectedModel: "",
             selectedArgument: {},
-            mouseOverBar: false
+            mouseOverBar: false,
+            inputs: {}
         }
     },
 
@@ -68,9 +69,23 @@ var App = React.createClass({
         if (event.type === "mouseenter") {
             this.setState({ mouseOverBar: true });
         }
-        else if (event.type === "mouseleave"){
+        else if (event.type === "mouseleave") {
             this.setState({ mouseOverBar: false });
         }
+    },
+
+    handleInputClick: function(component, defaultValue) {
+        this.setState({
+            inputs: {
+                ...this.state.inputs,
+
+                [this.state.selectedArgument.argName]: {
+                    component: component,
+                    type: this.state.selectedArgument.type,
+                    value: defaultValue
+                }
+            }
+        });
     },
 
     render: function() {
@@ -81,10 +96,12 @@ var App = React.createClass({
                     <h2>Welcome to React</h2>
                 </div>
 
-                <InputSelectionBar filterType={this.state.selectedArgument.type} handleBarState={this.handleBarState} />
+                <InputSelectionBar filterType={this.state.selectedArgument.type} handleBarState={this.handleBarState}
+                    handleInputClick={this.handleInputClick} />
 
                 <ModelForm args={this.state.args} models={this.state.models} selectedModel={this.state.selectedModel}
-                    handleModelChange={this.handleModelChange} handleArgumentClick={this.handleArgumentClick} selectedArgument={this.state.selectedArgument} handleArgumentDeselect={this.handleArgumentDeselect}
+                    handleModelChange={this.handleModelChange} handleArgumentClick={this.handleArgumentClick}
+                    selectedArgument={this.state.selectedArgument} handleArgumentDeselect={this.handleArgumentDeselect}
                     />
                 {/* <QueensForm /> */}
             </div>

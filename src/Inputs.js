@@ -11,7 +11,7 @@ export var InputRange = React.createClass({
     getDefaultProps: function() {
         return {
             min: 1,
-            max: 3
+            max: 10
         }
     },
 
@@ -30,5 +30,5 @@ export var InputRange = React.createClass({
 });
 
 export const AllInputs = [
-    { name: "Slider", type: "int", image: "sliders", component: InputRange }
+    { name: "Slider", type: "int", image: "sliders", component: InputRange, defaultValue: 1 }
 ]
