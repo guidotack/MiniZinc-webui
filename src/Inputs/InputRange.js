@@ -1,4 +1,5 @@
 import React from 'react';
+import './InputRange.css';
 
 export var InputRange = React.createClass({
     propTypes: {
@@ -22,8 +23,11 @@ export var InputRange = React.createClass({
 
     render: function() {
         return (
-            <div>
-                <div>{this.props.id}</div><p>{this.props.value}</p>
+            <div className="InputRange">
+                <div className="container">
+                    <div className="name">{this.props.id}</div>
+                    <div className="value">{this.props.value}</div>
+                </div>
                 <input onChange={this.onChange} value={this.props.value} type="range" min={this.props.min} max={this.props.max}></input>
             </div>
         );

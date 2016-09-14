@@ -1,0 +1,30 @@
+.InputRange {
+    display: inline-block;
+    border: 1px solid rgba(0,0,0,0.2);
+    margin-top: 20px;
+}
+
+.InputRange .container {
+    background-color: #5C6BC0;
+    color: white;
+    position: relative;
+    /*height: 25px;*/
+
+}
+
+.InputRange .name {
+    display: inline-block;
+    font-size: 20px;
+    padding: 20px;
+    padding-right: 0px;
+}
+
+.InputRange .value {
+    display: inline-block;
+    padding: 10px;
+    font-size: 35px;
+}
+
+.InputRange input {
+    width: 80%;
+}
