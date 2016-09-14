@@ -8,7 +8,8 @@ export var ModelForm = React.createClass({
         selectedArgument: React.PropTypes.object.isRequired,
         handleModelChange: React.PropTypes.func.isRequired,
         handleArgumentClick: React.PropTypes.func.isRequired,
-        handleArgumentDeselect: React.PropTypes.func.isRequired
+        handleArgumentDeselect: React.PropTypes.func.isRequired,
+        handleModelSubmit: React.PropTypes.func.isRequired
     },
 
     componentDidMount: function() {
@@ -53,6 +54,24 @@ export var ModelForm = React.createClass({
                 selectedModel={this.props.selectedModel} handleModelChange={this.handleModelChange} />
             <ModelDisplay modelName={this.props.selectedModel}/>
             {inputs}
+            <ModelSubmit handleModelSubmit={this.props.handleModelSubmit} />
+        </div>
+    }
+});
+
+var ModelSubmit = React.createClass({
+    propTypes: {
+        handleModelSubmit: React.PropTypes.func.isRequired
+    },
+
+    handleModelSubmit: function(e) {
+        e.preventDefault();
+        this.props.handleModelSubmit();
+    },
+
+    render: function() {
+        return <div className="ModelButton">
+            <button onClick={this.handleModelSubmit}>Submit</button>
         </div>
     }
 });

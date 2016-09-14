@@ -4,12 +4,14 @@ import './App.css';
 
 import { ModelForm } from './Model';
 import { InputSelectionBar } from './InputSelectionBar/InputSelectionBar';
-import { InputHolder } from './InputHolder'
+import { InputHolder } from './InputHolder';
+import { OutputString } from './Outputs/OutputString';
 import { GetURL } from './Utils';
 
 var API_ROOT = "http://localhost:5000/";
 var API_MODELS = API_ROOT + "models";
 var API_ARGUMENTS = API_ROOT + "models/";
+var API_MODEL_SOLVE = API_ROOT + "solve/";
 
 // TODO: abstract the first model loaded.
 var API_MODEL_EXAMPLE = "prod_planning";
@@ -22,7 +24,8 @@ var App = React.createClass({
             selectedModel: "",
             selectedArgument: {},
             mouseOverBar: false,
-            inputs: {}
+            inputs: {},
+            result: []
         }
     },
 
@@ -58,7 +61,7 @@ var App = React.createClass({
 
     handleModelChange: function(event) {
         var value = event.target.value;
-        this.setState({ args: {}, selectedModel: value, selectedArgument: {} });
+        this.setState({ args: {}, selectedModel: value, selectedArgument: {}, inputs: {}, result: [] });
 
         GetURL(API_ARGUMENTS + value, function(http) {
             var args = JSON.parse(http.responseText);
@@ -104,6 +107,41 @@ var App = React.createClass({
         })
     },
 
+    handleModelSubmit: function() {
+        var successful = true;
+        var fetchURL = API_MODEL_SOLVE + this.state.selectedModel + '?';
+        Object.keys(this.state.args).forEach(function(arg) {
+            if (this.state.inputs[arg] != null) {
+                fetchURL += arg + '=' + this.state.inputs[arg].value + '&';
+            }
+            else {
+                successful = false;
+                return;
+            }
+        }.bind(this));
+
+        if (successful) {
+            console.log(fetchURL);
+            GetURL(fetchURL, function(http) {
+                // var result = http.responseText;
+                // console.log(result);
+
+                var split = http.responseText.split("{");
+                split.splice(0,1);
+                for (var i = 0; i < split.length; i++) {
+                    split[i] = "{" + split[i];
+                    split[i] = JSON.parse(split[i]);
+                }
+
+                console.log(split);
+
+                this.setState({
+                    result: split
+                });
+            }.bind(this));
+        }
+    },
+
     render: function() {
         return (
             <div className="App">
@@ -118,9 +156,10 @@ var App = React.createClass({
                 <ModelForm args={this.state.args} models={this.state.models} selectedModel={this.state.selectedModel}
                     handleModelChange={this.handleModelChange} handleArgumentClick={this.handleArgumentClick}
                     selectedArgument={this.state.selectedArgument} handleArgumentDeselect={this.handleArgumentDeselect}
-                    />
+                    handleModelSubmit={this.handleModelSubmit} />
                 {/* <QueensForm /> */}
                 <InputHolder inputs={this.state.inputs} handleInputValueChange={this.handleInputValueChange} />
+                <OutputString result={this.state.result} />
             </div>
         );
     }
