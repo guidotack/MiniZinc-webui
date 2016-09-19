@@ -11,10 +11,13 @@ import { GetURL } from './Utils';
 var API_ROOT = "http://localhost:5000/";
 var API_MODELS = API_ROOT + "models";
 var API_ARGUMENTS = API_ROOT + "models/";
-var API_MODEL_SOLVE = API_ROOT + "solve/";
+//var API_MODEL_SOLVE = API_ROOT + "solve/";
 
 // TODO: abstract the first model loaded.
 var API_MODEL_EXAMPLE = "prod_planning";
+
+var socket = require('socket.io-client')('http://localhost:5000/');
+
 
 var App = React.createClass({
     getInitialState: function() {
@@ -109,31 +112,29 @@ var App = React.createClass({
 
     handleModelSubmit: function() {
         var successful = true;
-        var fetchURL = API_MODEL_SOLVE + this.state.selectedModel + '?';
+        //var fetchURL = API_MODEL_SOLVE + this.state.selectedModel + '?';
+        var args = ''
         Object.keys(this.state.args).forEach(function(arg) {
             if (this.state.inputs[arg] != null) {
-                fetchURL += arg + '=' + this.state.inputs[arg].value + '&';
+                args += arg + '=' + this.state.inputs[arg].value + '&';
             }
             else {
                 successful = false;
                 return;
             }
         }.bind(this));
-
+        //fetchURL += args
         if (successful) {
-            console.log(fetchURL);
-            GetURL(fetchURL, function(http) {
-                // var result = http.responseText;
-                // console.log(result);
-
-                var split = http.responseText.split("{");
+            socket.emit('request_solution', {model:this.state.selectedModel,args});
+            socket.on('solution', function(data){
+            //GetURL(fetchURL, function(http) {
+                console.log(data)
+                var split = data.split("{");
                 split.splice(0,1);
                 for (var i = 0; i < split.length; i++) {
                     split[i] = "{" + split[i];
                     split[i] = JSON.parse(split[i]);
                 }
-
-                console.log(split);
 
                 this.setState({
                     result: split
