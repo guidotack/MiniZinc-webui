@@ -114,6 +114,9 @@ var App = React.createClass({
         var successful = true;
         //var fetchURL = API_MODEL_SOLVE + this.state.selectedModel + '?';
         var args = ''
+        this.setState({
+          result: []
+        });
         Object.keys(this.state.args).forEach(function(arg) {
             if (this.state.inputs[arg] != null) {
                 args += arg + '=' + this.state.inputs[arg].value + '&';
