@@ -135,9 +135,8 @@ var App = React.createClass({
                     split[i] = "{" + split[i];
                     split[i] = JSON.parse(split[i]);
                 }
-
                 this.setState({
-                    result: split
+                    result: this.state.result.concat(split) //each solution is added as an object to the array
                 });
             }.bind(this));
         }
