@@ -48,6 +48,22 @@ var App = React.createClass({
             var args = JSON.parse(http.responseText);
             this.setState({ args: args });
         }.bind(this));
+
+        socket.on('solution', function(data) {
+            var split = data.split("{");
+            split.splice(0,1);
+
+            for (var i = 0; i < split.length; i++) {
+                split[i] = "{" + split[i];
+                split[i] = JSON.parse(split[i]);
+            }
+
+            var newResult = this.state.result.concat(split);
+
+            this.setState({
+                result: newResult //each solution is added as an object to the array
+            });
+        }.bind(this));
     },
 
     handleArgumentClick: function(argName, type) {
@@ -114,9 +130,11 @@ var App = React.createClass({
         var successful = true;
         //var fetchURL = API_MODEL_SOLVE + this.state.selectedModel + '?';
         var args = ''
+        
         this.setState({
-          result: []
+            result: []
         });
+
         Object.keys(this.state.args).forEach(function(arg) {
             if (this.state.inputs[arg] != null) {
                 args += arg + '=' + this.state.inputs[arg].value + '&';
@@ -126,22 +144,9 @@ var App = React.createClass({
                 return;
             }
         }.bind(this));
-        //fetchURL += args
+
         if (successful) {
             socket.emit('request_solution', {model:this.state.selectedModel,args});
-            socket.on('solution', function(data){
-            //GetURL(fetchURL, function(http) {
-                console.log(data)
-                var split = data.split("{");
-                split.splice(0,1);
-                for (var i = 0; i < split.length; i++) {
-                    split[i] = "{" + split[i];
-                    split[i] = JSON.parse(split[i]);
-                }
-                this.setState({
-                    result: this.state.result.concat(split) //each solution is added as an object to the array
-                });
-            }.bind(this));
         }
     },
 
