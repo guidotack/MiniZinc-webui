@@ -1,5 +1,5 @@
 import React from 'react';
-import './InputRange.css';
+import './Input.css';
 
 export var InputRange = React.createClass({ //slider
     propTypes: {
@@ -23,7 +23,7 @@ export var InputRange = React.createClass({ //slider
 
     render: function() {
         return (
-            <div className="InputRange">
+            <div className="Input Range">
                 <div className="container">
                     <div className="name">{this.props.id}</div>
                     <div className="value">{this.props.value}</div>
@@ -34,7 +34,7 @@ export var InputRange = React.createClass({ //slider
     }
 });
 
-export var TextField = React.createClass({ //text Field
+export var InputTextField = React.createClass({ //text Field
     propTypes: {
         id: React.PropTypes.string.isRequired,
         value: React.PropTypes.number.isRequired,
@@ -47,7 +47,7 @@ export var TextField = React.createClass({ //text Field
 
     render: function() {
         return (
-            <div className="InputRange">
+            <div className="Input TextField">
                 <div className="container">
                     <div className="name">{this.props.id}</div>
                 </div>

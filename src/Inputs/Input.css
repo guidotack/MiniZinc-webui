@@ -1,30 +1,33 @@
-.InputRange {
+.Input {
     display: inline-block;
     border: 1px solid rgba(0,0,0,0.2);
     margin-top: 20px;
+    vertical-align: top;
 }
 
-.InputRange .container {
+.Input ~ .Input {
+    margin-left: 10px;
+}
+
+.Input .container {
     background-color: #5C6BC0;
     color: white;
     position: relative;
-    /*height: 25px;*/
-
 }
 
-.InputRange .name {
+.Input .container .name {
     display: inline-block;
     font-size: 20px;
     padding: 20px;
-    padding-right: 0px;
 }
 
-.InputRange .value {
+.Input .value {
     display: inline-block;
     padding: 10px;
     font-size: 35px;
 }
 
-.InputRange input {
+.Input input {
     width: 80%;
+    margin: 5px;
 }
