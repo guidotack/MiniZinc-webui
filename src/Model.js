@@ -9,7 +9,8 @@ export var ModelForm = React.createClass({
         handleModelChange: React.PropTypes.func.isRequired,
         handleArgumentClick: React.PropTypes.func.isRequired,
         handleArgumentDeselect: React.PropTypes.func.isRequired,
-        handleModelSubmit: React.PropTypes.func.isRequired
+        handleModelSubmit: React.PropTypes.func.isRequired,
+        handleSolveStop: React.PropTypes.func.isRequired
     },
 
     componentDidMount: function() {
@@ -55,6 +56,7 @@ export var ModelForm = React.createClass({
             <ModelDisplay modelName={this.props.selectedModel}/>
             {inputs}
             <ModelSubmit handleModelSubmit={this.props.handleModelSubmit} />
+            <SolveStop handleSolveStop={this.props.handleSolveStop} />
         </div>
     }
 });
@@ -74,6 +76,23 @@ var ModelSubmit = React.createClass({
             <button onClick={this.handleModelSubmit}>Submit</button>
         </div>
     }
+});
+
+var SolveStop = React.createClass({
+  propTypes: {
+      handleSolveStop: React.PropTypes.func.isRequired
+  },
+
+  handleSolveStop: function(e) {
+      e.preventDefault();
+      this.props.handleSolveStop();
+  },
+
+  render: function() {
+      return <div className="ModelButton">
+          <button onClick={this.handleSolveStop}>Stop</button>
+      </div>
+  }
 });
 
 var ModelSelect = React.createClass({

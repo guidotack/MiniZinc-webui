@@ -13,7 +13,7 @@ export var InputRange = React.createClass({ //slider
     getDefaultProps: function() {
         return {
             min: 1,
-            max: 10
+            max: 15
         }
     },
 

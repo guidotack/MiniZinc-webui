@@ -14,7 +14,7 @@ var API_ARGUMENTS = API_ROOT + "models/";
 //var API_MODEL_SOLVE = API_ROOT + "solve/";
 
 // TODO: abstract the first model loaded.
-var API_MODEL_EXAMPLE = "prod_planning";
+var API_MODEL_EXAMPLE = "golomb";
 
 var socket = require('socket.io-client')('http://localhost:5000/');
 
@@ -126,11 +126,15 @@ var App = React.createClass({
         })
     },
 
+    handleSolveStop: function() {
+        socket.emit('kill_solution');
+    },
+
     handleModelSubmit: function() {
         var successful = true;
         //var fetchURL = API_MODEL_SOLVE + this.state.selectedModel + '?';
         var args = ''
-        
+
         this.setState({
             result: []
         });
@@ -164,7 +168,7 @@ var App = React.createClass({
                 <ModelForm args={this.state.args} models={this.state.models} selectedModel={this.state.selectedModel}
                     handleModelChange={this.handleModelChange} handleArgumentClick={this.handleArgumentClick}
                     selectedArgument={this.state.selectedArgument} handleArgumentDeselect={this.handleArgumentDeselect}
-                    handleModelSubmit={this.handleModelSubmit} />
+                    handleModelSubmit={this.handleModelSubmit} handleSolveStop={this.handleSolveStop} />
                 {/* <QueensForm /> */}
                 <InputHolder inputs={this.state.inputs} handleInputValueChange={this.handleInputValueChange} />
                 <OutputString result={this.state.result} />
