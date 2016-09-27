@@ -5,7 +5,7 @@ import './App.css';
 import { ModelForm } from './Model';
 import { InputSelectionBar } from './InputSelectionBar/InputSelectionBar';
 import { InputHolder } from './InputHolder';
-import { OutputString } from './Outputs/OutputString';
+import { OutputHolder } from './OutputHolder'
 import { GetURL } from './Utils';
 
 var API_ROOT = "http://localhost:5000/";
@@ -28,7 +28,8 @@ var App = React.createClass({
             selectedArgument: {},
             mouseOverBar: false,
             inputs: {},
-            result: []
+            result: [],
+            selectedOutputIndex: 0
         }
     },
 
@@ -59,9 +60,9 @@ var App = React.createClass({
             }
 
             var newResult = this.state.result.concat(split);
-
             this.setState({
-                result: newResult //each solution is added as an object to the array
+                result: newResult, //each solution is added as an object to the array
+                selectedOutputIndex: newResult.length - 1
             });
         }.bind(this));
     },
@@ -154,12 +155,18 @@ var App = React.createClass({
         }
     },
 
+    handleOutputChange: function(event) {
+        this.setState({
+            selectedOutputIndex: parseInt(event.target.value, 10)
+        });
+    },
+
     render: function() {
         return (
             <div className="App">
                 <div className="App-header">
-                    <img src={logo} className="App-logo" alt="logo" />
-                    <h2>Welcome to React</h2>
+                    {/* <img src={logo} className="App-logo" alt="logo" /> */}
+                    <h2>MiniZinc-WebUI</h2>
                 </div>
 
                 <InputSelectionBar filterType={this.state.selectedArgument.type} handleBarState={this.handleBarState}
@@ -171,7 +178,8 @@ var App = React.createClass({
                     handleModelSubmit={this.handleModelSubmit} handleSolveStop={this.handleSolveStop} />
                 {/* <QueensForm /> */}
                 <InputHolder inputs={this.state.inputs} handleInputValueChange={this.handleInputValueChange} />
-                <OutputString result={this.state.result} />
+                <OutputHolder result={this.state.result} selectedOutputIndex={this.state.selectedOutputIndex}
+                    handleOutputChange={this.handleOutputChange} />
             </div>
         );
     }

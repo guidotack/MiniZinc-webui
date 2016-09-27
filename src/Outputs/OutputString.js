@@ -2,18 +2,17 @@ import React from 'react';
 
 export var OutputString = React.createClass({
     propTypes: {
-        result: React.PropTypes.array.isRequired
+        result: React.PropTypes.array
     },
 
     render: function() {
         var lines = [];
 
-        this.props.result.forEach(function(row) {
-            var keys = Object.keys(row);
-
-            lines.push(<p key={row[keys[0]]}>{row[keys[0]]}</p>);
-        });
-
+        if (this.props.result != null) {
+            this.props.result.forEach(function(row) {
+                lines.push(<p key={row}>{row}</p>);
+            });
+        }
         return (
             <div className="OutputString">
                 {lines}

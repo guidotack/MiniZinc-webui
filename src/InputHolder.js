@@ -1,3 +1,5 @@
+// The container that holds inputs and passes the changes back to the parent.
+
 import React from 'react';
 import { StringToInput } from './Inputs/Inputs';
 

@@ -1,4 +1,5 @@
 import React from 'react';
+import { DropDownBar } from './DropDownBar.js';
 
 export var ModelForm = React.createClass({
     propTypes: {
@@ -51,8 +52,8 @@ export var ModelForm = React.createClass({
         }
 
         return <div className="ModelForm" onMouseDown={this.onMouseDown} onMouseUp={this.onMouseUp}>
-            <ModelSelect models={this.props.models}
-                selectedModel={this.props.selectedModel} handleModelChange={this.handleModelChange} />
+            <DropDownBar options={this.props.models}
+                selectedOption={this.props.selectedModel} handleOptionChange={this.handleModelChange} />
             <ModelDisplay modelName={this.props.selectedModel}/>
             {inputs}
             <ModelSubmit handleModelSubmit={this.props.handleModelSubmit} />
@@ -93,29 +94,6 @@ var SolveStop = React.createClass({
           <button onClick={this.handleSolveStop}>Stop</button>
       </div>
   }
-});
-
-var ModelSelect = React.createClass({
-    propTypes: {
-        selectedModel: React.PropTypes.string.isRequired,
-        models: React.PropTypes.arrayOf(React.PropTypes.string).isRequired,
-        handleModelChange: React.PropTypes.func.isRequired
-    },
-
-    onChange: function(event) {
-        this.props.handleModelChange(event);
-    },
-
-    render: function() {
-        var models = [];
-        for (var i = 0; i < this.props.models.length; i++) {
-            models.push(<option key={this.props.models[i]} value={this.props.models[i]}>{this.props.models[i]}</option>);
-        }
-
-        return <select className="ModelSelect" onChange={this.onChange} value={this.props.selectedModel}>
-                    {models}
-                </select>
-    }
 });
 
 var ModelDisplay = React.createClass({

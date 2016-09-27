@@ -1,6 +1,7 @@
 import React from 'react';
 import { AllInputs } from '../Inputs/Inputs';
 import { InputSelectionButton } from './InputSelectionButton';
+import './InputSelectionBar.css';
 
 export var InputSelectionBar = React.createClass({
     propTypes: {
