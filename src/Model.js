@@ -59,7 +59,7 @@ export var ModelForm = React.createClass({
             {inputs}
             <Button text={"Submit"} handleClick={this.props.handleModelSubmit} />
             <Button text={"Stop"} handleClick={this.props.handleSolveStop} />
-            <Button text={"Save"} handleClick={this.props.handleTemplateSave} />
+            {this.props.developmentMode ? <Button text={"Save"} handleClick={this.props.handleTemplateSave} /> : null}
         </div>
     }
 });

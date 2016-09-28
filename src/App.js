@@ -1,5 +1,5 @@
 import React from 'react';
-import logo from './logo.svg';
+// import logo from './logo.svg';
 import './App.css';
 
 import { ModelForm } from './Model';
@@ -13,12 +13,12 @@ var API_MODELS = API_ROOT + "models";
 var API_ARGUMENTS = API_ROOT + "models/";
 //var API_MODEL_SOLVE = API_ROOT + "solve/";
 var API_SAVE_TEMPLATE = API_ROOT + "save_template";
+var API_GET_TEMPLATE = API_ROOT + "get_template/";
 
 // TODO: abstract the first model loaded.
 var API_MODEL_EXAMPLE = "golomb";
 
 var socket = require('socket.io-client')('http://localhost:5000/');
-
 
 var App = React.createClass({
     getInitialState: function() {
@@ -31,26 +31,41 @@ var App = React.createClass({
             inputs: {},
             result: [],
             selectedOutputIndex: 0,
-            outputs: {}
+            outputs: {},
+            developmentMode: true
         }
     },
 
     componentDidMount: function() {
-        GetURL(API_MODELS, function(http) {
-            var modelFiles = JSON.parse(http.responseText);
-            var models = modelFiles.models;
+        if (this.props.params.template != null) {
+            GetURL(API_GET_TEMPLATE + this.props.params.template, function(http) {
+                var prevState = JSON.parse(http.responseText);
 
-            for (var i = 0; i < models.length; i++) {
-                models[i] = models[i].slice(0, models[i].length - 4);
-            }
+                this.setState(prevState);
+            }.bind(this));
 
-            this.setState({ models: models, selectedModel: models[0] });
-        }.bind(this));
+            this.setState({
+                models: [this.props.params.template],
+                selectedModel: this.props.params.template,
+                developmentMode: false
+            });
+        }
+        else {
+            GetURL(API_MODELS, function(http) {
+                var models = JSON.parse(http.responseText);
 
-        GetURL(API_ARGUMENTS + API_MODEL_EXAMPLE, function(http) {
-            var args = JSON.parse(http.responseText);
-            this.setState({ args: args });
-        }.bind(this));
+                for (var i = 0; i < models.length; i++) {
+                    models[i] = models[i].slice(0, models[i].length - 4);
+                }
+
+                this.setState({ models: models, selectedModel: models[0] });
+            }.bind(this));
+
+            GetURL(API_ARGUMENTS + API_MODEL_EXAMPLE, function(http) {
+                var args = JSON.parse(http.responseText);
+                this.setState({ args: args });
+            }.bind(this));
+        }
 
         socket.on('solution', function(data) {
             var split = data.split("{");
@@ -153,7 +168,7 @@ var App = React.createClass({
     handleModelSubmit: function() {
         var successful = true;
         //var fetchURL = API_MODEL_SOLVE + this.state.selectedModel + '?';
-        var args = ''
+        var args = '';
 
         this.setState({
             result: []
@@ -210,10 +225,10 @@ var App = React.createClass({
                     <h2>MiniZinc-WebUI</h2>
                 </div>
 
-                <InputSelectionBar filterType={this.state.selectedArgument.type} handleBarState={this.handleBarState}
+                <InputSelectionBar developmentMode={this.state.developmentMode} filterType={this.state.selectedArgument.type} handleBarState={this.handleBarState}
                     handleInputButtonClick={this.handleInputButtonClick} handleOutputButtonClick={this.handleOutputButtonClick} outputs={this.state.outputs} />
 
-                <ModelForm args={this.state.args} models={this.state.models} selectedModel={this.state.selectedModel}
+                <ModelForm developmentMode={this.state.developmentMode} args={this.state.args} models={this.state.models} selectedModel={this.state.selectedModel}
                     handleModelChange={this.handleModelChange} handleArgumentClick={this.handleArgumentClick}
                     selectedArgument={this.state.selectedArgument} handleArgumentDeselect={this.handleArgumentDeselect}
                     handleModelSubmit={this.handleModelSubmit} handleSolveStop={this.handleSolveStop}

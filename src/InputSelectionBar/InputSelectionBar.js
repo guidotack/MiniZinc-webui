@@ -41,7 +41,7 @@ export var InputSelectionBar = React.createClass({
                     />);
         }
 
-        return <div className="InputSelectionBar" onMouseEnter={this.props.handleBarState} onMouseLeave={this.props.handleBarState} >
+        return <div className={"InputSelectionBar " + (this.props.developmentMode ? '' : 'disabled')}  onMouseEnter={this.props.handleBarState} onMouseLeave={this.props.handleBarState} >
             {inputs}
             {outputs}
         </div>
