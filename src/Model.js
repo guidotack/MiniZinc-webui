@@ -11,7 +11,8 @@ export var ModelForm = React.createClass({
         handleArgumentClick: React.PropTypes.func.isRequired,
         handleArgumentDeselect: React.PropTypes.func.isRequired,
         handleModelSubmit: React.PropTypes.func.isRequired,
-        handleSolveStop: React.PropTypes.func.isRequired
+        handleSolveStop: React.PropTypes.func.isRequired,
+        handleTemplateSave: React.PropTypes.func.isRequired
     },
 
     componentDidMount: function() {
@@ -56,44 +57,24 @@ export var ModelForm = React.createClass({
                 selectedOption={this.props.selectedModel} handleOptionChange={this.handleModelChange} />
             <ModelDisplay modelName={this.props.selectedModel}/>
             {inputs}
-            <ModelSubmit handleModelSubmit={this.props.handleModelSubmit} />
-            <SolveStop handleSolveStop={this.props.handleSolveStop} />
+            <Button text={"Submit"} handleClick={this.props.handleModelSubmit} />
+            <Button text={"Stop"} handleClick={this.props.handleSolveStop} />
+            <Button text={"Save"} handleClick={this.props.handleTemplateSave} />
         </div>
     }
 });
 
-var ModelSubmit = React.createClass({
+var Button = React.createClass({
     propTypes: {
-        handleModelSubmit: React.PropTypes.func.isRequired
-    },
-
-    handleModelSubmit: function(e) {
-        e.preventDefault();
-        this.props.handleModelSubmit();
+        text: React.PropTypes.string,
+        handleClick: React.PropTypes.func.isRequired
     },
 
     render: function() {
         return <div className="ModelButton">
-            <button onClick={this.handleModelSubmit}>Submit</button>
+            <button onClick={this.props.handleClick}>{this.props.text}</button>
         </div>
     }
-});
-
-var SolveStop = React.createClass({
-  propTypes: {
-      handleSolveStop: React.PropTypes.func.isRequired
-  },
-
-  handleSolveStop: function(e) {
-      e.preventDefault();
-      this.props.handleSolveStop();
-  },
-
-  render: function() {
-      return <div className="ModelButton">
-          <button onClick={this.handleSolveStop}>Stop</button>
-      </div>
-  }
 });
 
 var ModelDisplay = React.createClass({

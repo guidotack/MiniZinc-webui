@@ -12,6 +12,7 @@ var API_ROOT = "http://localhost:5000/";
 var API_MODELS = API_ROOT + "models";
 var API_ARGUMENTS = API_ROOT + "models/";
 //var API_MODEL_SOLVE = API_ROOT + "solve/";
+var API_SAVE_TEMPLATE = API_ROOT + "save_template";
 
 // TODO: abstract the first model loaded.
 var API_MODEL_EXAMPLE = "golomb";
@@ -173,6 +174,19 @@ var App = React.createClass({
         }
     },
 
+    handleTemplateSave: function(templateName) {
+        var template = {
+            name: this.state.selectedModel,
+            args: this.state.args,
+            inputs: this.state.inputs
+        }
+
+        var request = new XMLHttpRequest();
+        request.open('POST', API_SAVE_TEMPLATE, true);
+        request.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
+        request.send(JSON.stringify(template));
+    },
+
     handleOutputChange: function(event) {
         this.setState({
             selectedOutputIndex: parseInt(event.target.value, 10),
@@ -202,7 +216,8 @@ var App = React.createClass({
                 <ModelForm args={this.state.args} models={this.state.models} selectedModel={this.state.selectedModel}
                     handleModelChange={this.handleModelChange} handleArgumentClick={this.handleArgumentClick}
                     selectedArgument={this.state.selectedArgument} handleArgumentDeselect={this.handleArgumentDeselect}
-                    handleModelSubmit={this.handleModelSubmit} handleSolveStop={this.handleSolveStop} />
+                    handleModelSubmit={this.handleModelSubmit} handleSolveStop={this.handleSolveStop}
+                    handleTemplateSave={this.handleTemplateSave} />
                 {/* <QueensForm /> */}
                 <InputHolder inputs={this.state.inputs} handleInputValueChange={this.handleInputValueChange} />
                 <OutputHolder result={this.state.result} selectedOutputIndex={this.state.selectedOutputIndex}
