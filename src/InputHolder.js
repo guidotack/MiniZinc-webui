@@ -14,14 +14,16 @@ export var InputHolder = React.createClass({
         var inputs = [];
         for (var i = 0; i < allKeys.length; i++) {
             var key = allKeys[i];
-            var element = StringToInput[this.props.inputs[key].component];
+            if (this.props.inputs[key].isOutput === false) {
+                var element = StringToInput[this.props.inputs[key].component];
 
-            inputs.push(React.createElement(element, {
-                value: this.props.inputs[key].value,
-                onUserInput: this.props.handleInputValueChange,
-                key: key,
-                id: key
-            }));
+                inputs.push(React.createElement(element, {
+                    value: this.props.inputs[key].value,
+                    onUserInput: this.props.handleInputValueChange,
+                    key: key,
+                    id: key
+                }));
+            }
         }
 
         return <div>

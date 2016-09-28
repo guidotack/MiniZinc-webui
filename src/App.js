@@ -29,7 +29,8 @@ var App = React.createClass({
             mouseOverBar: false,
             inputs: {},
             result: [],
-            selectedOutputIndex: 0
+            selectedOutputIndex: 0,
+            outputs: {}
         }
     },
 
@@ -98,7 +99,7 @@ var App = React.createClass({
         }
     },
 
-    handleInputClick: function(componentName, defaultValue) {
+    handleInputButtonClick: function(componentName, defaultValue) {
         if (this.state.selectedArgument.argName != null) {
             this.setState({
                 inputs: {
@@ -107,7 +108,24 @@ var App = React.createClass({
                     [this.state.selectedArgument.argName]: {
                         component: componentName,
                         type: this.state.selectedArgument.type,
-                        value: defaultValue
+                        value: defaultValue,
+                        isOutput: false
+                    }
+                }
+            });
+        }
+    },
+
+    handleOutputButtonClick: function() {
+        if (this.state.selectedArgument.argName != null) {
+            console.log(this.state.outputs.result)
+            this.setState({
+                inputs: {
+                    ...this.state.inputs,
+
+                    [this.state.selectedArgument.argName]: {
+                        isOutput: true,
+                        output: "result"
                     }
                 }
             });
@@ -157,7 +175,16 @@ var App = React.createClass({
 
     handleOutputChange: function(event) {
         this.setState({
-            selectedOutputIndex: parseInt(event.target.value, 10)
+            selectedOutputIndex: parseInt(event.target.value, 10),
+            outputs: {
+                ...this.state.outputs,
+
+                result: {
+                    name: "Output1",
+                    value: event.target.value,
+                    type: "int"
+                }
+            }
         });
     },
 
@@ -170,7 +197,7 @@ var App = React.createClass({
                 </div>
 
                 <InputSelectionBar filterType={this.state.selectedArgument.type} handleBarState={this.handleBarState}
-                    handleInputClick={this.handleInputClick} />
+                    handleInputButtonClick={this.handleInputButtonClick} handleOutputButtonClick={this.handleOutputButtonClick} outputs={this.state.outputs} />
 
                 <ModelForm args={this.state.args} models={this.state.models} selectedModel={this.state.selectedModel}
                     handleModelChange={this.handleModelChange} handleArgumentClick={this.handleArgumentClick}

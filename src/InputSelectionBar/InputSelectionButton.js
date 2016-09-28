@@ -5,8 +5,8 @@ export var InputSelectionButton = React.createClass({
         name: React.PropTypes.string.isRequired,
         type: React.PropTypes.string.isRequired,
         image: React.PropTypes.string,
-        component: React.PropTypes.string.isRequired,
-        defaultValue: React.PropTypes.any.isRequired,
+        component: React.PropTypes.string,
+        defaultValue: React.PropTypes.any,
         handleClick: React.PropTypes.func.isRequired
     },
 

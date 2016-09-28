@@ -7,7 +7,8 @@ export var InputSelectionBar = React.createClass({
     propTypes: {
         filterType: React.PropTypes.string,
         handleBarState: React.PropTypes.func,
-        handleInputClick: React.PropTypes.func.isRequired
+        handleInputButtonClick: React.PropTypes.func.isRequired,
+        outputs: React.PropTypes.object
     },
 
     getDefaultProps: function() {
@@ -22,7 +23,7 @@ export var InputSelectionBar = React.createClass({
             if (this.props.filterType.length === 0 || AllInputs[i].type === this.props.filterType)
                 inputs.push(<InputSelectionButton key={AllInputs[i].name} name={AllInputs[i].name}
                     type={AllInputs[i].type} image={AllInputs[i].image}
-                    component={AllInputs[i].component} handleClick={this.props.handleInputClick}
+                    component={AllInputs[i].component} handleClick={this.props.handleInputButtonClick}
                     defaultValue={AllInputs[i].defaultValue} />);
         }
 
@@ -30,8 +31,19 @@ export var InputSelectionBar = React.createClass({
             inputs.push(<p key="error">{this.props.filterType} has no inputs!</p>)
         }
 
+        var outputs = [];
+        var outputNames = Object.keys(this.props.outputs);
+        for (var i = 0; i < outputNames.length; i++) {
+            if (this.props.filterType.length === 0 || this.props.outputs[outputNames[i]].type === this.props.filterType)
+                outputs.push(<InputSelectionButton key={this.props.outputs[outputNames[i]].name} name={outputNames[i]}
+                    type={this.props.outputs[outputNames[i]].type}
+                    handleClick={this.props.handleOutputButtonClick}
+                    />);
+        }
+
         return <div className="InputSelectionBar" onMouseEnter={this.props.handleBarState} onMouseLeave={this.props.handleBarState} >
             {inputs}
+            {outputs}
         </div>
     }
 });
