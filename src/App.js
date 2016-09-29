@@ -63,6 +63,7 @@ var App = React.createClass({
 
             GetURL(API_ARGUMENTS + API_MODEL_EXAMPLE, function(http) {
                 var args = JSON.parse(http.responseText);
+                args = args[0]
                 this.setState({ args: args });
             }.bind(this));
         }
@@ -102,6 +103,7 @@ var App = React.createClass({
 
         GetURL(API_ARGUMENTS + value, function(http) {
             var args = JSON.parse(http.responseText);
+            args = args[0]
             this.setState({ args: args });
         }.bind(this));
     },
