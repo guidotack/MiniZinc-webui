@@ -63,7 +63,7 @@ var App = React.createClass({
 
             GetURL(API_ARGUMENTS + API_MODEL_EXAMPLE, function(http) {
                 var args = JSON.parse(http.responseText);
-                args = args[0]
+
                 this.setState({ args: args });
             }.bind(this));
         }
@@ -103,7 +103,6 @@ var App = React.createClass({
 
         GetURL(API_ARGUMENTS + value, function(http) {
             var args = JSON.parse(http.responseText);
-            args = args[0]
             this.setState({ args: args });
         }.bind(this));
     },
@@ -176,7 +175,7 @@ var App = React.createClass({
             result: []
         });
 
-        Object.keys(this.state.args).forEach(function(arg) {
+        Object.keys(this.state.args.input).forEach(function(arg) {
             if (this.state.inputs[arg] != null) {
                 args += arg + '=' + this.state.inputs[arg].value + '&';
             }

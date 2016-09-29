@@ -42,14 +42,16 @@ export var ModelForm = React.createClass({
 
     render: function() {
         var inputs = [];
-        for (var i = 0; i < Object.keys(this.props.args).length; i++) {
-            var key = Object.keys(this.props.args)[i];
-            var type = this.props.args[key];
+        if (this.props.args.input != null) {
+            for (var i = 0; i < Object.keys(this.props.args.input).length; i++) {
+                var key = Object.keys(this.props.args.input)[i];
+                var type = this.props.args.input[key].type;
 
-            var selected = this.props.selectedArgument.argName === key;
+                var selected = this.props.selectedArgument.argName === key;
 
-            inputs.push(<ModelArgument key={key} argName={key} selected={selected}
-                type={type} onUserClick={this.props.handleArgumentClick} />);
+                inputs.push(<ModelArgument key={key} argName={key} selected={selected}
+                    type={type} onUserClick={this.props.handleArgumentClick} />);
+            }
         }
 
         return <div className="ModelForm" onMouseDown={this.onMouseDown} onMouseUp={this.onMouseUp}>
