@@ -6,7 +6,7 @@ import { ModelForm } from './Model';
 import { InputSelectionBar } from './InputSelectionBar/InputSelectionBar';
 import { InputHolder } from './InputHolder';
 import { OutputHolder } from './OutputHolder'
-import { GetURL } from './Utils';
+import { GetURL, GetTypeDimensionString } from './Utils';
 
 var API_ROOT = "http://localhost:5000/";
 var API_MODELS = API_ROOT + "models";
@@ -64,6 +64,16 @@ var App = React.createClass({
             GetURL(API_ARGUMENTS + API_MODEL_EXAMPLE, function(http) {
                 var args = JSON.parse(http.responseText);
 
+                var inKeys = Object.keys(args.input);
+                for (let i = 0; i < inKeys.length; i++) {
+                    args.input[inKeys[i]].type = GetTypeDimensionString(args.input[inKeys[i]]);
+                }
+
+                var outKeys = Object.keys(args.output);
+                for (let i = 0; i < outKeys.length; i++) {
+                    args.output[outKeys[i]].type = GetTypeDimensionString(args.output[outKeys[i]]);
+                }
+
                 this.setState({ args: args });
             }.bind(this));
         }
@@ -103,6 +113,17 @@ var App = React.createClass({
 
         GetURL(API_ARGUMENTS + value, function(http) {
             var args = JSON.parse(http.responseText);
+
+            var inKeys = Object.keys(args.input);
+            for (let i = 0; i < inKeys.length; i++) {
+                args.input[inKeys[i]].type = GetTypeDimensionString(args.input[inKeys[i]]);
+            }
+
+            var outKeys = Object.keys(args.output);
+            for (let i = 0; i < outKeys.length; i++) {
+                args.output[outKeys[i]].type = GetTypeDimensionString(args.output[outKeys[i]]);
+            }
+
             this.setState({ args: args });
         }.bind(this));
     },

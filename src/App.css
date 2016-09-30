@@ -68,10 +68,13 @@ body {
 }
 
 .ModelForm {
-    margin-top: 20px;
     display: inline-block;
     border: 1px solid #bdc3c7;
     min-width: 220px;
+
+    position: absolute;
+    left: 0;
+    margin: 20px;
 }
 
 .DropDownBar {

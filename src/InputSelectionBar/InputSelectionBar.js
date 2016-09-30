@@ -19,7 +19,7 @@ export var InputSelectionBar = React.createClass({
 
     render: function() {
         var inputs = [];
-        for (var i = 0; i < AllInputs.length; i++) {
+        for (let i = 0; i < AllInputs.length; i++) {
             if (this.props.filterType.length === 0 || AllInputs[i].type === this.props.filterType)
                 inputs.push(<InputSelectionButton key={AllInputs[i].name} name={AllInputs[i].name}
                     type={AllInputs[i].type} image={AllInputs[i].image}
@@ -33,7 +33,7 @@ export var InputSelectionBar = React.createClass({
 
         var outputs = [];
         var outputNames = Object.keys(this.props.outputs);
-        for (var i = 0; i < outputNames.length; i++) {
+        for (let i = 0; i < outputNames.length; i++) {
             if (this.props.filterType.length === 0 || this.props.outputs[outputNames[i]].type === this.props.filterType)
                 outputs.push(<InputSelectionButton key={this.props.outputs[outputNames[i]].name} name={outputNames[i]}
                     type={this.props.outputs[outputNames[i]].type}

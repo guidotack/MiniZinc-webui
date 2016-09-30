@@ -1,6 +1,6 @@
 import React from 'react';
 import App from './App';
-import { BrowserRouter, Match, Miss, Link } from 'react-router';
+import { BrowserRouter, Match } from 'react-router';
 
 
 export var Router = React.createClass({
