@@ -37,12 +37,15 @@ export var InputRange = React.createClass({ //slider
 export var InputTextField = React.createClass({ //text Field
     propTypes: {
         id: React.PropTypes.string.isRequired,
-        value: React.PropTypes.number.isRequired,
+        value: React.PropTypes.oneOfType([
+            React.PropTypes.string,
+            React.PropTypes.number
+        ]).isRequired,
         onUserInput: React.PropTypes.func.isRequired
     },
 
     onChange: function(event) {
-        this.props.onUserInput(this.props.id, parseInt(event.target.value, 10));
+        this.props.onUserInput(this.props.id, event.target.value);
     },
 
     render: function() {
@@ -51,8 +54,55 @@ export var InputTextField = React.createClass({ //text Field
                 <div className="container">
                     <div className="name">{this.props.id}</div>
                 </div>
-                <input onChange={this.onChange} value={this.props.value} type="text"></input>
+                <TextField onTextChange={this.onChange} value={this.props.value} />
             </div>
         );
+    }
+});
+
+var TextField = React.createClass({
+    propTypes: {
+        id: React.PropTypes.string,
+        onTextChange: React.PropTypes.func.isRequired,
+        value: React.PropTypes.oneOfType([
+            React.PropTypes.string,
+            React.PropTypes.number
+        ]).isRequired
+    },
+
+    onChange: function(event) {
+        this.props.onTextChange(event, this.props.id);
+    },
+
+    render: function() {
+        return <input onChange={this.onChange} value={this.props.value} type="text"></input>
+    }
+});
+
+export var InputMatrix1D = React.createClass({
+    propTypes: {
+        id: React.PropTypes.string.isRequired,
+        value: React.PropTypes.array.isRequired,
+        onUserInput: React.PropTypes.func.isRequired
+    },
+
+    onChange: function(event, id) {
+        var currentValue = this.props.value.slice();
+        currentValue[id] = event.target.value;
+        this.props.onUserInput(this.props.id, currentValue);
+    },
+
+    render: function() {
+        var boxes = [];
+        for (let i = 0; i < 5; i++) {
+            boxes.push(<TextField key={i} id={i.toString()} onTextChange={this.onChange} value={this.props.value[i] != null ? this.props.value[i] : 0} />)
+        }
+
+        return <div className="Input Matrix">
+            <div className="container">
+                <div className="name">{this.props.id}</div>
+            </div>
+            {boxes}
+        </div>
     }
 });

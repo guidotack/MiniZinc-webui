@@ -16,7 +16,7 @@ var API_SAVE_TEMPLATE = API_ROOT + "save_template";
 var API_GET_TEMPLATE = API_ROOT + "get_template/";
 
 // TODO: abstract the first model loaded.
-var API_MODEL_EXAMPLE = "golomb";
+var API_MODEL_EXAMPLE = "prod_planning";
 
 var socket = require('socket.io-client')('http://localhost:5000/');
 
@@ -250,15 +250,17 @@ var App = React.createClass({
                 <InputSelectionBar developmentMode={this.state.developmentMode} filterType={this.state.selectedArgument.type} handleBarState={this.handleBarState}
                     handleInputButtonClick={this.handleInputButtonClick} handleOutputButtonClick={this.handleOutputButtonClick} outputs={this.state.outputs} />
 
-                <ModelForm developmentMode={this.state.developmentMode} args={this.state.args} models={this.state.models} selectedModel={this.state.selectedModel}
-                    handleModelChange={this.handleModelChange} handleArgumentClick={this.handleArgumentClick}
-                    selectedArgument={this.state.selectedArgument} handleArgumentDeselect={this.handleArgumentDeselect}
-                    handleModelSubmit={this.handleModelSubmit} handleSolveStop={this.handleSolveStop}
-                    handleTemplateSave={this.handleTemplateSave} />
-                {/* <QueensForm /> */}
-                <InputHolder inputs={this.state.inputs} handleInputValueChange={this.handleInputValueChange} />
-                <OutputHolder result={this.state.result} selectedOutputIndex={this.state.selectedOutputIndex}
-                    handleOutputChange={this.handleOutputChange} />
+                <div className="App-Content">
+                    <ModelForm developmentMode={this.state.developmentMode} args={this.state.args} models={this.state.models} selectedModel={this.state.selectedModel}
+                        handleModelChange={this.handleModelChange} handleArgumentClick={this.handleArgumentClick}
+                        selectedArgument={this.state.selectedArgument} handleArgumentDeselect={this.handleArgumentDeselect}
+                        handleModelSubmit={this.handleModelSubmit} handleSolveStop={this.handleSolveStop}
+                        handleTemplateSave={this.handleTemplateSave} />
+                    {/* <QueensForm /> */}
+                    <InputHolder inputs={this.state.inputs} handleInputValueChange={this.handleInputValueChange} />
+                    <OutputHolder result={this.state.result} selectedOutputIndex={this.state.selectedOutputIndex}
+                        handleOutputChange={this.handleOutputChange} />
+                </div>
             </div>
         );
     }

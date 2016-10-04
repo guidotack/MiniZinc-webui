@@ -26,7 +26,7 @@ export var InputHolder = React.createClass({
             }
         }
 
-        return <div>
+        return <div className="InputHolder">
             {inputs}
         </div>
     }

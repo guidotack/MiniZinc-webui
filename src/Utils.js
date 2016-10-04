@@ -12,12 +12,11 @@ export function GetURL(url, cb) {
 }
 
 export function GetTypeDimensionString(inObj) {
-    var dimension = "1";
     if (inObj.dim != null) {
-        dimension = inObj.dim;
+        var type = inObj.dim;
+        type = inObj.type + "-" + type + "D";
+        return type
     }
-
-    dimension = inObj.type + "-" + dimension + "D";
-
-    return dimension
+    
+    return inObj.type;
 }
