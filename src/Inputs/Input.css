@@ -1,12 +1,13 @@
 .Input {
     display: inline-block;
     border: 1px solid rgba(0,0,0,0.2);
-    margin-top: 20px;
+    margin: 5px;
     vertical-align: top;
+    width: 200px;
 }
 
 .Input ~ .Input {
-    margin-left: 10px;
+    /*margin-left: 10px;*/
 }
 
 .Input .container {

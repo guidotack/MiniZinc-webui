@@ -10,6 +10,17 @@ body {
 .App {
     text-align: center;
     color: rgba(0,0,0,0.87);
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.App-Content {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    justify-content: center;
 }
 
 .App-logo {
@@ -68,11 +79,13 @@ body {
 }
 
 .ModelForm {
-    display: inline-block;
+    /*display: inline-block;*/
     border: 1px solid #bdc3c7;
-    min-width: 220px;
+    /*max-width: 500px;*/
 
-    position: absolute;
+    flex: 0 0 250px;
+
+    /*position: absolute;*/
     left: 0;
     margin: 20px;
 }
@@ -113,6 +126,7 @@ body {
 
 .ModelArgumentName {
     color: #3498db;
+    padding-right: 20px;
 }
 
 .ModelArgumentType {
@@ -153,10 +167,15 @@ body {
 .OutputHolder {
     display: inline-block;
     margin-top: 20px;
-    width: 200px;
+    /*width: 200px;*/
     border: 1px solid #bdc3c7;
+    flex: 0 0 200px;
 }
 
 .disabled {
     display: none !important;
+}
+
+.InputHolder {
+    flex: 1 0 0;
 }
