@@ -95,7 +95,7 @@ export var InputMatrix1D = React.createClass({
     render: function() {
         var boxes = [];
         for (let i = 0; i < 5; i++) {
-            boxes.push(<TextField key={i} id={i.toString()} onTextChange={this.onChange} value={this.props.value[i] != null ? this.props.value[i] : 0} />)
+            boxes.push(<TextField on key={i} id={i.toString()} onTextChange={this.onChange} value={this.props.value[i] != null ? this.props.value[i] : ""} />)
         }
 
         return <div className="Input Matrix">
