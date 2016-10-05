@@ -9,13 +9,13 @@
     margin-left: 10px;
 }
 
-.Input .container {
+.container {
     background-color: rgba(0,0,0,0.87);
     color: white;
     position: relative;
 }
 
-.Input .container .name {
+.container .name {
     display: inline-block;
     font-size: 20px;
     padding: 20px;

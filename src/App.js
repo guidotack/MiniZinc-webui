@@ -110,7 +110,7 @@ var App = React.createClass({
 
     handleModelChange: function(event) {
         var value = event.target.value;
-        this.setState({ args: {}, selectedModel: value, selectedArgument: {}, inputs: {}, result: [] });
+        this.setState({ args: {}, selectedModel: value, selectedArgument: {}, inputs: {}, result: [], outputs: {} });
 
         GetURL(API_ARGUMENTS + value, function(http) {
             var args = JSON.parse(http.responseText);
@@ -155,21 +155,21 @@ var App = React.createClass({
         }
     },
 
-    // handleOutputButtonClick: function() {
-    //     if (this.state.selectedArgument.argName != null) {
-    //         console.log(this.state.outputs.result)
-    //         this.setState({
-    //             inputs: {
-    //                 ...this.state.inputs,
-    //
-    //                 [this.state.selectedArgument.argName]: {
-    //                     isOutput: true,
-    //                     output: "result"
-    //                 }
-    //             }
-    //         });
-    //     }
-    // },
+    handleInputBarOutputClick: function() {
+        if (this.state.selectedArgument.argName != null) {
+            console.log(this.state.outputs.result)
+            this.setState({
+                inputs: {
+                    ...this.state.inputs,
+
+                    [this.state.selectedArgument.argName]: {
+                        isOutput: true,
+                        output: "result"
+                    }
+                }
+            });
+        }
+    },
 
     handleInputValueChange: function(id, value) {
         var newObject = this.state.inputs[id];
@@ -242,8 +242,21 @@ var App = React.createClass({
         });
     },
 
-    handleOutputButtonClick: function(event) {
+    handleOutputButtonClick: function(component, defValue, type) {
+        var num = Math.floor((Math.random() * 1000) + 1);
 
+        this.setState({
+            outputs: {
+                ...this.state.outputs,
+
+                [num]: {
+                    name: num,
+                    value: [1,2,4],
+                    type: type,
+                    component: component
+                }
+            }
+        });
     },
 
     render: function() {
@@ -255,7 +268,7 @@ var App = React.createClass({
                 </div>
 
                 <InputSelectionBar developmentMode={this.state.developmentMode} filterType={this.state.selectedArgument.type} handleBarState={this.handleBarState}
-                    handleInputButtonClick={this.handleInputButtonClick} handleOutputButtonClick={this.handleOutputButtonClick} outputs={this.state.outputs} />
+                    handleInputButtonClick={this.handleInputButtonClick} handleOutputButtonClick={this.handleInputBarOutputClick} outputs={this.state.outputs} />
                 <OutputSelectionBar developmentMode={this.state.developmentMode} handleOutputButtonClick={this.handleOutputButtonClick} />
 
                 <div className="App-Content">
@@ -266,7 +279,7 @@ var App = React.createClass({
                         handleTemplateSave={this.handleTemplateSave} />
                     {/* <QueensForm /> */}
                     <InputHolder inputs={this.state.inputs} handleInputValueChange={this.handleInputValueChange} />
-                    <OutputHolder result={this.state.result} selectedOutputIndex={this.state.selectedOutputIndex}
+                    <OutputHolder outputs={this.state.outputs} result={this.state.result} selectedOutputIndex={this.state.selectedOutputIndex}
                         handleOutputChange={this.handleOutputChange} />
                 </div>
             </div>

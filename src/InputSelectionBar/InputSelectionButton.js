@@ -17,7 +17,7 @@ export var InputSelectionButton = React.createClass({
     },
 
     handleClick: function() {
-        this.props.handleClick(this.props.component, this.props.defaultValue);
+        this.props.handleClick(this.props.component, this.props.defaultValue, this.props.type);
     },
 
     render: function() {
