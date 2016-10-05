@@ -45,3 +45,17 @@
 .Matrix input~input {
     border-left: 1px solid rgba(0,0,0,0.2);
 }
+
+.Matrix2D {
+    /*border: 0;*/
+}
+
+.Matrix2D input {
+    width: 20px;
+    height: 100%;
+    margin: 1px;
+    padding: 10px;
+
+    text-align: center;
+    border: 1px solid rgba(0,0,0,0.2);
+}

@@ -43,14 +43,27 @@ export var ModelForm = React.createClass({
     render: function() {
         var inputs = [];
         if (this.props.args.input != null) {
-            for (var i = 0; i < Object.keys(this.props.args.input).length; i++) {
-                var key = Object.keys(this.props.args.input)[i];
-                var type = this.props.args.input[key].type;
+            for (let i = 0; i < Object.keys(this.props.args.input).length; i++) {
+                let key = Object.keys(this.props.args.input)[i];
+                let type = this.props.args.input[key].type;
 
-                var selected = this.props.selectedArgument.argName === key;
+                let selected = this.props.selectedArgument.argName === key;
 
                 inputs.push(<ModelArgument key={key} argName={key} selected={selected}
                     type={type} onUserClick={this.props.handleArgumentClick} />);
+            }
+        }
+
+        var outputs = [];
+        if (this.props.args.output != null) {
+            for (let i = 0; i < Object.keys(this.props.args.output).length; i++) {
+                let key = Object.keys(this.props.args.output)[i];
+                let type = this.props.args.output[key].type;
+
+                let selected = this.props.selectedArgument.argName === key;
+
+                outputs.push(<ModelArgument key={key} argName={key} selected={selected}
+                    type={type} />);
             }
         }
 
@@ -59,6 +72,9 @@ export var ModelForm = React.createClass({
                 selectedOption={this.props.selectedModel} handleOptionChange={this.handleModelChange} />
             <ModelDisplay modelName={this.props.selectedModel}/>
             {inputs}
+            <div className="Outputs">
+                {outputs}
+            </div>
             <Button text={"Submit"} handleClick={this.props.handleModelSubmit} />
             <Button text={"Stop"} handleClick={this.props.handleSolveStop} />
             {this.props.developmentMode ? <Button text={"Save"} handleClick={this.props.handleTemplateSave} /> : null}
@@ -106,7 +122,8 @@ var ModelArgument = React.createClass({
     },
 
     onUserClick: function(event) {
-        this.props.onUserClick(this.props.argName, this.props.type);
+        if (this.props.onUserClick != null)
+            this.props.onUserClick(this.props.argName, this.props.type);
     },
 
     render: function() {

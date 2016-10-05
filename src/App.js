@@ -189,16 +189,17 @@ var App = React.createClass({
 
     handleModelSubmit: function() {
         var successful = true;
-        //var fetchURL = API_MODEL_SOLVE + this.state.selectedModel + '?';
-        var args = '';
 
         this.setState({
             result: []
         });
 
+        var argList = {};
         Object.keys(this.state.args.input).forEach(function(arg) {
             if (this.state.inputs[arg] != null) {
-                args += arg + '=' + this.state.inputs[arg].value + '&';
+                argList[arg] = {};
+                argList[arg].value =  this.state.inputs[arg].value;
+                argList[arg].dim = this.state.args.input[arg].dim;
             }
             else {
                 successful = false;
@@ -207,7 +208,8 @@ var App = React.createClass({
         }.bind(this));
 
         if (successful) {
-            socket.emit('request_solution', {model:this.state.selectedModel,args});
+            argList.model = this.state.selectedModel;
+            socket.emit('request_solution', argList);
         }
     },
 

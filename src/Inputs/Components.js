@@ -95,7 +95,7 @@ export var InputMatrix1D = React.createClass({
     render: function() {
         var boxes = [];
         for (let i = 0; i < 5; i++) {
-            boxes.push(<TextField on key={i} id={i.toString()} onTextChange={this.onChange} value={this.props.value[i] != null ? this.props.value[i] : ""} />)
+            boxes.push(<TextField key={i} id={i.toString()} onTextChange={this.onChange} value={this.props.value[i] != null ? this.props.value[i] : ""} />)
         }
 
         return <div className="Input Matrix">
@@ -103,6 +103,49 @@ export var InputMatrix1D = React.createClass({
                 <div className="name">{this.props.id}</div>
             </div>
             {boxes}
+        </div>
+    }
+});
+
+export var InputMatrix2D = React.createClass({
+    propTypes: {
+        id: React.PropTypes.string.isRequired,
+        value: React.PropTypes.array.isRequired,
+        onUserInput: React.PropTypes.func.isRequired
+    },
+
+    onChange: function(event, id) {
+        var location = id.split('-');
+        var currentValue = this.props.value.slice();
+
+        if (currentValue[parseInt(location[0], 10)] == null) {
+            currentValue[parseInt(location[0], 10)] = [];
+        }
+
+        if (currentValue[parseInt(location[0], 10)][currentValue[parseInt(location[1], 10)]] == null) {
+            currentValue[parseInt(location[0], 10)][currentValue[parseInt(location[1], 10)]] = "";
+        }
+
+        currentValue[parseInt(location[0], 10)][parseInt(location[1], 10)] = event.target.value;
+        this.props.onUserInput(this.props.id, currentValue);
+    },
+
+    render: function() {
+        var rows = [];
+        for (let i = 0; i < 3; i++) {
+            var boxes = [];
+            for (let j = 0; j < 4; j++) {
+                boxes.push(<TextField key={i + '-' + j} id={i + '-' + j} onTextChange={this.onChange} value={(this.props.value[parseInt(i, 10)] != null && this.props.value[parseInt(i, 10)][parseInt(j, 10)] != null) ? this.props.value[i][j] : ""} />)
+            }
+
+            rows.push(<div key={i} className="row">{boxes}</div>)
+        }
+
+        return <div className="Input Matrix2D">
+            <div className="container">
+                <div className="name">{this.props.id}</div>
+            </div>
+            {rows}
         </div>
     }
 });

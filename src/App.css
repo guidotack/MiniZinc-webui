@@ -72,7 +72,7 @@ body {
     border: 1px solid #bdc3c7;
     min-width: 220px;
 
-    position: absolute;
+    /*position: absolute;*/
     left: 0;
     margin: 20px;
 }
@@ -159,4 +159,12 @@ body {
 
 .disabled {
     display: none !important;
+}
+
+.Outputs .ModelArgumentName {
+    color: #c0392b;
+}
+
+.Outputs {
+    background-color: rgba(0,0,0,0.1);
 }
