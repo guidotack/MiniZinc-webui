@@ -1,9 +1,9 @@
-import { OutputMatrix } from './Components';
+import { OutputMatrix1D } from './OutputMatrix';
 
 export const AllOutputs = [
-    { component: "OutputMatrix", name: "Slider", type: "int-1D", image: "sliders", defaultValue: 1 },
+    { component: "OutputMatrix1D", name: "Matrix1D", type: "int-1D" },
 ]
 
 export const OutputStringToInput = {
-    OutputMatrix: OutputMatrix,
+    OutputMatrix1D: OutputMatrix1D
 }

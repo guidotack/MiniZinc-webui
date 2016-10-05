@@ -7,6 +7,7 @@ import { InputSelectionBar } from './InputSelectionBar/InputSelectionBar';
 import { InputHolder } from './InputHolder';
 import { OutputHolder } from './OutputHolder'
 import { GetURL, GetTypeDimensionString } from './Utils';
+import { OutputSelectionBar } from './OutputSelectionBar';
 
 var API_ROOT = "http://localhost:5000/";
 var API_MODELS = API_ROOT + "models";
@@ -154,21 +155,21 @@ var App = React.createClass({
         }
     },
 
-    handleOutputButtonClick: function() {
-        if (this.state.selectedArgument.argName != null) {
-            console.log(this.state.outputs.result)
-            this.setState({
-                inputs: {
-                    ...this.state.inputs,
-
-                    [this.state.selectedArgument.argName]: {
-                        isOutput: true,
-                        output: "result"
-                    }
-                }
-            });
-        }
-    },
+    // handleOutputButtonClick: function() {
+    //     if (this.state.selectedArgument.argName != null) {
+    //         console.log(this.state.outputs.result)
+    //         this.setState({
+    //             inputs: {
+    //                 ...this.state.inputs,
+    //
+    //                 [this.state.selectedArgument.argName]: {
+    //                     isOutput: true,
+    //                     output: "result"
+    //                 }
+    //             }
+    //         });
+    //     }
+    // },
 
     handleInputValueChange: function(id, value) {
         var newObject = this.state.inputs[id];
@@ -241,6 +242,10 @@ var App = React.createClass({
         });
     },
 
+    handleOutputButtonClick: function(event) {
+
+    },
+
     render: function() {
         return (
             <div className="App">
@@ -251,6 +256,7 @@ var App = React.createClass({
 
                 <InputSelectionBar developmentMode={this.state.developmentMode} filterType={this.state.selectedArgument.type} handleBarState={this.handleBarState}
                     handleInputButtonClick={this.handleInputButtonClick} handleOutputButtonClick={this.handleOutputButtonClick} outputs={this.state.outputs} />
+                <OutputSelectionBar developmentMode={this.state.developmentMode} handleOutputButtonClick={this.handleOutputButtonClick} />
 
                 <div className="App-Content">
                     <ModelForm developmentMode={this.state.developmentMode} args={this.state.args} models={this.state.models} selectedModel={this.state.selectedModel}
