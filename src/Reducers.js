@@ -1,9 +1,10 @@
 import { SELECT_ARGUMENT, SELECT_MODEL, SET_BAR_HOVER, CHANGE_ARGUMENT_LINK,
-    ADD_OUTPUT_COMPONENT, CHANGE_INPUT_COMPONENT_VALUE, ADD_RESULT,
-    SET_MODELS, SET_ARGUMENTS, RESET_APPLICATION, RESTORE_STATE, SET_DEVELOPMENT_MODE } from './Actions';
+    ADD_OUTPUT_COMPONENT, CHANGE_INPUT_COMPONENT_VALUE, ADD_RESULT, SET_RESULTS,
+    SET_MODELS, SET_ARGUMENTS, RESET_APPLICATION, RESTORE_STATE, SET_DEVELOPMENT_MODE,
+    SET_OUTPUT_COMPONENT_PARAMETER } from './Actions';
 import { combineReducers } from 'redux';
 
-/*
+/* this was the old layout.
 args:
     input: {}
     output: {}
@@ -18,7 +19,7 @@ selectedModel: ""
 selectedOutputIndex: int
 */
 
-function args(state = {}, action) {
+function args(state = { input: {}, output: {} }, action) {
     switch (action.type) {
         case SET_ARGUMENTS:
             return action.args;
@@ -87,11 +88,25 @@ function outputs(state = {}, action) {
                     name: action.outputName,
                     type: action.outputType,
                     component: action.componentName,
-                    result: action.defaultValue
+                    result: action.defaultValue,
+                    parameters: {}
                     // TODO: value?
                 }
             }
+        case SET_OUTPUT_COMPONENT_PARAMETER:
+            return {
+                ...state,
 
+                [action.componentName]: {
+                    ...state[action.componentName],
+
+                    parameters: {
+                        ...state[action.componentName].parameters,
+
+                        [action.parameterName]: action.parameter
+                    }
+                }
+            }
         default:
             return state;
     }
@@ -105,6 +120,8 @@ function result(state = [], action) {
 
                 action.result
             ];
+        case SET_RESULTS:
+            return action.results;
         default:
             return state;
     }

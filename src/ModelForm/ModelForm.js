@@ -13,6 +13,7 @@ export var ModelForm = React.createClass({
         handleModelChange: React.PropTypes.func.isRequired,
         handleArgumentClick: React.PropTypes.func.isRequired,
         handleArgumentDeselect: React.PropTypes.func.isRequired,
+        handleClearResults: React.PropTypes.func.isRequired
     },
 
     componentDidMount: function() {
@@ -36,14 +37,14 @@ export var ModelForm = React.createClass({
         this.mouseDown = true;
     },
 
-    handleModelChange: function(event) {
-        this.props.handleModelChange(event.target.value);
+    handleModelChange: function(value) {
+        this.props.handleModelChange(value);
     },
 
     handleModelSubmit: function() {
         var successful = true;
 
-        // TODO: clear results
+        this.props.handleClearResults();
 
         var argList = {};
         Object.keys(this.props.args.input).forEach(function(arg) {

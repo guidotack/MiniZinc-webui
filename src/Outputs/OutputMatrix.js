@@ -6,15 +6,28 @@ export var OutputMatrix1D = React.createClass({
         id: React.PropTypes.string.isRequired,
         result: React.PropTypes.array,
         onUserInput: React.PropTypes.func,
-        // options:
+        outputArgs: React.PropTypes.array,
+        setOutputComponentParameter: React.PropTypes.func,
+        selectedParameters: React.PropTypes.object,
+        selectedOutputIndex: React.PropTypes.number
+    },
+
+    setOutputComponentParameter: function(parameter, parameterName) {
+        this.props.setOutputComponentParameter(this.props.id, parameterName, parameter);
     },
 
     render: function() {
         var rows = [];
 
-        if (this.props.result != null) {
-            for (let i = 0; i < this.props.result.length; i++) {
-                rows.push(<div key={i} className="row">{this.props.result[i]}</div>)
+        if (this.props.result != null && this.props.selectedParameters['resultType'] != null) {
+            var currentRow = this.props.result[this.props.selectedOutputIndex];
+
+            if (currentRow != null) {
+                var filteredCurrentRow = currentRow[this.props.selectedParameters['resultType']];
+
+                for (let i = 0; i < filteredCurrentRow.length; i++) {
+                    rows.push(<div key={i} className="row">{filteredCurrentRow[i]}</div>)
+                }
             }
         }
 
@@ -22,7 +35,9 @@ export var OutputMatrix1D = React.createClass({
             <div className="container">
                 <div className="name">{this.props.id}</div>
             </div>
-            {/* <DropDownBar options={this.props.options} selectedOption={this.props.selectedOption} handleOptionChange */}
+            <DropDownBar name={"resultType"} options={this.props.outputArgs}
+                selectedOption={this.props.selectedParameters["resultType"] != null ? this.props.selectedParameters["resultType"] : ""}
+                handleOptionChange={this.setOutputComponentParameter} />
             {rows}
         </div>
     }

@@ -5,11 +5,13 @@ export const CHANGE_ARGUMENT_LINK = 'CHANGE_ARGUMENT_LINK';
 export const ADD_OUTPUT_COMPONENT = 'ADD_OUTPUT_COMPONENT';
 export const CHANGE_INPUT_COMPONENT_VALUE = 'CHANGE_INPUT_COMPONENT_VALUE';
 export const ADD_RESULT = 'ADD_RESULT';
+export const SET_RESULTS = 'SET_RESULTS';
 export const SET_MODELS = 'SET_MODELS';
 export const SET_ARGUMENTS = 'SET_ARGUMENTS';
 export const SET_DEVELOPMENT_MODE = 'SET_DEVELOPMENT_MODE';
 export const RESET_APPLICATION = 'RESET_APPLICATION';
 export const RESTORE_STATE = 'RESTORE_STATE';
+export const SET_OUTPUT_COMPONENT_PARAMETER = 'SET_OUTPUT_COMPONENT_PARAMETER';
 // handleOutputChange?
 // selectTemplate?
 
@@ -42,6 +44,10 @@ export function addResult(result) {
     return { type: ADD_RESULT, result };
 }
 
+export function setResults(results) {
+    return { type: SET_RESULTS, results };
+}
+
 export function setModels(models) {
     return { type: SET_MODELS, models };
 }
@@ -60,4 +66,8 @@ export function resetApplication() {
 
 export function restoreState(prevState) {
     return { type: RESTORE_STATE, prevState };
+}
+
+export function setOutputComponentParameter(componentName, parameterName, parameter) {
+    return { type: SET_OUTPUT_COMPONENT_PARAMETER, componentName, parameterName, parameter };
 }

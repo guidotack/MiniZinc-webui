@@ -18,21 +18,6 @@ var API_MODEL_EXAMPLE = "prod_planning";
 var socket = require('socket.io-client')('http://localhost:5000/');
 
 var App = React.createClass({
-    getInitialState: function() {
-        return {
-            args: {},
-            models: [],
-            selectedModel: "",
-            selectedArgument: {},
-            mouseOverBar: false,
-            inputs: {},
-            result: [],
-            selectedOutputIndex: 0,
-            outputs: {},
-            developmentMode: true
-        }
-    },
-
     componentDidMount: function() {
         if (this.props.params.template != null) {
             GetURL(API_GET_TEMPLATE + this.props.params.template, function(http) {
@@ -85,21 +70,6 @@ var App = React.createClass({
 
             this.props.dispatch(addResult(split[0]));
         }.bind(this));
-    },
-
-    handleOutputChange: function(event) {
-        this.setState({
-            selectedOutputIndex: parseInt(event.target.value, 10),
-            outputs: {
-                ...this.state.outputs,
-
-                result: {
-                    name: "Output1",
-                    value: event.target.value,
-                    type: "int"
-                }
-            }
-        });
     },
 
     render: function() {
