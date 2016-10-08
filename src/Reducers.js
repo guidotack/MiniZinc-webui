@@ -1,6 +1,6 @@
 import { SELECT_ARGUMENT, SELECT_MODEL, SET_BAR_HOVER, CHANGE_ARGUMENT_LINK,
     ADD_OUTPUT_COMPONENT, CHANGE_INPUT_COMPONENT_VALUE, ADD_RESULT,
-    SET_MODELS, SET_ARGUMENTS } from './Actions';
+    SET_MODELS, SET_ARGUMENTS, RESET_APPLICATION, RESTORE_STATE, SET_DEVELOPMENT_MODE } from './Actions';
 import { combineReducers } from 'redux';
 
 /*
@@ -45,20 +45,20 @@ function inputs(state = {}, action) {
                 [action.argName]: {
                     component: action.componentName,
                     type: action.argType,
-                    defaultValue: action.defaultValue,
+                    value: action.defaultValue,
                     isOutput: action.isOutput
                 }
             }
         case CHANGE_INPUT_COMPONENT_VALUE:
-            return state.map(function(input) {
-                if (input === action.argName) {
-                    return Object.assign({}, input, {
-                        value: action.value
-                    });
-                }
+            return {
+                ...state,
 
-                return input;
-            });
+                [action.componentID]: {
+                    ...state[action.componentID],
+
+                    value: action.value
+                }
+            };
         default:
             return state;
     }
@@ -96,7 +96,7 @@ function result(state = [], action) {
     }
 }
 
-function appState(state = { developmentMode: true }, action) {
+function appState(state = { developmentMode: true, selectedArgument: {}, selectedModel: "", mouseOverBar: false }, action) {
     switch(action.type) {
         case SELECT_ARGUMENT:
             return {
@@ -119,12 +119,18 @@ function appState(state = { developmentMode: true }, action) {
 
                 mouseOverBar: action.status
             }
+        case SET_DEVELOPMENT_MODE:
+            return {
+                ...state,
+
+                developmentMode: action.devMode
+            }
         default:
             return state;
     }
 }
 
-const minizincApp = combineReducers({
+const appReducer = combineReducers({
     args,
     models,
     inputs,
@@ -132,5 +138,30 @@ const minizincApp = combineReducers({
     result,
     appState
 });
+
+const minizincApp = function(state, action) {
+    switch (action.type) {
+        case RESET_APPLICATION:
+            state = {
+                ...state,
+
+                args: undefined,
+                inputs: undefined,
+                result: undefined,
+                outputs: undefined,
+                appState: undefined
+            }
+            break;
+        case RESTORE_STATE:
+            state = Object.assign({}, state,
+                action.prevState
+            );
+            break;
+        default:
+            break;
+    }
+
+    return appReducer(state, action);
+}
 
 export default minizincApp;

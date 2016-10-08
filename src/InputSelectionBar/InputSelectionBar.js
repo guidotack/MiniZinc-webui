@@ -8,7 +8,9 @@ export var InputSelectionBar = React.createClass({
         filterType: React.PropTypes.string,
         handleBarState: React.PropTypes.func,
         handleInputButtonClick: React.PropTypes.func.isRequired,
-        outputs: React.PropTypes.object
+        outputs: React.PropTypes.object,
+        selectedArgument: React.PropTypes.object,
+        developmentMode: React.PropTypes.bool
     },
 
     getDefaultProps: function() {
@@ -17,13 +19,17 @@ export var InputSelectionBar = React.createClass({
         }
     },
 
+    handleInputButtonClick: function(componentName, defaultValue) {
+        this.props.handleInputButtonClick(this.props.selectedArgument, componentName, defaultValue);
+    },
+
     render: function() {
         var inputs = [];
         for (let i = 0; i < AllInputs.length; i++) {
             if (this.props.filterType.length === 0 || AllInputs[i].type === this.props.filterType)
                 inputs.push(<InputSelectionButton key={AllInputs[i].name + '-' +  AllInputs[i].type} name={AllInputs[i].name}
                     type={AllInputs[i].type} image={AllInputs[i].image}
-                    component={AllInputs[i].component} handleClick={this.props.handleInputButtonClick}
+                    component={AllInputs[i].component} handleClick={this.handleInputButtonClick}
                     defaultValue={AllInputs[i].defaultValue} />);
         }
 

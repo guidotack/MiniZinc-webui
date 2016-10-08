@@ -1,3 +1,10 @@
+export const API_ROOT = "http://localhost:5000/";
+export const API_MODELS = API_ROOT + "models";
+export const API_ARGUMENTS = API_ROOT + "models/";
+//API_MODEL_SOLVE = API_ROOT + "solve/";
+export const API_SAVE_TEMPLATE = API_ROOT + "save_template";
+export const API_GET_TEMPLATE = API_ROOT + "get_template/";
+
 export function GetURL(url, cb) {
     var http = new XMLHttpRequest();
 
@@ -17,6 +24,6 @@ export function GetTypeDimensionString(inObj) {
         type = inObj.type + "-" + type + "D";
         return type
     }
-    
+
     return inObj.type;
 }

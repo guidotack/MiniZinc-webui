@@ -1,18 +1,18 @@
 import React from 'react';
-import { DropDownBar } from './DropDownBar.js';
+import { DropDownBar } from '../DropDownBar';
+import { API_SAVE_TEMPLATE } from '../Utils';
 
 export var ModelForm = React.createClass({
     propTypes: {
         args: React.PropTypes.object.isRequired,
+        inputs: React.PropTypes.object.isRequired,
         models: React.PropTypes.arrayOf(React.PropTypes.string).isRequired,
         selectedModel: React.PropTypes.string.isRequired,
         selectedArgument: React.PropTypes.object.isRequired,
+        mouseOverbar: React.PropTypes.bool,
         handleModelChange: React.PropTypes.func.isRequired,
         handleArgumentClick: React.PropTypes.func.isRequired,
         handleArgumentDeselect: React.PropTypes.func.isRequired,
-        handleModelSubmit: React.PropTypes.func.isRequired,
-        handleSolveStop: React.PropTypes.func.isRequired,
-        handleTemplateSave: React.PropTypes.func.isRequired
     },
 
     componentDidMount: function() {
@@ -23,7 +23,7 @@ export var ModelForm = React.createClass({
         if (this.mouseDown) {
             return;
         }
-        else {
+        else if (this.props.mouseOverBar === false && this.props.selectedArgument.argName != null) {
             this.props.handleArgumentDeselect();
         }
     },
@@ -37,7 +37,48 @@ export var ModelForm = React.createClass({
     },
 
     handleModelChange: function(event) {
-        this.props.handleModelChange(event);
+        this.props.handleModelChange(event.target.value);
+    },
+
+    handleModelSubmit: function() {
+        var successful = true;
+
+        // TODO: clear results
+
+        var argList = {};
+        Object.keys(this.props.args.input).forEach(function(arg) {
+            if (this.props.inputs[arg] != null) {
+                argList[arg] = {};
+                argList[arg].value =  this.props.inputs[arg].value;
+                argList[arg].dim = this.props.args.input[arg].dim;
+            }
+            else {
+                successful = false;
+                return;
+            }
+        }.bind(this));
+
+        if (successful) {
+            argList.model = this.props.selectedModel;
+            this.props.socket.emit('request_solution', argList);
+        }
+    },
+
+    handleSolveStop: function() {
+        this.props.socket.emit('kill_solution');
+    },
+
+    handleTemplateSave: function(templateName) {
+        var template = {
+            name: this.props.selectedModel,
+            args: this.props.args,
+            inputs: this.props.inputs
+        }
+
+        var request = new XMLHttpRequest();
+        request.open('POST', API_SAVE_TEMPLATE, true);
+        request.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
+        request.send(JSON.stringify(template));
     },
 
     render: function() {
@@ -75,9 +116,9 @@ export var ModelForm = React.createClass({
             <div className="Outputs">
                 {outputs}
             </div>
-            <Button text={"Submit"} handleClick={this.props.handleModelSubmit} />
-            <Button text={"Stop"} handleClick={this.props.handleSolveStop} />
-            {this.props.developmentMode ? <Button text={"Save"} handleClick={this.props.handleTemplateSave} /> : null}
+            <Button text={"Submit"} handleClick={this.handleModelSubmit} />
+            <Button text={"Stop"} handleClick={this.handleSolveStop} />
+            {this.props.developmentMode ? <Button text={"Save"} handleClick={this.handleTemplateSave} /> : null}
         </div>
     }
 });

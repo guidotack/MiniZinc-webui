@@ -7,6 +7,9 @@ export const CHANGE_INPUT_COMPONENT_VALUE = 'CHANGE_INPUT_COMPONENT_VALUE';
 export const ADD_RESULT = 'ADD_RESULT';
 export const SET_MODELS = 'SET_MODELS';
 export const SET_ARGUMENTS = 'SET_ARGUMENTS';
+export const SET_DEVELOPMENT_MODE = 'SET_DEVELOPMENT_MODE';
+export const RESET_APPLICATION = 'RESET_APPLICATION';
+export const RESTORE_STATE = 'RESTORE_STATE';
 // handleOutputChange?
 // selectTemplate?
 
@@ -24,7 +27,7 @@ export function setBarHover(status) {
 }
 
 export function changeArgumentLink(argName, argType, componentName, defaultValue, isOutput) {
-    return { type: CHANGE_ARGUMENT_LINK, componentName, defaultValue, isOutput };
+    return { type: CHANGE_ARGUMENT_LINK, argName, argType, componentName, defaultValue, isOutput };
 }
 
 export function changeInputComponentValue(componentID, value) {
@@ -45,4 +48,16 @@ export function setModels(models) {
 
 export function setArguments(args) {
     return { type: SET_ARGUMENTS, args };
+}
+
+export function setDevelopmentMode(devMode) {
+    return { type: SET_DEVELOPMENT_MODE, devMode };
+}
+
+export function resetApplication() {
+    return { type: RESET_APPLICATION };
+}
+
+export function restoreState(prevState) {
+    return { type: RESTORE_STATE, prevState };
 }

@@ -1,20 +1,16 @@
 import React from 'react';
-// import logo from './logo.svg';
 import './App.css';
 
-import { ModelForm } from './Model';
-import { InputSelectionBar } from './InputSelectionBar/InputSelectionBar';
-import { InputHolder } from './InputHolder';
-import { OutputHolder } from './OutputHolder'
-import { GetURL, GetTypeDimensionString } from './Utils';
-import { OutputSelectionBar } from './OutputSelectionBar';
+import { connect } from 'react-redux';
+import { setModels, setArguments, addResult, selectModel, restoreState,
+    setDevelopmentMode } from './Actions';
 
-var API_ROOT = "http://localhost:5000/";
-var API_MODELS = API_ROOT + "models";
-var API_ARGUMENTS = API_ROOT + "models/";
-//var API_MODEL_SOLVE = API_ROOT + "solve/";
-var API_SAVE_TEMPLATE = API_ROOT + "save_template";
-var API_GET_TEMPLATE = API_ROOT + "get_template/";
+import { ModelFormContainer } from './ModelForm/ModelFormContainer';
+import { InputSelectionBarContainer } from './InputSelectionBar/InputSelectionBarContainer';
+import { InputHolderContainer } from './InputHolderContainer';
+import { OutputHolderContainer } from './OutputHolderContainer'
+import { GetURL, GetTypeDimensionString, API_GET_TEMPLATE, API_MODELS, API_ARGUMENTS } from './Utils';
+import { OutputSelectionBar } from './OutputSelectionBar';
 
 // TODO: abstract the first model loaded.
 var API_MODEL_EXAMPLE = "prod_planning";
@@ -42,14 +38,12 @@ var App = React.createClass({
             GetURL(API_GET_TEMPLATE + this.props.params.template, function(http) {
                 var prevState = JSON.parse(http.responseText);
 
-                this.setState(prevState);
+                this.props.dispatch(restoreState(prevState));
             }.bind(this));
 
-            this.setState({
-                models: [this.props.params.template],
-                selectedModel: this.props.params.template,
-                developmentMode: false
-            });
+            this.props.dispatch(setModels([this.props.params.template]));
+            this.props.dispatch(selectModel(this.props.params.template));
+            this.props.dispatch(setDevelopmentMode(false));
         }
         else {
             GetURL(API_MODELS, function(http) {
@@ -59,7 +53,8 @@ var App = React.createClass({
                     models[i] = models[i].slice(0, models[i].length - 4);
                 }
 
-                this.setState({ models: models, selectedModel: models[0] });
+                this.props.dispatch(selectModel(models[0]));
+                this.props.dispatch(setModels(models));
             }.bind(this));
 
             GetURL(API_ARGUMENTS + API_MODEL_EXAMPLE, function(http) {
@@ -75,7 +70,7 @@ var App = React.createClass({
                     args.output[outKeys[i]].type = GetTypeDimensionString(args.output[outKeys[i]]);
                 }
 
-                this.setState({ args: args });
+                this.props.dispatch(setArguments(args));
             }.bind(this));
         }
 
@@ -88,71 +83,8 @@ var App = React.createClass({
                 split[i] = JSON.parse(split[i]);
             }
 
-            var newResult = this.state.result.concat(split);
-            this.setState({
-                result: newResult, //each solution is added as an object to the array
-                selectedOutputIndex: newResult.length - 1
-            });
+            this.props.dispatch(addResult(split[0]));
         }.bind(this));
-    },
-
-    handleArgumentClick: function(argName, type) {
-        this.setState({ selectedArgument: { argName: argName, type: type} });
-    },
-
-    handleArgumentDeselect: function() {
-        if (this.state.mouseOverBar === false) {
-            this.setState({
-                selectedArgument: {}
-            });
-        }
-    },
-
-    handleModelChange: function(event) {
-        var value = event.target.value;
-        this.setState({ args: {}, selectedModel: value, selectedArgument: {}, inputs: {}, result: [], outputs: {} });
-
-        GetURL(API_ARGUMENTS + value, function(http) {
-            var args = JSON.parse(http.responseText);
-
-            var inKeys = Object.keys(args.input);
-            for (let i = 0; i < inKeys.length; i++) {
-                args.input[inKeys[i]].type = GetTypeDimensionString(args.input[inKeys[i]]);
-            }
-
-            var outKeys = Object.keys(args.output);
-            for (let i = 0; i < outKeys.length; i++) {
-                args.output[outKeys[i]].type = GetTypeDimensionString(args.output[outKeys[i]]);
-            }
-
-            this.setState({ args: args });
-        }.bind(this));
-    },
-
-    handleBarState: function(event) {
-        if (event.type === "mouseenter") {
-            this.setState({ mouseOverBar: true });
-        }
-        else if (event.type === "mouseleave") {
-            this.setState({ mouseOverBar: false });
-        }
-    },
-
-    handleInputButtonClick: function(componentName, defaultValue) {
-        if (this.state.selectedArgument.argName != null) {
-            this.setState({
-                inputs: {
-                    ...this.state.inputs,
-
-                    [this.state.selectedArgument.argName]: {
-                        component: componentName,
-                        type: this.state.selectedArgument.type,
-                        value: defaultValue,
-                        isOutput: false
-                    }
-                }
-            });
-        }
     },
 
     handleInputBarOutputClick: function() {
@@ -169,62 +101,6 @@ var App = React.createClass({
                 }
             });
         }
-    },
-
-    handleInputValueChange: function(id, value) {
-        var newObject = this.state.inputs[id];
-        newObject.value = value;
-
-        this.setState({
-            inputs: {
-                ...this.state.inputs,
-
-                [id]: newObject
-            }
-        })
-    },
-
-    handleSolveStop: function() {
-        socket.emit('kill_solution');
-    },
-
-    handleModelSubmit: function() {
-        var successful = true;
-
-        this.setState({
-            result: []
-        });
-
-        var argList = {};
-        Object.keys(this.state.args.input).forEach(function(arg) {
-            if (this.state.inputs[arg] != null) {
-                argList[arg] = {};
-                argList[arg].value =  this.state.inputs[arg].value;
-                argList[arg].dim = this.state.args.input[arg].dim;
-            }
-            else {
-                successful = false;
-                return;
-            }
-        }.bind(this));
-
-        if (successful) {
-            argList.model = this.state.selectedModel;
-            socket.emit('request_solution', argList);
-        }
-    },
-
-    handleTemplateSave: function(templateName) {
-        var template = {
-            name: this.state.selectedModel,
-            args: this.state.args,
-            inputs: this.state.inputs
-        }
-
-        var request = new XMLHttpRequest();
-        request.open('POST', API_SAVE_TEMPLATE, true);
-        request.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
-        request.send(JSON.stringify(template));
     },
 
     handleOutputChange: function(event) {
@@ -263,28 +139,23 @@ var App = React.createClass({
         return (
             <div className="App">
                 <div className="App-header">
-                    {/* <img src={logo} className="App-logo" alt="logo" /> */}
                     <h2>MiniZinc-WebUI</h2>
                 </div>
 
-                <InputSelectionBar developmentMode={this.state.developmentMode} filterType={this.state.selectedArgument.type} handleBarState={this.handleBarState}
-                    handleInputButtonClick={this.handleInputButtonClick} handleOutputButtonClick={this.handleInputBarOutputClick} outputs={this.state.outputs} />
+                <InputSelectionBarContainer />
                 <OutputSelectionBar developmentMode={this.state.developmentMode} handleOutputButtonClick={this.handleOutputButtonClick} />
 
                 <div className="App-Content">
-                    <ModelForm developmentMode={this.state.developmentMode} args={this.state.args} models={this.state.models} selectedModel={this.state.selectedModel}
-                        handleModelChange={this.handleModelChange} handleArgumentClick={this.handleArgumentClick}
-                        selectedArgument={this.state.selectedArgument} handleArgumentDeselect={this.handleArgumentDeselect}
-                        handleModelSubmit={this.handleModelSubmit} handleSolveStop={this.handleSolveStop}
-                        handleTemplateSave={this.handleTemplateSave} />
-                    {/* <QueensForm /> */}
-                    <InputHolder inputs={this.state.inputs} handleInputValueChange={this.handleInputValueChange} />
-                    <OutputHolder outputs={this.state.outputs} result={this.state.result} selectedOutputIndex={this.state.selectedOutputIndex}
-                        handleOutputChange={this.handleOutputChange} />
+                    <ModelFormContainer socket={socket} />
+
+                    <InputHolderContainer />
+                    <OutputHolderContainer />
                 </div>
             </div>
         );
     }
 });
+
+App = connect()(App);
 
 export default App;
