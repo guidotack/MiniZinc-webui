@@ -1,4 +1,4 @@
-import { SELECT_ARGUMENT, SELECT_MODEL, SET_BAR_HOVER, CHANGE_ARGUMENT_LINK,
+import { SELECT_ARGUMENT, SELECT_MODEL, CHANGE_ARGUMENT_LINK,
     ADD_OUTPUT_COMPONENT, CHANGE_INPUT_COMPONENT_VALUE, ADD_RESULT, SET_RESULTS,
     SET_MODELS, SET_ARGUMENTS, RESET_APPLICATION, RESTORE_STATE, SET_DEVELOPMENT_MODE,
     SET_OUTPUT_COMPONENT_PARAMETER } from './Actions';
@@ -127,7 +127,7 @@ function result(state = [], action) {
     }
 }
 
-function appState(state = { developmentMode: true, selectedArgument: {}, selectedModel: "", mouseOverBar: false }, action) {
+function appState(state = { developmentMode: true, selectedArgument: {}, selectedModel: "" }, action) {
     switch(action.type) {
         case SELECT_ARGUMENT:
             return {
@@ -143,12 +143,6 @@ function appState(state = { developmentMode: true, selectedArgument: {}, selecte
                 ...state,
 
                 selectedModel: action.modelName
-            }
-        case SET_BAR_HOVER:
-            return {
-                ...state,
-
-                mouseOverBar: action.status
             }
         case SET_DEVELOPMENT_MODE:
             return {

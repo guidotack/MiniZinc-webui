@@ -11,7 +11,6 @@ const mapStateToProps = function(state, ownProps) {
         developmentMode: state.appState.developmentMode,
         selectedModel: state.appState.selectedModel,
         selectedArgument: state.appState.selectedArgument,
-        mouseOverBar: state.appState.mouseOverBar
     }
 }
 

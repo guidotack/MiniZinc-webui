@@ -9,7 +9,6 @@ export var ModelForm = React.createClass({
         models: React.PropTypes.arrayOf(React.PropTypes.string).isRequired,
         selectedModel: React.PropTypes.string.isRequired,
         selectedArgument: React.PropTypes.object.isRequired,
-        mouseOverbar: React.PropTypes.bool,
         handleModelChange: React.PropTypes.func.isRequired,
         handleArgumentClick: React.PropTypes.func.isRequired,
         handleArgumentDeselect: React.PropTypes.func.isRequired,
@@ -21,20 +20,9 @@ export var ModelForm = React.createClass({
     },
 
     onUserClick: function(event) {
-        if (this.mouseDown) {
-            return;
+        if (this.props.selectedArgument.argName != null) {
+            setTimeout(function() { this.props.handleArgumentDeselect(); }.bind(this), 100);
         }
-        else if (this.props.mouseOverBar === false && this.props.selectedArgument.argName != null) {
-            this.props.handleArgumentDeselect();
-        }
-    },
-
-    onMouseUp: function(event) {
-        this.mouseDown = false;
-    },
-
-    onMouseDown: function(event) {
-        this.mouseDown = true;
     },
 
     handleModelChange: function(value) {
@@ -109,7 +97,7 @@ export var ModelForm = React.createClass({
             }
         }
 
-        return <div className="ModelForm" onMouseDown={this.onMouseDown} onMouseUp={this.onMouseUp}>
+        return <div className="ModelForm">
             <DropDownBar options={this.props.models}
                 selectedOption={this.props.selectedModel} handleOptionChange={this.handleModelChange} />
             <ModelDisplay modelName={this.props.selectedModel}/>

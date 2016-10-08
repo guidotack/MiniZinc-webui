@@ -1,6 +1,5 @@
 export const SELECT_ARGUMENT = 'SELECT_ARGUMENT';
 export const SELECT_MODEL = 'SELECT_MODEL';
-export const SET_BAR_HOVER = 'SET_BAR_HOVER';
 export const CHANGE_ARGUMENT_LINK = 'CHANGE_ARGUMENT_LINK';
 export const ADD_OUTPUT_COMPONENT = 'ADD_OUTPUT_COMPONENT';
 export const CHANGE_INPUT_COMPONENT_VALUE = 'CHANGE_INPUT_COMPONENT_VALUE';
@@ -22,10 +21,6 @@ export function selectArgument(argName, argType) {
 
 export function selectModel(modelName) {
     return { type: SELECT_MODEL, modelName };
-}
-
-export function setBarHover(status) {
-    return { type: SET_BAR_HOVER, status };
 }
 
 export function changeArgumentLink(argName, argType, componentName, defaultValue, isOutput, outputName) {

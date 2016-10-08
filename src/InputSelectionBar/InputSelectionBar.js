@@ -6,7 +6,6 @@ import './InputSelectionBar.css';
 export var InputSelectionBar = React.createClass({
     propTypes: {
         filterType: React.PropTypes.string,
-        handleBarState: React.PropTypes.func,
         handleInputButtonClick: React.PropTypes.func.isRequired,
         handleOutputButtonClick: React.PropTypes.func.isRequired,
         outputs: React.PropTypes.object,
@@ -52,7 +51,7 @@ export var InputSelectionBar = React.createClass({
                     />);
         }
 
-        return <div className={"InputSelectionBar " + (this.props.developmentMode ? '' : 'disabled')}  onMouseEnter={this.props.handleBarState} onMouseLeave={this.props.handleBarState} >
+        return <div className={"InputSelectionBar " + (this.props.developmentMode ? '' : 'disabled')} >
             {inputs}
             {outputs}
         </div>

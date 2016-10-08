@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import { InputSelectionBar } from './InputSelectionBar';
-import { setBarHover, changeArgumentLink } from '../Actions';
+import { changeArgumentLink } from '../Actions';
 
 const mapStateToProps = function(state, ownProps) {
     return {
@@ -13,14 +13,6 @@ const mapStateToProps = function(state, ownProps) {
 
 const mapDispatchToProps = function(dispatch, ownProps) {
     return {
-        handleBarState: function(event) {
-            if (event.type === "mouseenter") {
-                dispatch(setBarHover(true));
-            }
-            else if (event.type === "mouseleave") {
-                dispatch(setBarHover(false));
-            }
-        },
         handleInputButtonClick: function(selectedArgument, componentName, defaultValue) {
             if (selectedArgument != null && selectedArgument.argName != null) {
                 dispatch(changeArgumentLink(selectedArgument.argName, selectedArgument.argType,
