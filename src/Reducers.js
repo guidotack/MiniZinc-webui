@@ -39,16 +39,29 @@ function models(state = [], action) {
 function inputs(state = {}, action) {
     switch (action.type) {
         case CHANGE_ARGUMENT_LINK:
-            return {
-                ...state,
+            if (!action.isOutput)
+                return {
+                    ...state,
 
-                [action.argName]: {
-                    component: action.componentName,
-                    type: action.argType,
-                    value: action.defaultValue,
-                    isOutput: action.isOutput
+                    [action.argName]: {
+                        component: action.componentName,
+                        type: action.argType,
+                        value: action.defaultValue,
+                        isOutput: action.isOutput
+                    }
                 }
-            }
+            else
+                return {
+                    ...state,
+
+                    [action.argName]: {
+                        component: action.componentName,
+                        type: action.argType,
+                        value: action.defaultValue,
+                        isOutput: action.isOutput,
+                        output: action.outputName
+                    }
+                }
         case CHANGE_INPUT_COMPONENT_VALUE:
             return {
                 ...state,
@@ -71,6 +84,7 @@ function outputs(state = {}, action) {
                 ...state,
 
                 [action.outputName]: {
+                    name: action.outputName,
                     type: action.outputType,
                     component: action.componentName,
                     result: action.defaultValue

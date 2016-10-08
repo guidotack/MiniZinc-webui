@@ -7,10 +7,10 @@ import { setModels, setArguments, addResult, selectModel, restoreState,
 
 import { ModelFormContainer } from './ModelForm/ModelFormContainer';
 import { InputSelectionBarContainer } from './InputSelectionBar/InputSelectionBarContainer';
+import { OutputSelectionBarContainer } from './OutputSelectionBarContainer';
 import { InputHolderContainer } from './InputHolderContainer';
 import { OutputHolderContainer } from './OutputHolderContainer'
 import { GetURL, GetTypeDimensionString, API_GET_TEMPLATE, API_MODELS, API_ARGUMENTS } from './Utils';
-import { OutputSelectionBar } from './OutputSelectionBar';
 
 // TODO: abstract the first model loaded.
 var API_MODEL_EXAMPLE = "prod_planning";
@@ -87,22 +87,6 @@ var App = React.createClass({
         }.bind(this));
     },
 
-    handleInputBarOutputClick: function() {
-        if (this.state.selectedArgument.argName != null) {
-            console.log(this.state.outputs.result)
-            this.setState({
-                inputs: {
-                    ...this.state.inputs,
-
-                    [this.state.selectedArgument.argName]: {
-                        isOutput: true,
-                        output: "result"
-                    }
-                }
-            });
-        }
-    },
-
     handleOutputChange: function(event) {
         this.setState({
             selectedOutputIndex: parseInt(event.target.value, 10),
@@ -118,23 +102,6 @@ var App = React.createClass({
         });
     },
 
-    handleOutputButtonClick: function(component, defValue, type) {
-        var num = Math.floor((Math.random() * 1000) + 1);
-
-        this.setState({
-            outputs: {
-                ...this.state.outputs,
-
-                [num]: {
-                    name: num,
-                    value: [1,2,4],
-                    type: type,
-                    component: component
-                }
-            }
-        });
-    },
-
     render: function() {
         return (
             <div className="App">
@@ -143,7 +110,7 @@ var App = React.createClass({
                 </div>
 
                 <InputSelectionBarContainer />
-                <OutputSelectionBar developmentMode={this.state.developmentMode} handleOutputButtonClick={this.handleOutputButtonClick} />
+                <OutputSelectionBarContainer />
 
                 <div className="App-Content">
                     <ModelFormContainer socket={socket} />

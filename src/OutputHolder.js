@@ -7,7 +7,7 @@ export var OutputHolder = React.createClass({
         outputs: React.PropTypes.object.isRequired,
         result: React.PropTypes.array.isRequired,
         selectedOutputIndex: React.PropTypes.number.isRequired,
-        handleOutputChange: React.PropTypes.func.isRequired
+        // handleOutputChange: React.PropTypes.func.isRequired
     },
 
     render: function() {

@@ -5,7 +5,8 @@ import { } from './Actions';
 const mapStateToProps = function(state, ownProps) {
     return {
         outputs: state.outputs,
-        result: state.result
+        result: state.result,
+        selectedOutputIndex: state.result.length - 1
     }
 }
 

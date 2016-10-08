@@ -26,8 +26,8 @@ export function setBarHover(status) {
     return { type: SET_BAR_HOVER, status };
 }
 
-export function changeArgumentLink(argName, argType, componentName, defaultValue, isOutput) {
-    return { type: CHANGE_ARGUMENT_LINK, argName, argType, componentName, defaultValue, isOutput };
+export function changeArgumentLink(argName, argType, componentName, defaultValue, isOutput, outputName) {
+    return { type: CHANGE_ARGUMENT_LINK, argName, argType, componentName, defaultValue, isOutput, outputName };
 }
 
 export function changeInputComponentValue(componentID, value) {

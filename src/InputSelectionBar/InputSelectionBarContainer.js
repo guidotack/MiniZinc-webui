@@ -27,7 +27,12 @@ const mapDispatchToProps = function(dispatch, ownProps) {
                     componentName, defaultValue, false));
             }
         },
-        // TODO: handleOutputButtonClick
+        handleOutputButtonClick: function(selectedArgument, componentName, defaultValue, outputName) {
+            if (selectedArgument != null && selectedArgument.argName != null) {
+                dispatch(changeArgumentLink(selectedArgument.argName, selectedArgument.argType,
+                    componentName, defaultValue, true, outputName));
+            }
+        },
     }
 }
 

@@ -8,6 +8,7 @@ export var InputSelectionBar = React.createClass({
         filterType: React.PropTypes.string,
         handleBarState: React.PropTypes.func,
         handleInputButtonClick: React.PropTypes.func.isRequired,
+        handleOutputButtonClick: React.PropTypes.func.isRequired,
         outputs: React.PropTypes.object,
         selectedArgument: React.PropTypes.object,
         developmentMode: React.PropTypes.bool
@@ -21,6 +22,10 @@ export var InputSelectionBar = React.createClass({
 
     handleInputButtonClick: function(componentName, defaultValue) {
         this.props.handleInputButtonClick(this.props.selectedArgument, componentName, defaultValue);
+    },
+
+    handleOutputButtonClick: function(componentName, defaultValue, outputType, outputName) {
+        this.props.handleOutputButtonClick(this.props.selectedArgument, componentName, defaultValue, outputName);
     },
 
     render: function() {
@@ -43,7 +48,7 @@ export var InputSelectionBar = React.createClass({
             if (this.props.filterType.length === 0 || this.props.outputs[outputNames[i]].type === this.props.filterType)
                 outputs.push(<InputSelectionButton key={this.props.outputs[outputNames[i]].name} name={outputNames[i]}
                     type={this.props.outputs[outputNames[i]].type}
-                    handleClick={this.props.handleOutputButtonClick}
+                    handleClick={this.handleOutputButtonClick}
                     />);
         }
 
