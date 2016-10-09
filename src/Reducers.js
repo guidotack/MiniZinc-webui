@@ -1,7 +1,7 @@
 import { SELECT_ARGUMENT, SELECT_MODEL, CHANGE_ARGUMENT_LINK,
     ADD_OUTPUT_COMPONENT, CHANGE_INPUT_COMPONENT_VALUE, ADD_RESULT, SET_RESULTS,
     SET_MODELS, SET_ARGUMENTS, RESET_APPLICATION, RESTORE_STATE, SET_DEVELOPMENT_MODE,
-    SET_OUTPUT_COMPONENT_PARAMETER } from './Actions';
+    SET_OUTPUT_COMPONENT_PARAMETER, SET_INPUT_COMPONENT_PARAMETER } from './Actions';
 import { combineReducers } from 'redux';
 
 /* this was the old layout.
@@ -37,7 +37,7 @@ function models(state = [], action) {
     }
 }
 
-function inputs(state = {}, action) {
+function inputs(state = { parameters: {} }, action) {
     switch (action.type) {
         case CHANGE_ARGUMENT_LINK:
             if (!action.isOutput)
@@ -73,6 +73,20 @@ function inputs(state = {}, action) {
                     value: action.value
                 }
             };
+        case SET_INPUT_COMPONENT_PARAMETER:
+            return {
+                ...state,
+
+                [action.componentName]: {
+                    ...state[action.componentName],
+
+                    parameters: {
+                        ...state[action.componentName].parameters,
+
+                        [action.parameterName]: action.parameter
+                    }
+                }
+            }
         default:
             return state;
     }

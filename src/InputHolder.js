@@ -6,6 +6,7 @@ import { StringToInput } from './Inputs/Inputs';
 export var InputHolder = React.createClass({
     propTypes: {
         handleInputValueChange: React.PropTypes.func.isRequired,
+        setInputComponentParameter: React.PropTypes.func.isRequired,
         inputs: React.PropTypes.object.isRequired
     },
 
@@ -21,7 +22,9 @@ export var InputHolder = React.createClass({
                     value: this.props.inputs[key].value,
                     onUserInput: this.props.handleInputValueChange,
                     key: key,
-                    id: key
+                    id: key,
+                    setInputComponentParameter: this.props.setInputComponentParameter,
+                    selectedParameters: this.props.inputs[key].parameters,
                 }));
             }
         }

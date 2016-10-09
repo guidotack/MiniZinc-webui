@@ -11,6 +11,7 @@ export const SET_DEVELOPMENT_MODE = 'SET_DEVELOPMENT_MODE';
 export const RESET_APPLICATION = 'RESET_APPLICATION';
 export const RESTORE_STATE = 'RESTORE_STATE';
 export const SET_OUTPUT_COMPONENT_PARAMETER = 'SET_OUTPUT_COMPONENT_PARAMETER';
+export const SET_INPUT_COMPONENT_PARAMETER = 'SET_INPUT_COMPONENT_PARAMETER';
 // handleOutputChange?
 // selectTemplate?
 
@@ -65,4 +66,8 @@ export function restoreState(prevState) {
 
 export function setOutputComponentParameter(componentName, parameterName, parameter) {
     return { type: SET_OUTPUT_COMPONENT_PARAMETER, componentName, parameterName, parameter };
+}
+
+export function setInputComponentParameter(componentName, parameterName, parameter) {
+    return { type: SET_INPUT_COMPONENT_PARAMETER, componentName, parameterName, parameter };
 }

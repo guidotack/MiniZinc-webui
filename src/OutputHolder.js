@@ -6,7 +6,6 @@ export var OutputHolder = React.createClass({
     propTypes: {
         outputs: React.PropTypes.object.isRequired,
         result: React.PropTypes.array.isRequired,
-        selectedOutputIndex: React.PropTypes.number.isRequired,
         outputArgs: React.PropTypes.array.isRequired,
         setOutputComponentParameter: React.PropTypes.func,
     },
@@ -25,7 +24,6 @@ export var OutputHolder = React.createClass({
                 outputArgs: this.props.outputArgs,
                 setOutputComponentParameter: this.props.setOutputComponentParameter,
                 selectedParameters: this.props.outputs[key].parameters,
-                selectedOutputIndex: this.props.selectedOutputIndex
             }));
         }
 

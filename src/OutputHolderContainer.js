@@ -6,7 +6,6 @@ const mapStateToProps = function(state, ownProps) {
     return {
         outputs: state.outputs,
         result: state.result,
-        selectedOutputIndex: state.result.length - 1,
         outputArgs: Object.keys(state.args.output),
     }
 }
