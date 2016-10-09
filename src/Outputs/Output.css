@@ -1,0 +1,50 @@
+.OutputHolder {
+    display: inline-block;
+    margin-top: 20px;
+    width: 200px;
+}
+
+.Matrix .rowContainer {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: flex-start;
+    align-content: flex-start;
+}
+
+.Matrix .row {
+    display: inline-block;
+    padding: 5px;
+    flex: 1 1 20px;
+}
+
+.Matrix .row ~ .row {
+    border-left: 1px solid rgba(0,0,0,0.2);
+}
+
+.Output {
+    display: inline-block;
+    margin: 5px;
+    border: 1px solid #bdc3c7;
+}
+
+.parameters {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: flex-start;
+    align-content: flex-start;
+}
+
+.parameters .DropDownBar {
+    display: inline-block;
+    width: 50%;
+    /*min-width: 75px;*/
+    flex: 1 1;
+}
+
+.parameters .DropDownBar ~ .DropDownBar {
+    border-left: 1px solid rgba(0,0,0,0.2);
+}

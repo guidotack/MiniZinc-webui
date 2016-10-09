@@ -150,13 +150,6 @@ body {
     transition: background-color 0.1s;
 }
 
-.OutputHolder {
-    display: inline-block;
-    margin-top: 20px;
-    width: 200px;
-    border: 1px solid #bdc3c7;
-}
-
 .disabled {
     display: none !important;
 }

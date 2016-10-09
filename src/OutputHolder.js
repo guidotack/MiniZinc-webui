@@ -1,5 +1,6 @@
 import React from 'react';
 import { OutputStringToComponent } from './Outputs/Outputs';
+import './Outputs/Output.css';
 
 export var OutputHolder = React.createClass({
     propTypes: {

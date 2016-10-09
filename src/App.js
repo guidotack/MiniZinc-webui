@@ -13,7 +13,7 @@ import { OutputHolderContainer } from './OutputHolderContainer'
 import { GetURL, GetTypeDimensionString, API_GET_TEMPLATE, API_MODELS, API_ARGUMENTS } from './Utils';
 
 // TODO: abstract the first model loaded.
-var API_MODEL_EXAMPLE = "prod_planning";
+var API_MODEL_EXAMPLE = "golomb";
 
 var socket = require('socket.io-client')('http://localhost:5000/');
 
@@ -31,6 +31,7 @@ var App = React.createClass({
             this.props.dispatch(setDevelopmentMode(false));
         }
         else {
+
             GetURL(API_MODELS, function(http) {
                 var models = JSON.parse(http.responseText);
 
@@ -38,7 +39,7 @@ var App = React.createClass({
                     models[i] = models[i].slice(0, models[i].length - 4);
                 }
 
-                this.props.dispatch(selectModel(models[0]));
+                this.props.dispatch(selectModel(API_MODEL_EXAMPLE));
                 this.props.dispatch(setModels(models));
             }.bind(this));
 
