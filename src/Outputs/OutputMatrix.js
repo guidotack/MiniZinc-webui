@@ -20,7 +20,8 @@ export var OutputMatrix1D = React.createClass({
         var rows = [];
 
         if (this.props.result != null && this.props.selectedParameters['resultType'] != null) {
-            var currentIndex = this.props.result.length - 1;
+            var currentIndex = this.props.selectedParameters['resultType'] == null ? this.props.result.length - 1 :
+                this.props.selectedParameters['resultType'];
             var currentRow = this.props.result[currentIndex];
 
             if (currentRow != null) {

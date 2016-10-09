@@ -1,7 +1,7 @@
 .OutputHolder {
     display: inline-block;
     margin-top: 20px;
-    width: 200px;
+    /*width: 200px;*/
 }
 
 .Matrix .rowContainer {
