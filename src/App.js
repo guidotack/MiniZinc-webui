@@ -6,10 +6,10 @@ import { setModels, setArguments, addResult, selectModel, restoreState,
     setDevelopmentMode } from './Actions';
 
 import { ModelFormContainer } from './ModelForm/ModelFormContainer';
-import { InputSelectionBarContainer } from './InputSelectionBar/InputSelectionBarContainer';
-import { OutputSelectionBarContainer } from './OutputSelectionBarContainer';
-import { InputHolderContainer } from './InputHolderContainer';
-import { OutputHolderContainer } from './OutputHolderContainer'
+// import { InputSelectionBarContainer } from './InputSelectionBar/InputSelectionBarContainer';
+// import { OutputSelectionBarContainer } from './OutputSelectionBarContainer';
+// import { InputHolderContainer } from './InputHolderContainer';
+// import { OutputHolderContainer } from './OutputHolderContainer';
 import { GetURL, GetTypeDimensionString, API_GET_TEMPLATE, API_MODELS, API_ARGUMENTS } from './Utils';
 
 // TODO: abstract the first model loaded.
@@ -80,14 +80,14 @@ var App = React.createClass({
                     <h2>MiniZinc-WebUI</h2>
                 </div>
 
-                <InputSelectionBarContainer />
-                <OutputSelectionBarContainer />
+                {/* <InputSelectionBarContainer />
+                <OutputSelectionBarContainer /> */}
 
                 <div className="App-Content">
                     <ModelFormContainer socket={socket} />
 
-                    <InputHolderContainer />
-                    <OutputHolderContainer />
+                    {/* <InputHolderContainer />
+                    <OutputHolderContainer /> */}
                 </div>
             </div>
         );

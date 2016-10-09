@@ -1,4 +1,4 @@
-.InputSelectionBar {
+.InputSelectionBar, .OutputSelectionBar {
     background: rgba(0,0,0,0.02);
     min-height: 120px;
     position: relative;

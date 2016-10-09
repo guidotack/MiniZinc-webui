@@ -67,16 +67,6 @@ body {
     border: 1px solid black;
 }
 
-.ModelForm {
-    display: inline-block;
-    border: 1px solid #bdc3c7;
-    min-width: 220px;
-
-    /*position: absolute;*/
-    left: 0;
-    margin: 20px;
-}
-
 .DropDownBar {
     border: none;
     border-bottom: 1px solid #bdc3c7;
@@ -84,80 +74,6 @@ body {
     padding: 5px;
 }
 
-.ModelDisplay {
-    font-size: 22px;
-    padding: 20px;
-    color: #ecf0f1;
-    background-color: rgba(0,0,0,0.87);
-    text-transform: lowercase;
-}
-
-.ModelArgument:nth-of-type(2n+1) {
-    background: rgba(0,0,0,0.02);
-}
-
-.ModelArgument {
-    padding: 10px 15px;
-    text-align: left;
-    border-top: 1px solid #bdc3c7;
-
-    transition: background-color 0.1s, border 0.1s;
-}
-
-.ModelArgument:hover {
-    border: 1px solid white;
-    background-color: rgba(0,0,0,0.2);
-
-    transition: background-color 0.1s, border 0.1s;
-}
-
-.ModelArgumentName {
-    color: #3498db;
-}
-
-.ModelArgumentType {
-    float: right;
-    font-style: italic;
-}
-
-.ModelForm > .selected {
-    border: 2px solid #303F9F;
-
-    transition: border 0.1s;
-}
-
-.ModelButton button {
-    box-sizing: border-box;
-    width: 100%;
-    background-color: rgba(0,0,0,0.87);
-    /*background-color: white;*/
-    padding: 10px;
-    border: 0;
-    border-top: 1px solid rgba(0,0,0,0.2);
-
-    font-weight: bold;
-    color: #f1c40f;
-    text-transform: uppercase;
-    text-decoration: underline;
-
-    transition: background-color 0.1s;
-}
-
-.ModelButton button:hover {
-    background-color: #f1c40f;
-    /*border: 1px solid #f1c40f;*/
-    color: white;
-    transition: background-color 0.1s;
-}
-
 .disabled {
     display: none !important;
-}
-
-.Outputs .ModelArgumentName {
-    color: #c0392b;
-}
-
-.Outputs {
-    background-color: rgba(0,0,0,0.1);
 }

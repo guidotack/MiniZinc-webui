@@ -1,11 +1,18 @@
 import React from 'react';
 import { DropDownBar } from '../DropDownBar';
 import { API_SAVE_TEMPLATE } from '../Utils';
+import './ModelForm.css';
+
+import { InputSelectionBarContainer } from '../InputSelectionBar/InputSelectionBarContainer';
+import { OutputSelectionBarContainer } from '../OutputSelectionBarContainer';
+import { InputHolderContainer } from '../InputHolderContainer';
+import { OutputHolderContainer } from '../OutputHolderContainer';
 
 export var ModelForm = React.createClass({
     propTypes: {
         args: React.PropTypes.object.isRequired,
         inputs: React.PropTypes.object.isRequired,
+        outputs: React.PropTypes.object.isRequired,
         models: React.PropTypes.arrayOf(React.PropTypes.string).isRequired,
         selectedModel: React.PropTypes.string.isRequired,
         selectedArgument: React.PropTypes.object.isRequired,
@@ -61,6 +68,7 @@ export var ModelForm = React.createClass({
         var template = {
             name: this.props.selectedModel,
             args: this.props.args,
+            outputs: this.props.outputs,
             inputs: this.props.inputs
         }
 
@@ -98,16 +106,32 @@ export var ModelForm = React.createClass({
         }
 
         return <div className="ModelForm">
-            <DropDownBar options={this.props.models}
-                selectedOption={this.props.selectedModel} handleOptionChange={this.handleModelChange} />
-            <ModelDisplay modelName={this.props.selectedModel}/>
-            {inputs}
-            <div className="Outputs">
-                {outputs}
+            <div className="ModelSelect">
+                <DropDownBar options={this.props.models}
+                    selectedOption={this.props.selectedModel} handleOptionChange={this.handleModelChange} />
             </div>
-            <Button text={"Submit"} handleClick={this.handleModelSubmit} />
-            <Button text={"Stop"} handleClick={this.handleSolveStop} />
-            {this.props.developmentMode ? <Button text={"Save"} handleClick={this.handleTemplateSave} /> : null}
+            <div className="Buttons">
+                <Button text={"Submit"} handleClick={this.handleModelSubmit} />
+                <Button text={"Stop"} handleClick={this.handleSolveStop} />
+                {this.props.developmentMode ? <Button text={"Save"} handleClick={this.handleTemplateSave} /> : null}
+            </div>
+            {/* <ModelDisplay modelName={this.props.selectedModel}/> */}
+            <div className="Inputs">
+                <h1>Inputs</h1>
+                <InputSelectionBarContainer />
+                <div className="Arguments">
+                    {inputs}
+                </div>
+                <InputHolderContainer />
+            </div>
+            <div className="Outputs">
+                <h1>Outputs</h1>
+                <OutputSelectionBarContainer />
+                <div className="Arguments">
+                    {outputs}
+                </div>
+                <OutputHolderContainer />
+            </div>
         </div>
     }
 });
