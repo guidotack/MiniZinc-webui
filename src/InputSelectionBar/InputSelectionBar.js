@@ -33,7 +33,6 @@ export var InputSelectionBar = React.createClass({
         for (let i = 0; i < AllInputs.length; i++) {
             if (this.props.filterType.length === 0 || AllInputs[i].type === this.props.filterType) {
                 let selected = (this.props.selectedConnectedComponent === AllInputs[i].component) || false;
-                console.log(this.props.selectedConnectedComponent);
 
                 inputs.push(<InputSelectionButton selected={selected} key={AllInputs[i].name + '-' +  AllInputs[i].type} name={AllInputs[i].name}
                     type={AllInputs[i].type} image={AllInputs[i].image}
