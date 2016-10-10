@@ -7,7 +7,8 @@ export var InputSelectionButton = React.createClass({
         image: React.PropTypes.string,
         component: React.PropTypes.string,
         defaultValue: React.PropTypes.any,
-        handleClick: React.PropTypes.func.isRequired
+        handleClick: React.PropTypes.func.isRequired,
+        selected: React.PropTypes.bool
     },
 
     getDefaultProps: function() {
@@ -21,7 +22,7 @@ export var InputSelectionButton = React.createClass({
     },
 
     render: function() {
-        return <div className="InputButton" onClick={this.handleClick}>
+        return <div className={"InputButton" + (this.props.selected ? " selected" : "") } onClick={this.handleClick}>
             <div className="InputName">{this.props.name}</div>
             <i className={"fa fa-2x InputImage fa-" + this.props.image}></i>
             <div className="InputType">{this.props.type}</div>

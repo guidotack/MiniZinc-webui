@@ -132,14 +132,16 @@ export var InputMatrix1D = React.createClass({
             boxes.push(<TextField key={i} id={i.toString()} onTextChange={this.onChange} value={this.props.value[i] || ""} />)
         }
 
-        return <div className="Input Matrix">
+        return <div className="Input Matrix 1D">
             <div className="container">
                 <div className="name">{this.props.id}</div>
             </div>
             <div className="Parameters">
                 <TextField id={"cols"} placeholder={"Length"} onTextChange={this.setInputComponentParameter} value={this.props.selectedParameters["cols"] || ""} />
             </div>
-            {boxes}
+            <div className="row">
+                {boxes}
+            </div>
         </div>
     }
 });
@@ -211,7 +213,7 @@ export var InputMatrix2D = React.createClass({
             rows.push(<div key={i} className="row">{boxes}</div>)
         }
 
-        return <div className="Input Matrix2D">
+        return <div className="Input Matrix 2D">
             <div className="container">
                 <div className="name">{this.props.id}</div>
             </div>

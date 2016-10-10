@@ -60,15 +60,7 @@ var App = React.createClass({
         }
 
         socket.on('solution', function(data) {
-            var split = data.split("{");
-            split.splice(0,1);
-
-            for (var i = 0; i < split.length; i++) {
-                split[i] = "{" + split[i];
-                split[i] = JSON.parse(split[i]);
-            }
-
-            this.props.dispatch(addResult(split[0]));
+            this.props.dispatch(addResult(data));
         }.bind(this));
     },
 

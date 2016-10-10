@@ -10,6 +10,7 @@ export var InputSelectionBar = React.createClass({
         handleOutputButtonClick: React.PropTypes.func.isRequired,
         outputs: React.PropTypes.object,
         selectedArgument: React.PropTypes.object,
+        selectedConnectedComponent: React.PropTypes.string,
         developmentMode: React.PropTypes.bool
     },
 
@@ -30,11 +31,15 @@ export var InputSelectionBar = React.createClass({
     render: function() {
         var inputs = [];
         for (let i = 0; i < AllInputs.length; i++) {
-            if (this.props.filterType.length === 0 || AllInputs[i].type === this.props.filterType)
-                inputs.push(<InputSelectionButton key={AllInputs[i].name + '-' +  AllInputs[i].type} name={AllInputs[i].name}
+            if (this.props.filterType.length === 0 || AllInputs[i].type === this.props.filterType) {
+                let selected = (this.props.selectedConnectedComponent === AllInputs[i].component) || false;
+                console.log(this.props.selectedConnectedComponent);
+
+                inputs.push(<InputSelectionButton selected={selected} key={AllInputs[i].name + '-' +  AllInputs[i].type} name={AllInputs[i].name}
                     type={AllInputs[i].type} image={AllInputs[i].image}
                     component={AllInputs[i].component} handleClick={this.handleInputButtonClick}
                     defaultValue={AllInputs[i].defaultValue} />);
+            }
         }
 
         if (inputs.length === 0) {

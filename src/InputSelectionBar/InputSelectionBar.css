@@ -51,3 +51,8 @@
     font-size: 1rem;
     /*font-style: italic;*/
 }
+
+.InputButton.selected {
+    border: 2px solid rgba(26, 188, 156, 1.0);
+    z-index: 1;
+}

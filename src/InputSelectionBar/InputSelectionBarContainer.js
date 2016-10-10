@@ -7,6 +7,7 @@ const mapStateToProps = function(state, ownProps) {
         developmentMode: state.appState.developmentMode,
         filterType: state.appState.selectedArgument.argType,
         selectedArgument: state.appState.selectedArgument,
+        selectedConnectedComponent: (state.inputs[state.appState.selectedArgument.argName] && state.inputs[state.appState.selectedArgument.argName].component) ? state.inputs[state.appState.selectedArgument.argName].component : "",
         outputs: state.outputs
     }
 }

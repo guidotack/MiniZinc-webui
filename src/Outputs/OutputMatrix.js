@@ -37,15 +37,13 @@ export var OutputMatrix1D = React.createClass({
             </div>
             <div className="parameters">
                 <DropDownBar name={"resultType"} options={this.props.outputArgs}
-                    selectedOption={this.props.selectedParameters["resultType"] != null ? this.props.selectedParameters["resultType"] : ""}
+                    selectedOption={this.props.selectedParameters["resultType"] || ""}
                     handleOptionChange={this.setOutputComponentParameter} />
                 <DropDownBar name={"resultNum"} options={Object.keys(this.props.result)}
-                    selectedOption={this.props.selectedParameters["resultNum"] != null ? this.props.selectedParameters["resultNum"] : ""}
+                    selectedOption={this.props.selectedParameters["resultNum"] || ""}
                     handleOptionChange={this.setOutputComponentParameter} />
             </div>
-            <div className="rowContainer">
-                {rows}
-            </div>
+            {rows}
         </div>
     }
 });
