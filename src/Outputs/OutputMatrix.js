@@ -63,7 +63,6 @@ export var OutputMatrix2D = React.createClass({
 
     render: function() {
         var rows = [];
-        console.log(this.props.result);
 
         if (this.props.result != null && this.props.selectedParameters['resultType'] != null) {
             var currentIndex = this.props.selectedParameters['resultNum'] == null ? this.props.result.length - 1 :
@@ -72,10 +71,8 @@ export var OutputMatrix2D = React.createClass({
 
             if (currentRow != null) {
                 var filteredCurrentRow = currentRow[this.props.selectedParameters['resultType']];
-                console.log(filteredCurrentRow)
                 for (let i = 0; i < filteredCurrentRow.length; i++) {
                     var inner_row = filteredCurrentRow[i]
-                    console.log(inner_row)
                     for (let j = 0; j < inner_row.length; j++) {
                         rows.push(<div key={[i,j]} className="row">{inner_row[j]}</div>)
                     }
