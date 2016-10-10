@@ -27,6 +27,7 @@
     display: inline-block;
     margin: 5px;
     border: 2px solid #9b59b6;
+    vertical-align: top;
 }
 
 .parameters {
@@ -47,4 +48,18 @@
 
 .parameters .DropDownBar ~ .DropDownBar {
     border-left: 1px solid rgba(0,0,0,0.2);
+}
+
+.Box .row {
+    padding: 10px;
+}
+
+nav.fixed {
+    position: fixed;
+    width: calc(100% - 40px);
+    margin-left: 0px;
+    padding: 0;
+    top: 0;
+    z-index: 500;
+    background-color: white;
 }

@@ -22,8 +22,15 @@ export var ModelForm = React.createClass({
         handleClearResults: React.PropTypes.func.isRequired
     },
 
+    getInitialState: function() {
+        return {
+            pastButtons: false
+        }
+    },
+
     componentDidMount: function() {
         window.addEventListener('mousedown', this.onUserClick, false);
+        window.addEventListener('scroll', this.handleScroll);
     },
 
     onUserClick: function(event) {
@@ -79,6 +86,17 @@ export var ModelForm = React.createClass({
         request.send(JSON.stringify(template));
     },
 
+    handleScroll: function(e) {
+        if (e.target.body.scrollTop > this.refs.title.offsetTop + this.refs.title.offsetHeight)
+            this.setState({ pastButtons: true });
+        else
+            this.setState({ pastButtons: false });
+    },
+
+    componentWillUnmount: function() {
+        window.removeEventListener('scroll', this.handleScroll);
+    },
+
     render: function() {
         var inputs = [];
         if (this.props.args.input != null) {
@@ -109,15 +127,17 @@ export var ModelForm = React.createClass({
         }
 
         return <div className="ModelForm">
-            <div className="ModelSelect">
+            <div className="ModelSelect" ref="title">
                 <DropDownBar options={this.props.models}
                     selectedOption={this.props.selectedModel} handleOptionChange={this.handleModelChange} />
             </div>
-            <div className="Buttons">
-                <Button text={"Submit"} handleClick={this.handleModelSubmit} />
-                <Button text={"Stop"} handleClick={this.handleSolveStop} />
-                {this.props.developmentMode ? <Button text={"Save"} handleClick={this.handleTemplateSave} /> : null}
-            </div>
+            <nav className={this.state.pastButtons ? "fixed" : ""}>
+                <div className="Buttons">
+                    <Button text={"Submit"} handleClick={this.handleModelSubmit} />
+                    <Button text={"Stop"} handleClick={this.handleSolveStop} />
+                    {this.props.developmentMode ? <Button text={"Save"} handleClick={this.handleTemplateSave} /> : null}
+                </div>
+            </nav>
             {/* <ModelDisplay modelName={this.props.selectedModel}/> */}
             <div className="Inputs">
                 <h1>Inputs</h1>
