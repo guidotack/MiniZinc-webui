@@ -27,8 +27,9 @@ export var ModelForm = React.createClass({
     },
 
     onUserClick: function(event) {
+        var selectedArgument = Object.assign({}, this.props.selectedArgument);
         if (this.props.selectedArgument.argName != null) {
-            setTimeout(function() { this.props.handleArgumentDeselect(); }.bind(this), 100);
+            setTimeout(function() { this.props.handleArgumentDeselect(selectedArgument.argName, selectedArgument.argType); }.bind(this), 100);
         }
     },
 
@@ -87,7 +88,9 @@ export var ModelForm = React.createClass({
 
                 let selected = this.props.selectedArgument.argName === key;
 
-                inputs.push(<ModelArgument key={key} argName={key} selected={selected}
+                let used = this.props.inputs[key] != null;
+
+                inputs.push(<ModelArgument used={used} key={key} argName={key} selected={selected}
                     type={type} onUserClick={this.props.handleArgumentClick} />);
             }
         }
@@ -149,24 +152,13 @@ var Button = React.createClass({
     }
 });
 
-var ModelDisplay = React.createClass({
-    propTypes: {
-        modelName: React.PropTypes.string.isRequired
-    },
-
-    render: function() {
-        return <div className="ModelDisplay">
-            {this.props.modelName}
-        </div>
-    }
-});
-
 var ModelArgument = React.createClass({
     propTypes: {
         argName: React.PropTypes.string.isRequired,
         type: React.PropTypes.string.isRequired,
         selected: React.PropTypes.bool,
         onUserClick: React.PropTypes.func,
+        used: React.PropTypes.bool
     },
 
     getDefaultProps: function() {
@@ -181,7 +173,7 @@ var ModelArgument = React.createClass({
     },
 
     render: function() {
-        return <div className={"ModelArgument" + (this.props.selected === true ? " selected" : "")} onClick={this.onUserClick}>
+        return <div className={"ModelArgument" + (this.props.selected === true ? " selected" : "") + (this.props.used === true ? " used" : "")} onClick={this.onUserClick}>
             <span className="ModelArgumentName">{this.props.argName}</span>
             <span className="ModelArgumentType">{this.props.type}</span>
         </div>

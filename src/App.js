@@ -13,7 +13,7 @@ import { ModelFormContainer } from './ModelForm/ModelFormContainer';
 import { GetURL, GetTypeDimensionString, API_GET_TEMPLATE, API_MODELS, API_ARGUMENTS } from './Utils';
 
 // TODO: abstract the first model loaded.
-var API_MODEL_EXAMPLE = "golomb";
+var API_MODEL_EXAMPLE = "prod_planning";
 
 var socket = require('socket.io-client')('http://localhost:5000/');
 
@@ -31,7 +31,6 @@ var App = React.createClass({
             this.props.dispatch(setDevelopmentMode(false));
         }
         else {
-
             GetURL(API_MODELS, function(http) {
                 var models = JSON.parse(http.responseText);
 

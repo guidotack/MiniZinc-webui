@@ -1,4 +1,5 @@
 export const SELECT_ARGUMENT = 'SELECT_ARGUMENT';
+export const DESELECT_ARGUMENT = 'DESELECT_ARGUMENT';
 export const SELECT_MODEL = 'SELECT_MODEL';
 export const CHANGE_ARGUMENT_LINK = 'CHANGE_ARGUMENT_LINK';
 export const ADD_OUTPUT_COMPONENT = 'ADD_OUTPUT_COMPONENT';
@@ -18,6 +19,10 @@ export const SET_INPUT_COMPONENT_PARAMETER = 'SET_INPUT_COMPONENT_PARAMETER';
 
 export function selectArgument(argName, argType) {
     return { type: SELECT_ARGUMENT, argName, argType };
+}
+
+export function deselectArgument(argName, argType) {
+    return { type: DESELECT_ARGUMENT, argName, argType };
 }
 
 export function selectModel(modelName) {

@@ -5,11 +5,9 @@ export var OutputMatrix1D = React.createClass({
     propTypes: {
         id: React.PropTypes.string.isRequired,
         result: React.PropTypes.array,
-        onUserInput: React.PropTypes.func,
         outputArgs: React.PropTypes.array,
         setOutputComponentParameter: React.PropTypes.func,
         selectedParameters: React.PropTypes.object,
-        selectedOutputIndex: React.PropTypes.number
     },
 
     setOutputComponentParameter: function(parameter, parameterName) {

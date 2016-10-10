@@ -21,6 +21,7 @@ export var InputHolder = React.createClass({
                 inputs.push(React.createElement(element, {
                     value: this.props.inputs[key].value,
                     onUserInput: this.props.handleInputValueChange,
+                    type: this.props.inputs[key].type,
                     key: key,
                     id: key,
                     setInputComponentParameter: this.props.setInputComponentParameter,

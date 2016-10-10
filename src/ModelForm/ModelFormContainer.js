@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import { ModelForm } from './ModelForm';
-import { selectArgument, selectModel, setArguments, resetApplication, setResults } from '../Actions';
+import { selectArgument, deselectArgument, selectModel, setArguments, resetApplication, setResults } from '../Actions';
 import { GetURL, GetTypeDimensionString, API_ARGUMENTS } from '../Utils';
 
 const mapStateToProps = function(state, ownProps) {
@@ -40,8 +40,8 @@ const mapDispatchToProps = function(dispatch, ownProps) {
         handleArgumentClick: function(argName, argType) {
             dispatch(selectArgument(argName, argType));
         },
-        handleArgumentDeselect: function() {
-            dispatch(selectArgument());
+        handleArgumentDeselect: function(argName, argType) {
+            dispatch(deselectArgument(argName, argType));
         },
         handleClearResults: function() {
             dispatch(setResults([]));

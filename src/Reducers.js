@@ -1,4 +1,4 @@
-import { SELECT_ARGUMENT, SELECT_MODEL, CHANGE_ARGUMENT_LINK,
+import { SELECT_ARGUMENT, DESELECT_ARGUMENT, SELECT_MODEL, CHANGE_ARGUMENT_LINK,
     ADD_OUTPUT_COMPONENT, CHANGE_INPUT_COMPONENT_VALUE, ADD_RESULT, SET_RESULTS,
     SET_MODELS, SET_ARGUMENTS, RESET_APPLICATION, RESTORE_STATE, SET_DEVELOPMENT_MODE,
     SET_OUTPUT_COMPONENT_PARAMETER, SET_INPUT_COMPONENT_PARAMETER } from './Actions';
@@ -37,7 +37,7 @@ function models(state = [], action) {
     }
 }
 
-function inputs(state = { parameters: {} }, action) {
+function inputs(state = { }, action) {
     switch (action.type) {
         case CHANGE_ARGUMENT_LINK:
             if (!action.isOutput)
@@ -48,7 +48,8 @@ function inputs(state = { parameters: {} }, action) {
                         component: action.componentName,
                         type: action.argType,
                         value: action.defaultValue,
-                        isOutput: action.isOutput
+                        isOutput: action.isOutput,
+                        parameters: {}
                     }
                 }
             else
@@ -60,7 +61,8 @@ function inputs(state = { parameters: {} }, action) {
                         type: action.argType,
                         value: action.defaultValue,
                         isOutput: action.isOutput,
-                        output: action.outputName
+                        output: action.outputName,
+                        parameters: {}
                     }
                 }
         case CHANGE_INPUT_COMPONENT_VALUE:
@@ -152,6 +154,18 @@ function appState(state = { developmentMode: true, selectedArgument: {}, selecte
                     argType: action.argType
                 }
             }
+        case DESELECT_ARGUMENT:
+            if (action.argName === state.selectedArgument.argName &&
+                action.argType === state.selectedArgument.argType) {
+                    return {
+                        ...state,
+
+                        selectedArgument: {
+
+                        }
+                    };
+                }
+            return state;
         case SELECT_MODEL:
             return {
                 ...state,
