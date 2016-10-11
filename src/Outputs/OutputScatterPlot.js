@@ -32,7 +32,7 @@ export var OutputScatterPlot = React.createClass({
                   var current_element = currentResultVar[i];
                   if (current_element.constructor === Array) {
                       chart_data.push(current_element);
-                  } else {
+                  } else { //if onyl 1d array
                       chart_data.push([i,current_element]);
                   }
 

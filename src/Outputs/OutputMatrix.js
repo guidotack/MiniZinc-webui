@@ -74,8 +74,14 @@ export var OutputMatrix2D = React.createClass({
                 for (let i = 0; i < filteredCurrentRow.length; i++) {
                     var tmpRow = [];
                     var inner_row = filteredCurrentRow[i]
-                    for (let j = 0; j < inner_row.length; j++) {
-                        tmpRow.push(<div key={[i,j]} className="row">{inner_row[j]}</div>)
+                    if (inner_row.constructor === Array) {
+                      for (let j = 0; j < inner_row.length; j++) {
+                          tmpRow.push(<div key={[i,j]} className="row">{inner_row[j]}</div>)
+                      }
+                    } else { //if only 1D array
+                      for (let j = 0; j < inner_row; j++) {
+                          tmpRow.push(<div key={[i,j]} className="row">{inner_row[j]}</div>)
+                      }
                     }
 
                     rows.push(<div key={i}>{tmpRow}</div>)
