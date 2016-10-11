@@ -13,7 +13,7 @@ import { ModelFormContainer } from './ModelForm/ModelFormContainer';
 import { GetURL, GetTypeDimensionString, API_GET_TEMPLATE, API_MODELS, API_ARGUMENTS } from './Utils';
 
 // TODO: abstract the first model loaded.
-var API_MODEL_EXAMPLE = "prod_planning";
+var API_MODEL_EXAMPLE = "queens";
 
 var socket = require('socket.io-client')('http://localhost:5000/');
 

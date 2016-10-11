@@ -33,15 +33,15 @@ export var OutputMatrix1D = React.createClass({
 
         return <div className="Output 1D_Matrix Matrix">
             <div className="container">
-                <div className="name">{this.props.id}</div>
+                <div className="name">1D Matrix {this.props.id}</div>
             </div>
             <div className="parameters">
                 <DropDownBar name={"resultType"} options={this.props.outputArgs}
                     selectedOption={this.props.selectedParameters["resultType"] || ""}
-                    handleOptionChange={this.setOutputComponentParameter} />
+                    handleOptionChange={this.setOutputComponentParameter} default_value="Choose variable"/>
                 <DropDownBar name={"resultNum"} options={Object.keys(this.props.result)}
                     selectedOption={this.props.selectedParameters["resultNum"] || ""}
-                    handleOptionChange={this.setOutputComponentParameter} />
+                    handleOptionChange={this.setOutputComponentParameter} default_value="Choose solution"/>
             </div>
             {rows}
         </div>
@@ -91,15 +91,15 @@ export var OutputMatrix2D = React.createClass({
 
         return <div className="Output 2D_Matrix Matrix">
             <div className="container">
-                <div className="name">{this.props.id}</div>
+                <div className="name">2D Matrix {this.props.id}</div>
             </div>
             <div className="parameters">
                 <DropDownBar name={"resultType"} options={this.props.outputArgs}
                     selectedOption={this.props.selectedParameters["resultType"] || ""}
-                    handleOptionChange={this.setOutputComponentParameter} />
+                    handleOptionChange={this.setOutputComponentParameter} default_value="Choose variable"/>
                 <DropDownBar name={"resultNum"} options={Object.keys(this.props.result)}
                     selectedOption={this.props.selectedParameters["resultNum"] || ""}
-                    handleOptionChange={this.setOutputComponentParameter} />
+                    handleOptionChange={this.setOutputComponentParameter} default_value="Choose solution"/>
             </div>
             {rows}
         </div>
