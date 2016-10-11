@@ -16,7 +16,7 @@ export var OutputScatterPlot = React.createClass({
     },
 
     render: function() {
-        var chart_data = [['rows','columns'],[0,0]]
+        var chart_data = [['rows','columns'],[0,0]];
         if (this.props.result != null && this.props.selectedParameters['resultType'] != null) {
             var currentResultNumber = this.props.selectedParameters['resultNum'] == null ? this.props.result.length - 1 :
                 this.props.selectedParameters['resultNum'];
@@ -24,11 +24,10 @@ export var OutputScatterPlot = React.createClass({
                 console.log(this.props.selectedParameters['resultType'])
 
             if (currentResult != null) {
-                var i = 0
-                chart_data = [['rows','columns']]
+                chart_data = [['rows','columns']];
                 var currentResultVar = currentResult[this.props.selectedParameters['resultType']]
                 //console.log(currentResultVar)
-                for (i; i < currentResultVar.length; ++i) {
+                for (let i = 0; i < currentResultVar.length; ++i) {
                   var current_element = currentResultVar[i];
                   if (current_element.constructor === Array) {
                       chart_data.push(current_element);
@@ -75,7 +74,7 @@ export var OutputGanttChart = React.createClass({
     },
 
     render: function() {
-        var chart_rows = [['2014Spring', 'Spring 2014', 'spring',new Date(2014, 2, 22), null, 5000, 100, null]];
+        var chart_rows = [[null,null,null,null,null,null,null,null]];
         var chart_columns = [
           {"id":"Task ID","type":"string"},
           {"id":"Task Name","type":"string"},
@@ -92,17 +91,16 @@ export var OutputGanttChart = React.createClass({
             var currentResult = this.props.result[currentResultNumber];
 
             if (currentResult != null) {
-                var i = 0
-                var duration = [[1,2],[3,4]]
-                var machines = [[1,2],[2,1]]
+                var duration = [[1,2],[3,4]];
+                var machines = [[1,2],[2,1]];
 
-                //var machines = currentResult[this.props.selectedParameters['machines']]
-                //var duration = currentResult[this.props.selectedParameters['duration']]
-                var task_start = currentResult[this.props.selectedParameters['task_start']]
+                //var machines = currentResult[this.props.selectedParameters['machines']];
+                //var duration = currentResult[this.props.selectedParameters['duration']];
+                var task_start = currentResult[this.props.selectedParameters['task_start']];
                 //console.log(currentResultVar)
-                chart_rows = []
+                chart_rows = [];
                 for (let job = 0; job < machines.length; ++job) {
-                  var current_row = machines[i];
+                  var current_row = machines[job];
                   for (let task = 0; task < current_row.length; ++task) {
                       var dependency = null;
                       if((task - 1) >= 0) {
