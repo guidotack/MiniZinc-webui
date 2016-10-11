@@ -86,24 +86,31 @@ export var OutputGanttChart = React.createClass({
           {"id":"Percent Complete","type":"number"},
           {"id":"Dependencies","type":"string"}
         ];
-        if (this.props.result != null && this.props.selectedParameters['resultType'] != null) { //This solution & variable exist
+        if (this.props.result != null && this.props.selectedParameters['machines'] != null && this.props.selectedParameters['duration'] != null && this.props.selectedParameters['task_start'] != null ) { //This solution & variable exist
             var currentResultNumber = this.props.selectedParameters['resultNum'] == null ? this.props.result.length - 1 :
                 this.props.selectedParameters['resultNum'];
             var currentResult = this.props.result[currentResultNumber];
-                console.log(this.props.selectedParameters['resultType'])
 
             if (currentResult != null) {
                 var i = 0
-                var currentResultVar = currentResult[this.props.selectedParameters['resultType']]
+                var duration = [[1,2],[3,4]]
+                var machines = [[1,2],[2,1]]
+
+                //var machines = currentResult[this.props.selectedParameters['machines']]
+                //var duration = currentResult[this.props.selectedParameters['duration']]
+                var task_start = currentResult[this.props.selectedParameters['task_start']]
                 //console.log(currentResultVar)
                 chart_rows = []
-                for (i; i < currentResultVar.length; ++i) {
-                  var current_element = currentResultVar[i];
-                  if (current_element.constructor === Array) {
-                      chart_rows.push(current_element);
-                  } else { //if onyl 1d array
-                      chart_rows.push([i,current_element]);
+                for (let job = 0; job < machines.length; ++job) {
+                  var current_row = machines[i];
+                  for (let task = 0; task < current_row.length; ++task) {
+                      var dependency = null;
+                      if((task - 1) >= 0) {
+                          dependency = job + '.' + (task - 1);
+                      }
+                      chart_rows.push([job + '.' + task, 'Job ' + job + ' Task ' + task, String(machines[job][task]),new Date(task_start[job][task]*1000), null, duration[job][task]*1000, 100, dependency]);
                   }
+
 
                 }
 
@@ -117,13 +124,13 @@ export var OutputGanttChart = React.createClass({
                 <div className="name">Gantt Chart {this.props.id}</div>
             </div>
             <div className="parameters">
-            <DropDownBar name={"resultType"} options={this.props.outputArgs}
+            <DropDownBar name={"machines"} options={this.props.outputArgs} //LINK TO INPUT VARIABLE
                 selectedOption={this.props.selectedParameters["machines"] || ""}
                 handleOptionChange={this.setOutputComponentParameter} default_value="Choose machines by job/task" />
-            <DropDownBar name={"resultType"} options={this.props.outputArgs}
+            <DropDownBar name={"duration"} options={this.props.outputArgs} //LINK TO INPUT VARIABLE
                 selectedOption={this.props.selectedParameters["duration"] || ""}
                 handleOptionChange={this.setOutputComponentParameter} default_value="Choose duration by job/task" />
-            <DropDownBar name={"resultType"} options={this.props.outputArgs}
+            <DropDownBar name={"task_start"} options={this.props.outputArgs}
                 selectedOption={this.props.selectedParameters["task_start"] || ""}
                 handleOptionChange={this.setOutputComponentParameter} default_value="Choose start by job/task" />
             <DropDownBar name={"resultNum"} options={Object.keys(this.props.result)}
