@@ -4,8 +4,10 @@ import './Outputs/Output.css';
 
 export var OutputHolder = React.createClass({
     propTypes: {
+        inputs: React.PropTypes.object.isRequired,
         outputs: React.PropTypes.object.isRequired,
         result: React.PropTypes.array.isRequired,
+        inputArgs: React.PropTypes.array.isRequired,
         outputArgs: React.PropTypes.array.isRequired,
         setOutputComponentParameter: React.PropTypes.func,
     },
@@ -21,6 +23,8 @@ export var OutputHolder = React.createClass({
                 result: this.props.result,
                 key: key,
                 id: key,
+                inputs:this.props.inputs,
+                inputArgs: this.props.inputArgs,
                 outputArgs: this.props.outputArgs,
                 setOutputComponentParameter: this.props.setOutputComponentParameter,
                 selectedParameters: this.props.outputs[key].parameters,

@@ -4,8 +4,10 @@ import { setOutputComponentParameter } from './Actions';
 
 const mapStateToProps = function(state, ownProps) {
     return {
+        inputs: state.inputs,
         outputs: state.outputs,
         result: state.result,
+        inputArgs: Object.keys(state.args.input),
         outputArgs: Object.keys(state.args.output),
     }
 }

@@ -63,6 +63,7 @@ export var OutputScatterPlot = React.createClass({
 export var OutputGanttChart = React.createClass({
     propTypes: {
         id: React.PropTypes.string.isRequired,
+        inputs: React.PropTypes.object,
         result: React.PropTypes.array,
         outputArgs: React.PropTypes.array,
         setOutputComponentParameter: React.PropTypes.func,
@@ -94,6 +95,10 @@ export var OutputGanttChart = React.createClass({
                 var duration = [[1,2],[3,4]];
                 var machines = [[1,2],[2,1]];
 
+                // How to use inputs:
+                // this.props.inputs["this.props.selectedParameters["theDropdownNameHere"]].value
+                // or something like that LOL
+
                 //var machines = currentResult[this.props.selectedParameters['machines']];
                 //var duration = currentResult[this.props.selectedParameters['duration']];
                 var task_start = currentResult[this.props.selectedParameters['task_start']];
@@ -122,10 +127,10 @@ export var OutputGanttChart = React.createClass({
                 <div className="name">Gantt Chart {this.props.id}</div>
             </div>
             <div className="parameters">
-            <DropDownBar name={"machines"} options={this.props.outputArgs} //LINK TO INPUT VARIABLE
+            <DropDownBar name={"machines"} options={this.props.inputArgs} //LINK TO INPUT VARIABLE
                 selectedOption={this.props.selectedParameters["machines"] || ""}
                 handleOptionChange={this.setOutputComponentParameter} default_value="Choose machines by job/task" />
-            <DropDownBar name={"duration"} options={this.props.outputArgs} //LINK TO INPUT VARIABLE
+            <DropDownBar name={"duration"} options={this.props.inputArgs} //LINK TO INPUT VARIABLE
                 selectedOption={this.props.selectedParameters["duration"] || ""}
                 handleOptionChange={this.setOutputComponentParameter} default_value="Choose duration by job/task" />
             <DropDownBar name={"task_start"} options={this.props.outputArgs}
