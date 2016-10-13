@@ -92,16 +92,30 @@ export var OutputGanttChart = React.createClass({
             var currentResult = this.props.result[currentResultNumber];
 
             if (currentResult != null) {
-                var duration = [[1,2],[3,4]];
-                var machines = [[1,2],[2,1]];
+                //console.log(currentResult);
+                //var duration = [[1,2],[3,4]];
+                //var machines = [[1,2],[2,1]];
 
+                function inputOrOutput(varName,inputValues,currentResult,argName) {
+                  var result;
+                  if(argName[varName] in inputValues) {
+                      result = inputValues[argName[varName]].value;
+                  } else {
+                      result = currentResult[argName[varName]];
+                  }
+                  //console.log(result);
+                  return result;
+                }
                 // How to use inputs:
-                // this.props.inputs["this.props.selectedParameters["theDropdownNameHere"]].value
+                var machines = inputOrOutput('machines',this.props.inputs,currentResult,this.props.selectedParameters);
+
+                var duration = inputOrOutput('duration',this.props.inputs,currentResult,this.props.selectedParameters);
+                var task_start = inputOrOutput('task_start',this.props.inputs,currentResult,this.props.selectedParameters);
                 // or something like that LOL
 
                 //var machines = currentResult[this.props.selectedParameters['machines']];
                 //var duration = currentResult[this.props.selectedParameters['duration']];
-                var task_start = currentResult[this.props.selectedParameters['task_start']];
+
                 //console.log(currentResultVar)
                 chart_rows = [];
                 for (let job = 0; job < machines.length; ++job) {
@@ -127,13 +141,13 @@ export var OutputGanttChart = React.createClass({
                 <div className="name">Gantt Chart {this.props.id}</div>
             </div>
             <div className="parameters">
-            <DropDownBar name={"machines"} options={this.props.inputArgs} //LINK TO INPUT VARIABLE
+            <DropDownBar name={"machines"} options={this.props.inputArgs.concat(this.props.outputArgs)} //LINK TO INPUT VARIABLE
                 selectedOption={this.props.selectedParameters["machines"] || ""}
                 handleOptionChange={this.setOutputComponentParameter} default_value="Choose machines by job/task" />
-            <DropDownBar name={"duration"} options={this.props.inputArgs} //LINK TO INPUT VARIABLE
+            <DropDownBar name={"duration"} options={this.props.inputArgs.concat(this.props.outputArgs)} //LINK TO INPUT VARIABLE
                 selectedOption={this.props.selectedParameters["duration"] || ""}
                 handleOptionChange={this.setOutputComponentParameter} default_value="Choose duration by job/task" />
-            <DropDownBar name={"task_start"} options={this.props.outputArgs}
+            <DropDownBar name={"task_start"} options={this.props.inputArgs.concat(this.props.outputArgs)}
                 selectedOption={this.props.selectedParameters["task_start"] || ""}
                 handleOptionChange={this.setOutputComponentParameter} default_value="Choose start by job/task" />
             <DropDownBar name={"resultNum"} options={Object.keys(this.props.result)}
