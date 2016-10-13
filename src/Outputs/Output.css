@@ -63,3 +63,7 @@ nav.fixed {
     z-index: 500;
     background-color: white;
 }
+
+.my-pretty-chart-container {
+    overflow:auto;
+}
