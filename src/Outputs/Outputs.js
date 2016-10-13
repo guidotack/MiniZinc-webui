@@ -18,5 +18,3 @@ export const OutputStringToComponent = {
     OutputScatterPlot: OutputScatterPlot,
     OutputGanttChart: OutputGanttChart,
 }
-
-af8066
