@@ -7,8 +7,8 @@ export const AllOutputs = [
     { component: "OutputMatrix2D", name: "Matrix2D", type: "int-2D", image: "table" },
     { component: "OutputScatterPlot", name: "Scatter Plot", type: "int-2D", image: "dot-circle-o" },
     { component: "OutputGanttChart", name: "Gantt Chart", type: "int-2D", image: "signal" },
-    { component: "OutputBox", name: "OutputBox", type: "int" },
-    { component: "OutputBox", name: "OutputBox", type: "string" }
+    { component: "OutputBox", name: "OutputBox", type: "int", image: "asterisk" },
+    { component: "OutputBox", name: "OutputBox", type: "string", image: "font" }
 ];
 
 export const OutputStringToComponent = {
