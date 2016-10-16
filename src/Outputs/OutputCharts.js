@@ -47,8 +47,10 @@ export var OutputScatterPlot = React.createClass({
             }
         }
 
+        var chartHeight = 300;
+
         return <div className="Output Scatter_Plot Chart">
-            <div className="container">
+            <div className="container dragHandle">
                 <div className="name">Scatter Plot {this.props.id}</div>
             </div>
             <div className="parameters">
@@ -60,7 +62,7 @@ export var OutputScatterPlot = React.createClass({
                 handleOptionChange={this.setOutputComponentParameter} default_value="Choose solution"/>
         </div>
         <div className={"my-pretty-chart-container"}>
-            <Chart chartType="ScatterChart" data={chart_data} options={{}} graph_id={"ScatterChart"+this.props.id}  width={"600px"} height={"500px"}  legend_toggle={true} />
+            <Chart chartType="ScatterChart" data={chart_data} options={{}} graph_id={"ScatterChart"+this.props.id}  width={"100%"} height={chartHeight} legend_toggle={true} />
         </div></div>
     }
 });
@@ -142,7 +144,7 @@ export var OutputGanttChart = React.createClass({
         }
 
         return <div className="Output Gantt_Chart Chart">
-            <div className="container">
+            <div className="container dragHandle">
                 <div className="name">Gantt Chart {this.props.id}</div>
             </div>
             <div className="parameters">
