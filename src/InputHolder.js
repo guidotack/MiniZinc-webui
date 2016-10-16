@@ -23,9 +23,28 @@ export var InputHolder = React.createClass({
         selectedModel: React.PropTypes.string.isRequired
     },
 
-    onResize: function(layout, oldLayoutItem, layoutItem, placeholder, e, element) {
-      console.log("onResize");
-      console.log(layoutItem);
+    onResize: function(layout, oldItem, newItem, e1, e2, element) {
+        var chart = element.parentElement.children[0];
+        if (chart.classList.contains("Output") && chart.classList.contains("Chart")) {
+            if (chart.children.length===3) {
+                var h = chart.clientHeight;
+                var nameH = chart.children[0].offsetHeight;
+                var paramsH = chart.children[1].offsetHeight;
+                chart.children[2].style.height = (h-nameH-paramsH)+"px";
+            }
+        }
+    },
+
+    onResizeStop: function(layout, oldItem, newItem, e1, e2, element) {
+        var chart = element.parentElement.children[0];
+        if (chart.classList.contains("Output") && chart.classList.contains("Chart")) {
+            if (chart.children.length===3) {
+                var h = newItem.h * 160 - 10;
+                var nameH = chart.children[0].offsetHeight;
+                var paramsH = chart.children[1].offsetHeight;
+                chart.children[2].style.height = (h-nameH-paramsH)+"px";
+            }
+        }
     },
 
     render: function() {
@@ -84,7 +103,7 @@ export var InputHolder = React.createClass({
         */
         return <ReactGridLayout className="InputHolder layout"
                  cols={12} rowHeight={150} draggableHandle=".dragHandle"
-                 layout={layout} width={1200} onResize={this.onResize}>
+                 layout={layout} width={1200} onResize={this.onResize} onResizeStop={this.onResizeStop}>
           {components}
         </ReactGridLayout>
     }
