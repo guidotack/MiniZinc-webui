@@ -8,6 +8,7 @@ export const ADD_RESULT = 'ADD_RESULT';
 export const SET_RESULTS = 'SET_RESULTS';
 export const SET_MODELS = 'SET_MODELS';
 export const SET_ARGUMENTS = 'SET_ARGUMENTS';
+export const SET_DATA = 'SET_DATA';
 export const SET_DEVELOPMENT_MODE = 'SET_DEVELOPMENT_MODE';
 export const RESET_APPLICATION = 'RESET_APPLICATION';
 export const RESTORE_STATE = 'RESTORE_STATE';
@@ -55,6 +56,10 @@ export function setModels(models) {
 
 export function setArguments(args) {
     return { type: SET_ARGUMENTS, args };
+}
+
+export function setData(dataFiles) {
+    return { type: SET_DATA, dataFiles };
 }
 
 export function setDevelopmentMode(devMode) {

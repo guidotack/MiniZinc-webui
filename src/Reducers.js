@@ -1,6 +1,6 @@
 import { SELECT_ARGUMENT, DESELECT_ARGUMENT, SELECT_MODEL, CHANGE_ARGUMENT_LINK,
     ADD_OUTPUT_COMPONENT, CHANGE_INPUT_COMPONENT_VALUE, ADD_RESULT, SET_RESULTS,
-    SET_MODELS, SET_ARGUMENTS, RESET_APPLICATION, RESTORE_STATE, SET_DEVELOPMENT_MODE,
+    SET_MODELS, SET_ARGUMENTS, SET_DATA, RESET_APPLICATION, RESTORE_STATE, SET_DEVELOPMENT_MODE,
     SET_OUTPUT_COMPONENT_PARAMETER, SET_INPUT_COMPONENT_PARAMETER } from './Actions';
 import { combineReducers } from 'redux';
 
@@ -23,6 +23,15 @@ function args(state = { input: {}, output: {} }, action) {
     switch (action.type) {
         case SET_ARGUMENTS:
             return action.args;
+        default:
+            return state;
+    }
+}
+
+function dataFiles(state = [], action) {
+    switch (action.type) {
+        case SET_DATA:
+            return action.dataFiles;
         default:
             return state;
     }
@@ -185,6 +194,7 @@ function appState(state = { developmentMode: true, selectedArgument: {}, selecte
 
 const appReducer = combineReducers({
     args,
+    dataFiles,
     models,
     inputs,
     outputs,
@@ -199,6 +209,7 @@ const minizincApp = function(state, action) {
                 ...state,
 
                 args: undefined,
+                dataFiles: undefined,
                 inputs: undefined,
                 result: undefined,
                 outputs: undefined,

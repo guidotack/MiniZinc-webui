@@ -9,7 +9,8 @@ const mapStateToProps = function(state, ownProps) {
         result: state.result,
         inputArgs: Object.keys(state.args.input),
         outputArgs: Object.keys(state.args.output),
-        childHeight: state.componentHeight,
+        dataFiles: state.dataFiles,
+        selectedModel: state.appState.selectedModel
     }
 }
 

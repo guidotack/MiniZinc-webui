@@ -1,5 +1,46 @@
 import React from 'react';
+import { DropDownBar } from '../DropDownBar';
+import { GetURL, API_DATA } from '../Utils';
 import './Input.css';
+
+export var InputFile = React.createClass({
+    propTypes: {
+        id: React.PropTypes.string.isRequired,
+        type: React.PropTypes.string,
+        selectedModel: React.PropTypes.string.isRequired,
+        dataFiles: React.PropTypes.array.isRequired,
+        value: React.PropTypes.array.isRequired,
+        selectedParameters: React.PropTypes.object.isRequired,
+        setInputComponentParameter: React.PropTypes.func.isRequired,
+        onUserInput: React.PropTypes.func.isRequired
+    },
+
+    setInputComponentParameter: function(parameter, parameterName) {
+        this.props.setInputComponentParameter(this.props.id, parameterName, parameter);
+        var onUserInput = this.props.onUserInput;
+        GetURL(API_DATA + this.props.selectedModel + "/" + parameter, function(http) {
+            var instance = JSON.parse(http.responseText);
+            var instanceKeys = Object.keys(instance);
+            for (let i = 0; i<instanceKeys.length; ++i) {
+                onUserInput(instanceKeys[i], instance[instanceKeys[i]]);
+            }
+        })
+    },
+    
+    render: function() {
+        return (
+            <div className="Input File">
+                <div className="container dragHandle">
+                    <div className="name">File input</div>
+                </div>
+            <DropDownBar name={"filename"} options={this.props.dataFiles}
+                selectedOption={this.props.selectedParameters["filename"] || ""}
+                handleOptionChange={this.setInputComponentParameter} default_value="Choose file" />
+            
+            </div>
+        )
+    }
+});
 
 export var InputRange = React.createClass({ //slider
     propTypes: {

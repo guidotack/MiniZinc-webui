@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import { ModelForm } from './ModelForm';
-import { selectArgument, deselectArgument, selectModel, setArguments, resetApplication, setResults } from '../Actions';
-import { GetURL, GetTypeDimensionString, API_ARGUMENTS } from '../Utils';
+import { selectArgument, deselectArgument, selectModel, setArguments, setData, resetApplication, setResults } from '../Actions';
+import { GetURL, GetTypeDimensionString, API_ARGUMENTS, API_DATA } from '../Utils';
 
 const mapStateToProps = function(state, ownProps) {
     return {
@@ -36,6 +36,11 @@ const mapDispatchToProps = function(dispatch, ownProps) {
 
                 dispatch(setArguments(args));
             });
+            
+            GetURL(API_DATA + model, function(http) {
+                var dataFiles = JSON.parse(http.responseText);
+                dispatch(setData(dataFiles));
+            })
         },
         handleArgumentClick: function(argName, argType) {
             dispatch(selectArgument(argName, argType));
