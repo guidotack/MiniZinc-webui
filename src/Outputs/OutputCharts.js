@@ -22,19 +22,24 @@ export var OutputScatterPlot = React.createClass({
                 this.props.selectedParameters['resultNum'];
             var currentResult = this.props.result[currentResultNumber];
                 console.log(this.props.selectedParameters['resultType'])
-
-            if (currentResult != null) {
+            if (currentResult != null && currentResult !== undefined) {
                 chart_data = [['rows','columns']];
                 var currentResultVar = currentResult[this.props.selectedParameters['resultType']]
-                //console.log(currentResultVar)
-                for (let i = 0; i < currentResultVar.length; ++i) {
-                  var current_element = currentResultVar[i];
-                  if (current_element.constructor === Array) {
-                      chart_data.push(current_element);
-                  } else { //if onyl 1d array
-                      chart_data.push([i,current_element]);
-                  }
+                if (currentResultVar.constructor === Array) {
+                  for (let i = 0; i < currentResultVar.length; ++i) {
+                    var current_element = currentResultVar[i];
+                    if (current_element.constructor === Array) {
+                        chart_data.push(current_element);
+                    } else { //if onyl 1d array
+                        chart_data.push([i,current_element]);
+                    }
 
+                  }
+                } else {
+                  for (let i = 0; i< this.props.result.length; ++i) {
+                    var newobj = [i, this.props.result[i][this.props.selectedParameters['resultType']]];
+                    chart_data.push(newobj);
+                  }
                 }
 
                 //var currentResultVar = [];
