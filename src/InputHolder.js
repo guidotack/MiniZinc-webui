@@ -20,7 +20,9 @@ export var InputHolder = React.createClass({
         outputArgs: React.PropTypes.array.isRequired,
         setOutputComponentParameter: React.PropTypes.func,
         dataFiles: React.PropTypes.array.isRequired,
-        selectedModel: React.PropTypes.string.isRequired
+        selectedModel: React.PropTypes.string.isRequired,
+        layout: React.PropTypes.object.isRequired,
+        handleLayoutChange: React.PropTypes.func.isRequired
     },
 
     onResize: function(layout, oldItem, newItem, e1, e2, element) {
@@ -47,10 +49,13 @@ export var InputHolder = React.createClass({
         }
     },
 
+    onLayoutChange: function(layout) {
+        this.props.handleLayoutChange(layout);
+    },
+
     render: function() {
         var allKeys = Object.keys(this.props.inputs);
         var components = [];
-        var layout = [];
         for (var i = 0; i < allKeys.length; i++) {
             var key = allKeys[i];
             if (this.props.inputs[key].isOutput === false) {
@@ -71,7 +76,6 @@ export var InputHolder = React.createClass({
                   })}
                   </div>
                 );
-                layout.push({i:key, x:0, y:0, w:2, h:1});
             }
         }
 
@@ -93,7 +97,6 @@ export var InputHolder = React.createClass({
               })}
               </div>
             );
-            layout.push({i:key, x:0, y:0, w:4, h:4});
         }
 
         /*
@@ -103,7 +106,10 @@ export var InputHolder = React.createClass({
         */
         return <ReactGridLayout className="InputHolder layout"
                  cols={12} rowHeight={150} draggableHandle=".dragHandle"
-                 layout={layout} width={1200} onResize={this.onResize} onResizeStop={this.onResizeStop}>
+                 layout={this.props.layout} width={1200}
+                 onResize={this.onResize} onResizeStop={this.onResizeStop}
+                 onLayoutChange={this.onLayoutChange}
+                 >
           {components}
         </ReactGridLayout>
     }

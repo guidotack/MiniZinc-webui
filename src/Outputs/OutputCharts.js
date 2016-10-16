@@ -62,7 +62,7 @@ export var OutputScatterPlot = React.createClass({
                 handleOptionChange={this.setOutputComponentParameter} default_value="Choose solution"/>
         </div>
         <div className={"my-pretty-chart-container"}>
-            <Chart chartType="ScatterChart" data={chart_data} options={{}} graph_id={"ScatterChart"+this.props.id}  width={"100%"} height={chartHeight} legend_toggle={true} />
+            <Chart chartType="ScatterChart" data={chart_data} options={{}} graph_id={"ScatterChart"+this.props.id}  width={"600px"} height={"300px"} legend_toggle={true} />
         </div></div>
     }
 });

@@ -14,6 +14,7 @@ export const RESET_APPLICATION = 'RESET_APPLICATION';
 export const RESTORE_STATE = 'RESTORE_STATE';
 export const SET_OUTPUT_COMPONENT_PARAMETER = 'SET_OUTPUT_COMPONENT_PARAMETER';
 export const SET_INPUT_COMPONENT_PARAMETER = 'SET_INPUT_COMPONENT_PARAMETER';
+export const SET_LAYOUT = 'SET_LAYOUT';
 // handleOutputChange?
 // selectTemplate?
 
@@ -80,4 +81,8 @@ export function setOutputComponentParameter(componentName, parameterName, parame
 
 export function setInputComponentParameter(componentName, parameterName, parameter) {
     return { type: SET_INPUT_COMPONENT_PARAMETER, componentName, parameterName, parameter };
+}
+
+export function handleLayoutChange(layout) {
+    return { type: SET_LAYOUT, layout };
 }
