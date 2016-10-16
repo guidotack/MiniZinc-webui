@@ -12,6 +12,7 @@ export var ModelForm = React.createClass({
         args: React.PropTypes.object.isRequired,
         inputs: React.PropTypes.object.isRequired,
         outputs: React.PropTypes.object.isRequired,
+        layout: React.PropTypes.object.isRequired,
         models: React.PropTypes.arrayOf(React.PropTypes.string).isRequired,
         selectedModel: React.PropTypes.string.isRequired,
         selectedArgument: React.PropTypes.object.isRequired,
@@ -76,7 +77,8 @@ export var ModelForm = React.createClass({
             name: this.props.selectedModel,
             args: this.props.args,
             outputs: this.props.outputs,
-            inputs: this.props.inputs
+            inputs: this.props.inputs,
+            layout: this.props.layout
         }
 
         var request = new XMLHttpRequest();

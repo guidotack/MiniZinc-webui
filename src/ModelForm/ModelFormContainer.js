@@ -9,6 +9,7 @@ const mapStateToProps = function(state, ownProps) {
         models: state.models,
         inputs: state.inputs,
         outputs: state.outputs,
+        layout: state.layout,
         developmentMode: state.appState.developmentMode,
         selectedModel: state.appState.selectedModel,
         selectedArgument: state.appState.selectedArgument,
