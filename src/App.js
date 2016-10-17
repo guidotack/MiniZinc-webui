@@ -3,14 +3,14 @@ import './App.css';
 
 import { connect } from 'react-redux';
 import { setModels, setArguments, addResult, selectModel, restoreState,
-    setDevelopmentMode, setRequestSID } from './Actions';
+    setDevelopmentMode, setRequestSID, setData } from './Actions';
 
 import { ModelFormContainer } from './ModelForm/ModelFormContainer';
 // import { InputSelectionBarContainer } from './InputSelectionBar/InputSelectionBarContainer';
 // import { OutputSelectionBarContainer } from './OutputSelectionBarContainer';
 // import { InputHolderContainer } from './InputHolderContainer';
 // import { OutputHolderContainer } from './OutputHolderContainer';
-import { GetURL, GetTypeDimensionString, API_GET_TEMPLATE, API_MODELS, API_ARGUMENTS } from './Utils';
+import { GetURL, GetTypeDimensionString, API_GET_TEMPLATE, API_MODELS, API_DATA, API_ARGUMENTS } from './Utils';
 
 // TODO: abstract the first model loaded.
 var API_MODEL_EXAMPLE = "queens";
@@ -26,6 +26,11 @@ var App = React.createClass({
 
                 this.props.dispatch(restoreState(prevState));
             }.bind(this));
+            var dispatch = this.props.dispatch;
+            GetURL(API_DATA + this.props.params.template, function(http) {
+                var dataFiles = JSON.parse(http.responseText);
+                dispatch(setData(dataFiles));
+            })
 
             this.props.dispatch(setModels([this.props.params.template]));
             this.props.dispatch(selectModel(this.props.params.template));
