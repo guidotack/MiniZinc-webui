@@ -3,7 +3,7 @@ import './App.css';
 
 import { connect } from 'react-redux';
 import { setModels, setArguments, addResult, selectModel, restoreState,
-    setDevelopmentMode } from './Actions';
+    setDevelopmentMode, setRequestSID } from './Actions';
 
 import { ModelFormContainer } from './ModelForm/ModelFormContainer';
 // import { InputSelectionBarContainer } from './InputSelectionBar/InputSelectionBarContainer';
@@ -15,7 +15,8 @@ import { GetURL, GetTypeDimensionString, API_GET_TEMPLATE, API_MODELS, API_ARGUM
 // TODO: abstract the first model loaded.
 var API_MODEL_EXAMPLE = "queens";
 
-var socket = require('socket.io-client')('http://localhost:5000/');
+var socket = require('socket.io-client')('ws://localhost:5000/');
+
 
 var App = React.createClass({
     componentDidMount: function() {
@@ -58,6 +59,10 @@ var App = React.createClass({
                 this.props.dispatch(setArguments(args));
             }.bind(this));
         }
+
+        socket.on('request_solution_sid', function(request_sid) {
+            this.props.dispatch(setRequestSID(request_sid))
+        }.bind(this));
 
         socket.on('solution', function(data) {
             this.props.dispatch(addResult(data));

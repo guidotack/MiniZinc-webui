@@ -1,12 +1,13 @@
 import { connect } from 'react-redux';
 import { InputHolder } from './InputHolder';
-import { changeInputComponentValue, setInputComponentParameter, setOutputComponentParameter, handleLayoutChange } from './Actions';
+import { changeInputComponentValue, setInputComponentParameter, setOutputComponentParameter, handleLayoutChange, setSelectedResult } from './Actions';
 
 const mapStateToProps = function(state, ownProps) {
     return {
         inputs: state.inputs,
         outputs: state.outputs,
         result: state.result,
+        selectedResult: state.selectedResult,
         inputArgs: Object.keys(state.args.input),
         outputArgs: Object.keys(state.args.output),
         dataFiles: state.dataFiles,
@@ -28,6 +29,9 @@ const mapDispatchToProps = function(dispatch, ownProps) {
         },
         handleLayoutChange: function(layout) {
             dispatch(handleLayoutChange(layout));
+        },
+        setSelectedResult: function(result) {
+            dispatch(setSelectedResult(result));
         }
     }
 }

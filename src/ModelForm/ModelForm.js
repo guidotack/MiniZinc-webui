@@ -1,6 +1,6 @@
 import React from 'react';
 import { DropDownBar } from '../DropDownBar';
-import { API_SAVE_TEMPLATE } from '../Utils';
+import { GetURL, API_SAVE_TEMPLATE, API_KILL } from '../Utils';
 import './ModelForm.css';
 
 import { InputSelectionBarContainer } from '../InputSelectionBar/InputSelectionBarContainer';
@@ -12,14 +12,15 @@ export var ModelForm = React.createClass({
         args: React.PropTypes.object.isRequired,
         inputs: React.PropTypes.object.isRequired,
         outputs: React.PropTypes.object.isRequired,
-        layout: React.PropTypes.object.isRequired,
+        layout: React.PropTypes.array.isRequired,
         models: React.PropTypes.arrayOf(React.PropTypes.string).isRequired,
         selectedModel: React.PropTypes.string.isRequired,
         selectedArgument: React.PropTypes.object.isRequired,
         handleModelChange: React.PropTypes.func.isRequired,
         handleArgumentClick: React.PropTypes.func.isRequired,
         handleArgumentDeselect: React.PropTypes.func.isRequired,
-        handleClearResults: React.PropTypes.func.isRequired
+        handleClearResults: React.PropTypes.func.isRequired,
+        request_sid: React.PropTypes.string
     },
 
     getInitialState: function() {
@@ -69,7 +70,7 @@ export var ModelForm = React.createClass({
     },
 
     handleSolveStop: function() {
-        this.props.socket.emit('kill_solution');
+        GetURL(API_KILL+this.props.request_sid);
     },
 
     handleTemplateSave: function(templateName) {
@@ -141,16 +142,14 @@ export var ModelForm = React.createClass({
             </nav>
             {/* <ModelDisplay modelName={this.props.selectedModel}/> */}
             <div className="Inputs">
-                <h1>Inputs</h1>
+                <h2>Outputs</h2>
+                <OutputSelectionBarContainer />
+                <h2>Inputs</h2>
                 <InputSelectionBarContainer />
                 <div className="Arguments">
                     {inputs}
                 </div>
-            </div>
-            <div className="Outputs">
-                <h1>Outputs</h1>
-                <OutputSelectionBarContainer />
-                <div className="Arguments">
+                <div className="Arguments OutputArgs">
                     {outputs}
                 </div>
             </div>
@@ -158,6 +157,7 @@ export var ModelForm = React.createClass({
                 <InputHolderContainer />
             </div>
         </div>
+
     }
 });
 

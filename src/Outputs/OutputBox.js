@@ -4,6 +4,8 @@ import { DropDownBar } from '../DropDownBar';
 export var OutputBox = React.createClass({
     propTypes: {
         id: React.PropTypes.string.isRequired,
+        result: React.PropTypes.array,
+        selectedResult: React.PropTypes.string,
         // result: React.PropTypes.oneOfType([
         //     React.PropTypes.string,
         //     React.PropTypes.number
@@ -20,8 +22,8 @@ export var OutputBox = React.createClass({
     render: function() {
         var item = [];
 
-        if (this.props.result != null && this.props.selectedParameters['resultType'] != null) {
-            var currentSol = this.props.result[this.props.selectedParameters['resultNum'] || ""]
+        if (this.props.result != null && this.props.selectedResult != null) {
+            var currentSol = this.props.result[this.props.selectedResult || ""]
             var currentPara = this.props.selectedParameters['resultType'] || "";
 
             if (currentSol != null && currentPara != null)
@@ -35,9 +37,6 @@ export var OutputBox = React.createClass({
             <div className="parameters">
                 <DropDownBar name={"resultType"} options={this.props.outputArgs}
                     selectedOption={this.props.selectedParameters["resultType"] || ""}
-                    handleOptionChange={this.setOutputComponentParameter} />
-                <DropDownBar name={"resultNum"} options={Object.keys(this.props.result)}
-                    selectedOption={this.props.selectedParameters["resultNum"] || ""}
                     handleOptionChange={this.setOutputComponentParameter} />
             </div>
             {item}

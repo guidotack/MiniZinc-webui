@@ -1,7 +1,7 @@
 import { SELECT_ARGUMENT, DESELECT_ARGUMENT, SELECT_MODEL, CHANGE_ARGUMENT_LINK,
     ADD_OUTPUT_COMPONENT, CHANGE_INPUT_COMPONENT_VALUE, ADD_RESULT, SET_RESULTS,
     SET_MODELS, SET_ARGUMENTS, SET_DATA, RESET_APPLICATION, RESTORE_STATE, SET_DEVELOPMENT_MODE,
-    SET_OUTPUT_COMPONENT_PARAMETER, SET_INPUT_COMPONENT_PARAMETER, SET_LAYOUT } from './Actions';
+    SET_OUTPUT_COMPONENT_PARAMETER, SET_INPUT_COMPONENT_PARAMETER, SET_LAYOUT, SET_SELECTED_RESULT, SET_REQUEST_SID } from './Actions';
 import { combineReducers } from 'redux';
 
 /* this was the old layout.
@@ -201,6 +201,24 @@ function layout(state = [], action) {
     }
 }
 
+function selectedResult(state = null, action) {
+    switch (action.type) {
+        case SET_SELECTED_RESULT:
+            return action.result;
+        default:
+            return state;
+    }
+}
+
+function request_sid(state = null, action) {
+    switch (action.type) {
+        case SET_REQUEST_SID:
+            return action.request_sid;
+        default:
+            return state;
+    }
+}
+
 const appReducer = combineReducers({
     args,
     dataFiles,
@@ -208,8 +226,10 @@ const appReducer = combineReducers({
     inputs,
     outputs,
     result,
+    selectedResult,
     layout,
-    appState
+    appState,
+    request_sid
 });
 
 const minizincApp = function(state, action) {
@@ -222,9 +242,11 @@ const minizincApp = function(state, action) {
                 dataFiles: undefined,
                 inputs: undefined,
                 result: undefined,
+                selectedResult: undefined,
                 outputs: undefined,
                 appState: undefined,
-                layout: undefined
+                layout: undefined,
+                request_sid: undefined
             }
             break;
         case RESTORE_STATE:

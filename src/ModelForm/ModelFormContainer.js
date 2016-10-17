@@ -13,6 +13,7 @@ const mapStateToProps = function(state, ownProps) {
         developmentMode: state.appState.developmentMode,
         selectedModel: state.appState.selectedModel,
         selectedArgument: state.appState.selectedArgument,
+        request_sid: state.request_sid
     }
 }
 

@@ -5,6 +5,7 @@ export var OutputMatrix1D = React.createClass({
     propTypes: {
         id: React.PropTypes.string.isRequired,
         result: React.PropTypes.array,
+        selectedResult: React.PropTypes.string,
         outputArgs: React.PropTypes.array,
         setOutputComponentParameter: React.PropTypes.func,
         selectedParameters: React.PropTypes.object,
@@ -18,8 +19,8 @@ export var OutputMatrix1D = React.createClass({
         var rows = [];
 
         if (this.props.result != null && this.props.selectedParameters['resultType'] != null) {
-            var currentIndex = this.props.selectedParameters['resultNum'] == null ? this.props.result.length - 1 :
-                this.props.selectedParameters['resultNum'];
+            var currentIndex = this.props.selectedResult == null ? this.props.result.length - 1 :
+                this.props.selectedResult;
             var currentRow = this.props.result[currentIndex];
 
             if (currentRow != null) {
@@ -39,9 +40,6 @@ export var OutputMatrix1D = React.createClass({
                 <DropDownBar name={"resultType"} options={this.props.outputArgs}
                     selectedOption={this.props.selectedParameters["resultType"] || ""}
                     handleOptionChange={this.setOutputComponentParameter} default_value="Choose variable"/>
-                <DropDownBar name={"resultNum"} options={Object.keys(this.props.result)}
-                    selectedOption={this.props.selectedParameters["resultNum"] || ""}
-                    handleOptionChange={this.setOutputComponentParameter} default_value="Choose solution"/>
             </div>
             {rows}
         </div>
@@ -52,6 +50,7 @@ export var OutputMatrix2D = React.createClass({
     propTypes: {
         id: React.PropTypes.string.isRequired,
         result: React.PropTypes.array,
+        selectedResult: React.PropTypes.string,
         outputArgs: React.PropTypes.array,
         setOutputComponentParameter: React.PropTypes.func,
         selectedParameters: React.PropTypes.object,
@@ -65,8 +64,8 @@ export var OutputMatrix2D = React.createClass({
         var rows = [];
 
         if (this.props.result != null && this.props.selectedParameters['resultType'] != null) {
-            var currentIndex = this.props.selectedParameters['resultNum'] == null ? this.props.result.length - 1 :
-                this.props.selectedParameters['resultNum'];
+            var currentIndex = this.props.selectedResult == null ? this.props.result.length - 1 :
+                this.props.selectedResult;
             var currentRow = this.props.result[currentIndex];
 
             if (currentRow != null) {
@@ -97,9 +96,6 @@ export var OutputMatrix2D = React.createClass({
                 <DropDownBar name={"resultType"} options={this.props.outputArgs}
                     selectedOption={this.props.selectedParameters["resultType"] || ""}
                     handleOptionChange={this.setOutputComponentParameter} default_value="Choose variable"/>
-                <DropDownBar name={"resultNum"} options={Object.keys(this.props.result)}
-                    selectedOption={this.props.selectedParameters["resultNum"] || ""}
-                    handleOptionChange={this.setOutputComponentParameter} default_value="Choose solution"/>
             </div>
             {rows}
         </div>

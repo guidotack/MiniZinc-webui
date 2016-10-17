@@ -15,6 +15,8 @@ export const RESTORE_STATE = 'RESTORE_STATE';
 export const SET_OUTPUT_COMPONENT_PARAMETER = 'SET_OUTPUT_COMPONENT_PARAMETER';
 export const SET_INPUT_COMPONENT_PARAMETER = 'SET_INPUT_COMPONENT_PARAMETER';
 export const SET_LAYOUT = 'SET_LAYOUT';
+export const SET_SELECTED_RESULT = 'SET_SELECTED_RESULT';
+export const SET_REQUEST_SID = 'SET_REQUEST_SID';
 // handleOutputChange?
 // selectTemplate?
 
@@ -85,4 +87,12 @@ export function setInputComponentParameter(componentName, parameterName, paramet
 
 export function handleLayoutChange(layout) {
     return { type: SET_LAYOUT, layout };
+}
+
+export function setSelectedResult(result) {
+    return { type: SET_SELECTED_RESULT, result };
+}
+
+export function setRequestSID(request_sid) {
+    return { type: SET_REQUEST_SID, request_sid };
 }

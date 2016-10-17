@@ -16,12 +16,14 @@ export var InputHolder = React.createClass({
         inputs: React.PropTypes.object.isRequired,
         outputs: React.PropTypes.object.isRequired,
         result: React.PropTypes.array.isRequired,
+        selectedResult: React.PropTypes.string,
+        setSelectedResult: React.PropTypes.func,
         inputArgs: React.PropTypes.array.isRequired,
         outputArgs: React.PropTypes.array.isRequired,
         setOutputComponentParameter: React.PropTypes.func,
         dataFiles: React.PropTypes.array.isRequired,
         selectedModel: React.PropTypes.string.isRequired,
-        layout: React.PropTypes.object.isRequired,
+        layout: React.PropTypes.array.isRequired,
         handleLayoutChange: React.PropTypes.func.isRequired
     },
 
@@ -56,7 +58,13 @@ export var InputHolder = React.createClass({
     render: function() {
         var allKeys = Object.keys(this.props.inputs);
         var components = [];
-        for (var i = 0; i < allKeys.length; i++) {
+        var layout = this.props.layout.slice(0);
+        // console.log(layout);
+        var layoutKeys = {};
+        for (let i = 0; i < layout.length; ++i) {
+          layoutKeys[layout[i].i] = 1;
+        }
+        for (let i = 0; i < allKeys.length; i++) {
             var key = allKeys[i];
             if (this.props.inputs[key].isOutput === false) {
                 var element = StringToInput[this.props.inputs[key].component];
@@ -76,17 +84,23 @@ export var InputHolder = React.createClass({
                   })}
                   </div>
                 );
+                if (! (key in layoutKeys)) {
+                  layout.push({i:key,w:2,h:1,x:0,y:Infinity});
+                }
             }
         }
 
         allKeys = Object.keys(this.props.outputs);
-        for (i = 0; i < allKeys.length; i++) {
+        for (let i = 0; i < allKeys.length; i++) {
             key = allKeys[i];
             element = OutputStringToComponent[this.props.outputs[key].component];
             components.push(
               <div key={key}>
               {React.createElement(element, {
                 result: this.props.result,
+                layout: this.props.layout,
+                selectedResult: this.props.selectedResult,
+                setSelectedResult: this.props.setSelectedResult,
                 key: key,
                 id: key,
                 inputs:this.props.inputs,
@@ -97,16 +111,15 @@ export var InputHolder = React.createClass({
               })}
               </div>
             );
+            if (! (key in layoutKeys)) {
+              layout.push({w:3,h:2,x:0,y:Infinity,i:key});
+            }
         }
 
-        /*
-        return <div className="InputHolder">
-            {components}
-        </div>
-        */
         return <ReactGridLayout className="InputHolder layout"
                  cols={12} rowHeight={150} draggableHandle=".dragHandle"
-                 layout={this.props.layout} width={1200}
+                 layout={layout}
+                 width={1200}
                  onResize={this.onResize} onResizeStop={this.onResizeStop}
                  onLayoutChange={this.onLayoutChange}
                  >
