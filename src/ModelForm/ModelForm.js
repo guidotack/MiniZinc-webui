@@ -70,7 +70,7 @@ export var ModelForm = React.createClass({
     },
 
     handleSolveStop: function() {
-        GetURL(API_KILL+this.props.request_sid);
+        GetURL(API_KILL+this.props.request_sid, function() {});
     },
 
     handleTemplateSave: function(templateName) {
