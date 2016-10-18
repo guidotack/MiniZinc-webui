@@ -15,7 +15,7 @@ const mapStateToProps = function(state, ownProps) {
 const mapDispatchToProps = function(dispatch, ownProps) {
     return {
         handleInputButtonClick: function(selectedArgument, componentName, defaultValue) {
-            if (componentName === "InputFile" || (selectedArgument != null && selectedArgument.argName != null) ) {
+            if (componentName === "InputFile" || componentName === "InputSolve" || (selectedArgument != null && selectedArgument.argName != null) ) {
                 dispatch(changeArgumentLink(selectedArgument.argName, selectedArgument.argType,
                     componentName, defaultValue, false));
             }

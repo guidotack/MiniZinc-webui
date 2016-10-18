@@ -31,6 +31,8 @@ const mapDispatchToProps = function(dispatch, ownProps) {
                     args.input[inKeys[i]].type = GetTypeDimensionString(args.input[inKeys[i]]);
                 }
 
+				args.input['fzn_options'] = { type: 'string' };
+
                 var outKeys = Object.keys(args.output);
                 for (let i = 0; i < outKeys.length; i++) {
                     args.output[outKeys[i]].type = GetTypeDimensionString(args.output[outKeys[i]]);

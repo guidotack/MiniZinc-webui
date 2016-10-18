@@ -56,6 +56,8 @@ var App = React.createClass({
                     args.input[inKeys[i]].type = GetTypeDimensionString(args.input[inKeys[i]]);
                 }
 
+				args.input['fzn_options'] = { type: 'string' };
+
                 var outKeys = Object.keys(args.output);
                 for (let i = 0; i < outKeys.length; i++) {
                     args.output[outKeys[i]].type = GetTypeDimensionString(args.output[outKeys[i]]);
@@ -72,12 +74,17 @@ var App = React.createClass({
         socket.on('solution', function(data) {
             this.props.dispatch(addResult(data));
         }.bind(this));
+        
+        socket.on('solving_finished', function() {
+            console.log("solving finished");
+            this.props.dispatch(setRequestSID(null));
+        }.bind(this));
     },
 
     render: function() {
         return (
             <div className="App">
-                <div className="App-header">
+                <div className={"App-header "+ (this.props.developmentMode ? '' : 'disabled')}>
                     <h2>MiniZinc-WebUI</h2>
                 </div>
 

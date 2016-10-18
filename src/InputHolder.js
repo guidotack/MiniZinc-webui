@@ -24,7 +24,9 @@ export var InputHolder = React.createClass({
         dataFiles: React.PropTypes.array.isRequired,
         selectedModel: React.PropTypes.string.isRequired,
         layout: React.PropTypes.array.isRequired,
-        handleLayoutChange: React.PropTypes.func.isRequired
+        handleLayoutChange: React.PropTypes.func.isRequired,
+        handleSolveClick: React.PropTypes.func.isRequired,
+        is_solving: React.PropTypes.bool.isRequired
     },
 
     onResize: function(layout, oldItem, newItem, e1, e2, element) {
@@ -80,7 +82,9 @@ export var InputHolder = React.createClass({
                     setInputComponentParameter: this.props.setInputComponentParameter,
                     selectedParameters: this.props.inputs[key].parameters,
                     dataFiles: this.props.dataFiles,
-                    selectedModel: this.props.selectedModel
+                    selectedModel: this.props.selectedModel,
+                    handleSolveClick: this.props.handleSolveClick,
+                    is_solving: this.props.is_solving,
                   })}
                   </div>
                 );

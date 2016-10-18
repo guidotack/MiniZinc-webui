@@ -25,7 +25,7 @@ export var OutputScatterPlot = React.createClass({
               if (chart.props.worksAcrossSolutions) {
                   var sel = chart.chart.getSelection();
                   if (sel.length > 0) {
-                      chart.props.setSelectedResult(sel[0].row);
+                      chart.props.setSelectedResult(""+sel[0].row);
                   }
               }
           }
@@ -50,14 +50,14 @@ export var OutputScatterPlot = React.createClass({
                     if (current_element.constructor === Array) {
                         chart_data.push(current_element);
                     } else { //if onyl 1d array
-                        chart_data.push([i,current_element]);
+                        chart_data.push([i+1,current_element]);
                     }
 
                   }
                 } else {
                   worksAcrossSolutions = true;
                   for (let i = 0; i< this.props.result.length; ++i) {
-                    var newobj = [i, this.props.result[i][this.props.selectedParameters['resultType']]];
+                    var newobj = [i+1, this.props.result[i][this.props.selectedParameters['resultType']]];
                     chart_data.push(newobj);
                   }
                 }
@@ -79,6 +79,8 @@ export var OutputScatterPlot = React.createClass({
             chartWidth  = "95%";
         }
 
+		var chartOptions = { legend: 'none' };
+
         return <div className="Output Scatter_Plot Chart">
             <div className="container dragHandle">
                 <div className="name">Scatter Plot {this.props.id}</div>
@@ -89,8 +91,105 @@ export var OutputScatterPlot = React.createClass({
                 handleOptionChange={this.setOutputComponentParameter} default_value="Choose variable" />
         </div>
         <div className={"my-pretty-chart-container"}>
-            <Chart {...this.props} worksAcrossSolutions={worksAcrossSolutions} chartType="ScatterChart" data={chart_data} options={{}} graph_id={"ScatterChart"+this.props.id}
-                   width={chartWidth} height={chartHeight} legend_toggle={true}
+            <Chart {...this.props} worksAcrossSolutions={worksAcrossSolutions} chartType="ScatterChart" data={chart_data} graph_id={"ScatterChart"+this.props.id}
+			width={chartWidth} height={chartHeight} legend_toggle={false} options={chartOptions}
+                   chartEvents={this.chartEvents}
+                    />
+        </div></div>
+    }
+});
+
+export var OutputLineChart = React.createClass({
+    propTypes: {
+        id: React.PropTypes.string.isRequired,
+        result: React.PropTypes.array,
+        layout: React.PropTypes.array,
+        selectedResult: React.PropTypes.string,
+        setSelectedResult: React.PropTypes.func,
+        outputArgs: React.PropTypes.array,
+        setOutputComponentParameter: React.PropTypes.func,
+        selectedParameters: React.PropTypes.object,
+    },
+
+    setOutputComponentParameter: function(parameter, parameterName) {
+        this.props.setOutputComponentParameter(this.props.id, parameterName, parameter);
+    },
+
+    chartEvents: [
+      {
+          eventName: 'select',
+          callback: function(chart) {
+              if (chart.props.worksAcrossSolutions) {
+                  var sel = chart.chart.getSelection();
+                  if (sel.length > 0) {
+                      chart.props.setSelectedResult(""+sel[0].row);
+                  }
+              }
+          }
+      }  
+    ],
+
+    render: function() {
+        var chart_data = [['rows','columns'],[0,0]];
+        var worksAcrossSolutions = undefined;
+        if (this.props.result != null && this.props.selectedParameters['resultType'] != null) {
+            var currentResultNumber = this.props.selectedResult == null ? this.props.result.length - 1 :
+                this.props.selectedResult;
+            var currentResult = this.props.result[currentResultNumber];
+                console.log(this.props.selectedParameters['resultType'])
+            if (currentResult != null && currentResult !== undefined) {
+                chart_data = [['rows','columns']];
+                var currentResultVar = currentResult[this.props.selectedParameters['resultType']]
+                if (currentResultVar.constructor === Array) {
+                  worksAcrossSolutions = false;
+                  for (let i = 0; i < currentResultVar.length; ++i) {
+                    var current_element = currentResultVar[i];
+                    if (current_element.constructor === Array) {
+                        chart_data.push(current_element);
+                    } else { //if onyl 1d array
+                        chart_data.push([i+1,current_element]);
+                    }
+
+                  }
+                } else {
+                  worksAcrossSolutions = true;
+                  for (let i = 0; i< this.props.result.length; ++i) {
+                    var newobj = [i+1, this.props.result[i][this.props.selectedParameters['resultType']]];
+                    chart_data.push(newobj);
+                  }
+                }
+
+                //var currentResultVar = [];
+                //console.log(currentResultVar)
+            }
+        }
+
+        var chartHeight = 300;
+        var chartWidth  = 600;
+        
+        var layout = {};
+        for (let i = 0; i < this.props.layout.length; ++i) {
+            layout[this.props.layout[i].i] = {w:this.props.layout[i].w, h:this.props.layout[i].h};
+        }
+        if (this.props.id in layout) {
+            chartHeight = 160*layout[this.props.id].h - 100;
+            chartWidth  = "95%";
+        }
+
+		var chartOptions = { legend: 'none' };
+
+        return <div className="Output Line_Plot Chart">
+            <div className="container dragHandle">
+                <div className="name">Line Chart {this.props.id}</div>
+            </div>
+            <div className="parameters">
+            <DropDownBar name={"resultType"} options={this.props.outputArgs}
+                selectedOption={this.props.selectedParameters["resultType"] || ""}
+                handleOptionChange={this.setOutputComponentParameter} default_value="Choose variable" />
+        </div>
+        <div className={"my-pretty-chart-container"}>
+            <Chart {...this.props} worksAcrossSolutions={worksAcrossSolutions} chartType="LineChart" data={chart_data} graph_id={"ScatterChart"+this.props.id}
+			width={chartWidth} height={chartHeight} legend_toggle={false} options={chartOptions}
                    chartEvents={this.chartEvents}
                     />
         </div></div>
@@ -271,8 +370,8 @@ export var OutputTimelineChart = React.createClass({
                 for (let job = 0; job < machines.length; ++job) {
                   var current_row = machines[job];
                   for (let task = 0; task < current_row.length; ++task) {
-                      var startDate = new Date(task_start[job][task]*1000);
-                      var endDate = new Date(startDate.getTime()+duration[job][task]*1000);
+                      var startDate = new Date(task_start[job][task]*1000*60);
+                      var endDate = new Date(startDate.getTime()+duration[job][task]*1000*60);
                       chart_rows.push([String(machines[job][task]), 'Job ' + job + ' Task ' + task, startDate, endDate]);
                   }
 

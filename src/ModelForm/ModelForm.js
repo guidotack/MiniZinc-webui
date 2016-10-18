@@ -58,8 +58,10 @@ export var ModelForm = React.createClass({
                 argList[arg].dim = this.props.args.input[arg].dim;
             }
             else {
-                successful = false;
-                return;
+                if (arg!=='fzn_options') {
+                    successful = false;
+                    return;
+                }
             }
         }.bind(this));
 
@@ -71,6 +73,14 @@ export var ModelForm = React.createClass({
 
     handleSolveStop: function() {
         GetURL(API_KILL+this.props.request_sid, function() {});
+    },
+
+    handleSolveClick: function() {
+        if (this.props.request_sid===null) {
+            this.handleModelSubmit();
+        } else {
+            this.handleSolveStop();
+        }
     },
 
     handleTemplateSave: function(templateName) {
@@ -128,20 +138,31 @@ export var ModelForm = React.createClass({
             }
         }
 
+        var heading;
+        if (this.props.developmentMode) {
+            heading = <div className="ModelSelect" ref="title">
+                        <DropDownBar options={this.props.models}
+                                     selectedOption={this.props.selectedModel} handleOptionChange={this.handleModelChange} />
+                      </div>
+        } else {
+            heading = <h1 ref="title">{this.props.selectedModel}</h1>
+        }
+
         return <div className="ModelForm">
-            <div className="ModelSelect" ref="title">
-                <DropDownBar options={this.props.models}
-                    selectedOption={this.props.selectedModel} handleOptionChange={this.handleModelChange} />
-            </div>
-            <nav className={this.state.pastButtons ? "fixed" : ""}>
+              { heading }
+              {this.props.developmentMode ? 
+                <nav className={this.state.pastButtons ? "fixed" : ""}>
                 <div className="Buttons">
-                    <Button text={"Submit"} handleClick={this.handleModelSubmit} />
-                    <Button text={"Stop"} handleClick={this.handleSolveStop} />
-                    {this.props.developmentMode ? <Button text={"Save"} handleClick={this.handleTemplateSave} /> : null}
+                  {//<Button text={"Submit"} handleClick={this.handleModelSubmit} />
+                  }
+                  {//  <Button text={"Stop"} handleClick={this.handleSolveStop} />
+                  }
+                    <Button text={"Save"} handleClick={this.handleTemplateSave} />
                 </div>
             </nav>
+                   : null}
             {/* <ModelDisplay modelName={this.props.selectedModel}/> */}
-            <div className="Inputs">
+            <div className={"Inputs "+ (this.props.developmentMode ? '' : 'disabled')}>
                 <h2>Outputs</h2>
                 <OutputSelectionBarContainer />
                 <h2>Inputs</h2>
@@ -154,7 +175,7 @@ export var ModelForm = React.createClass({
                 </div>
             </div>
             <div>
-                <InputHolderContainer />
+                <InputHolderContainer handleSolveClick={this.handleSolveClick} is_solving={this.props.request_sid!==null}/>
             </div>
         </div>
 

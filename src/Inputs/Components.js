@@ -3,6 +3,29 @@ import { DropDownBar } from '../DropDownBar';
 import { GetURL, API_DATA } from '../Utils';
 import './Input.css';
 
+export var InputSolve = React.createClass({
+    propTypes: {
+        id: React.PropTypes.string.isRequired,
+        handleSolveClick: React.PropTypes.func.isRequired,
+        is_solving: React.PropTypes.bool.isRequired
+    },
+
+    handleSolveClick: function() {
+        this.props.handleSolveClick();
+    },
+
+    render: function() {
+        return (
+            <div className="Input SolverControl">
+                <div className="container dragHandle">
+                    <div className="name">Solver Control</div>
+                </div>
+                <button onClick={this.handleSolveClick} type="button">{ this.props.is_solving ? "Stop" : "Solve"}</button>
+            </div>
+        )
+    }
+});
+
 export var InputFile = React.createClass({
     propTypes: {
         id: React.PropTypes.string.isRequired,

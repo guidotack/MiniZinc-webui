@@ -1,4 +1,4 @@
-import { InputRange, InputTextField, InputMatrix1D, InputMatrix2D, InputFile } from './Components';
+import { InputRange, InputTextField, InputMatrix1D, InputMatrix2D, InputFile, InputSolve } from './Components';
 
 export const AllInputs = [
     { component: "InputRange", name: "Slider", type: "int", image: "sliders", defaultValue: 1 },
@@ -8,7 +8,8 @@ export const AllInputs = [
     { component: "InputMatrix2D", name: "Matrix", type: "int-2D", defaultValue: [], image: "table" },
     { component: "InputMatrix1D", name: "Matrix", type: "string-1D", defaultValue: [], image: "bars" },
     { component: "InputMatrix2D", name: "Matrix", type: "string-2D", defaultValue: [], image: "table" },
-    { component: "InputFile", name: "File", type: "any", defaultValue: [], image: "table" }
+    { component: "InputFile", name: "File", type: "any", defaultValue: [], image: "table" },
+    { component: "InputSolve", name: "Solve", type: "any", defaultValue: [], image: "table" }
 
 ]
 
@@ -17,5 +18,6 @@ export const StringToInput = {
     InputTextField: InputTextField,
     InputMatrix1D: InputMatrix1D,
     InputMatrix2D: InputMatrix2D,
-    InputFile: InputFile
+    InputFile: InputFile,
+    InputSolve: InputSolve
 }
