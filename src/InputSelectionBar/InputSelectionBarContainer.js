@@ -16,7 +16,9 @@ const mapDispatchToProps = function(dispatch, ownProps) {
     return {
         handleInputButtonClick: function(selectedArgument, componentName, defaultValue) {
             if (componentName === "InputFile" || componentName === "InputSolve" || (selectedArgument != null && selectedArgument.argName != null) ) {
-                dispatch(changeArgumentLink(selectedArgument.argName, selectedArgument.argType,
+                var argName = !('argName' in selectedArgument) ? componentName : selectedArgument.argName;
+                var argType = !('argType' in selectedArgument) ? "any" : selectedArgument.argType;
+                dispatch(changeArgumentLink(argName, argType,
                     componentName, defaultValue, false));
             }
         },
