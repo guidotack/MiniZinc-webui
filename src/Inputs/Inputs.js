@@ -8,8 +8,8 @@ export const AllInputs = [
     { component: "InputMatrix2D", name: "Matrix", type: "int-2D", defaultValue: [], image: "table" },
     { component: "InputMatrix1D", name: "Matrix", type: "string-1D", defaultValue: [], image: "bars" },
     { component: "InputMatrix2D", name: "Matrix", type: "string-2D", defaultValue: [], image: "table" },
-    { component: "InputFile", name: "File", type: "any", defaultValue: [], image: "table" },
-    { component: "InputSolve", name: "Solve", type: "any", defaultValue: [], image: "table" }
+    { component: "InputFile", name: "File", type: "any", defaultValue: [], image: "file-text-o" },
+    { component: "InputSolve", name: "Solve", type: "any", defaultValue: [], image: "play-circle-o" },
 
 ]
 
