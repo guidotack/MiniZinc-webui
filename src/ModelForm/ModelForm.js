@@ -30,14 +30,14 @@ export var ModelForm = React.createClass({
     },
 
     componentDidMount: function() {
-        window.addEventListener('mousedown', this.onUserClick, false);
+        window.addEventListener('click', this.onUserClick, false);
         window.addEventListener('scroll', this.handleScroll);
     },
 
     onUserClick: function(event) {
         var selectedArgument = Object.assign({}, this.props.selectedArgument);
         if (this.props.selectedArgument.argName != null) {
-            setTimeout(function() { this.props.handleArgumentDeselect(selectedArgument.argName, selectedArgument.argType); }.bind(this), 100);
+            this.props.handleArgumentDeselect(selectedArgument.argName, selectedArgument.argType);
         }
     },
 
@@ -188,9 +188,14 @@ var Button = React.createClass({
         handleClick: React.PropTypes.func.isRequired
     },
 
+    onUserClick: function(event) {
+        event.stopPropagation();
+        this.props.handleClick();
+    },
+
     render: function() {
         return <div className="ModelButton">
-            <button onClick={this.props.handleClick}>{this.props.text}</button>
+            <button onClick={this.onUserClick}>{this.props.text}</button>
         </div>
     }
 });
@@ -211,8 +216,11 @@ var ModelArgument = React.createClass({
     },
 
     onUserClick: function(event) {
-        if (this.props.onUserClick != null)
+        console.log("ma click");
+        if (this.props.onUserClick != null) {
+            event.stopPropagation();
             this.props.onUserClick(this.props.argName, this.props.type);
+        }
     },
 
     render: function() {

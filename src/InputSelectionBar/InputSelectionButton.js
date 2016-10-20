@@ -17,7 +17,9 @@ export var InputSelectionButton = React.createClass({
         }
     },
 
-    handleClick: function() {
+    handleClick: function(event) {
+        console.log("is button click");
+        event.stopPropagation();
         this.props.handleClick(this.props.component, this.props.defaultValue, this.props.type, this.props.name);
     },
 
