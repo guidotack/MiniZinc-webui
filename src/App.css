@@ -77,3 +77,7 @@ body {
 .disabled {
     display: none !important;
 }
+
+.ModelForm .react-grid-item > .react-resizable-handle {
+    bottom: -4px;
+}
