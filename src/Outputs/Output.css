@@ -65,5 +65,5 @@ nav.fixed {
 }
 
 .my-pretty-chart-container {
-    overflow:auto;
+    overflow:hidden;
 }

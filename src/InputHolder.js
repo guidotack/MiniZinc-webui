@@ -29,30 +29,6 @@ export var InputHolder = React.createClass({
         is_solving: React.PropTypes.bool.isRequired
     },
 
-    onResize: function(layout, oldItem, newItem, e1, e2, element) {
-        var chart = element.parentElement.children[0];
-        if (chart.classList.contains("Output") && chart.classList.contains("Chart")) {
-            if (chart.children.length===3) {
-                var h = chart.clientHeight;
-                var nameH = chart.children[0].offsetHeight;
-                var paramsH = chart.children[1].offsetHeight;
-                chart.children[2].style.height = (h-nameH-paramsH)+"px";
-            }
-        }
-    },
-
-    onResizeStop: function(layout, oldItem, newItem, e1, e2, element) {
-        var chart = element.parentElement.children[0];
-        if (chart.classList.contains("Output") && chart.classList.contains("Chart")) {
-            if (chart.children.length===3) {
-                var h = newItem.h * 160 - 10;
-                var nameH = chart.children[0].offsetHeight;
-                var paramsH = chart.children[1].offsetHeight;
-                chart.children[2].style.height = (h-nameH-paramsH)+"px";
-            }
-        }
-    },
-
     onLayoutChange: function(layout) {
         this.props.handleLayoutChange(layout);
     },
@@ -124,7 +100,6 @@ export var InputHolder = React.createClass({
                  cols={12} rowHeight={150} draggableHandle=".dragHandle"
                  layout={layout}
                  width={1200}
-                 onResize={this.onResize} onResizeStop={this.onResizeStop}
                  onLayoutChange={this.onLayoutChange}
                  >
           {components}
