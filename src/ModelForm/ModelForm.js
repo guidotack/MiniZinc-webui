@@ -216,7 +216,6 @@ var ModelArgument = React.createClass({
     },
 
     onUserClick: function(event) {
-        console.log("ma click");
         if (this.props.onUserClick != null) {
             event.stopPropagation();
             this.props.onUserClick(this.props.argName, this.props.type);
