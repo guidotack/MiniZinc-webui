@@ -58,7 +58,10 @@ export var InputHolder = React.createClass({
                 components.push(
                     <div key={key}>
                   <UIBox id={key} removeComponent={this.removeInputComponent}
-                   title={(this.props.inputs[key].name===undefined ? "" : this.props.inputs[key].name+" ")+key} key={key}>
+                   title={(this.props.inputs[key].name===undefined ? "" : this.props.inputs[key].name+" ")+key}
+                   key={key}
+                   developmentMode={this.props.developmentMode}
+                   >
                   {React.createElement(element, {
                     value: this.props.inputs[key].value,
                     onUserInput: this.props.handleInputValueChange,

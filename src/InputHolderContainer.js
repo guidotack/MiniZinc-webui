@@ -6,6 +6,7 @@ import { changeInputComponentValue, setInputComponentParameter, setOutputCompone
 
 const mapStateToProps = function(state, ownProps) {
     return {
+        developmentMode: state.appState.developmentMode,
         inputs: state.inputs,
         outputs: state.outputs,
         result: state.result,
@@ -14,7 +15,7 @@ const mapStateToProps = function(state, ownProps) {
         outputArgs: Object.keys(state.args.output),
         dataFiles: state.dataFiles,
         selectedModel: state.appState.selectedModel,
-        layout: state.layout
+        layout: state.layout,
     }
 }
 
