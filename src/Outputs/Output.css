@@ -23,12 +23,6 @@
     margin: 1px;
 }
 
-.Output {
-/*    margin: 5px;*/
-    border: 2px solid #9b59b6;
-    vertical-align: top;
-    height: 100%;
-}
 
 .parameters {
     display: flex;

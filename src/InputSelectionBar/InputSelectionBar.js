@@ -20,8 +20,8 @@ export var InputSelectionBar = React.createClass({
         }
     },
 
-    handleInputButtonClick: function(componentName, defaultValue) {
-        this.props.handleInputButtonClick(this.props.selectedArgument, componentName, defaultValue);
+    handleInputButtonClick: function(componentName, defaultValue, inputType, inputName) {
+        this.props.handleInputButtonClick(this.props.selectedArgument, componentName, defaultValue, inputName);
     },
 
     handleOutputButtonClick: function(componentName, defaultValue, outputType, outputName) {

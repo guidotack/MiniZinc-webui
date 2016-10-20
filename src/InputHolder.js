@@ -3,6 +3,7 @@
 import React from 'react';
 import { StringToInput } from './Inputs/Inputs';
 import { OutputStringToComponent } from './Outputs/Outputs';
+import { UIBox } from './GridComponents';
 import './Outputs/Output.css';
 
 import ReactGridLayout from 'react-grid-layout';
@@ -33,6 +34,13 @@ export var InputHolder = React.createClass({
         this.props.handleLayoutChange(layout);
     },
 
+    removeInputComponent: function(component) {
+        this.props.removeInputComponent(component);
+    },
+    removeOutputComponent: function(component) {
+        this.props.removeOutputComponent(component);
+    },
+
     render: function() {
         var allKeys = Object.keys(this.props.inputs);
         var components = [];
@@ -48,7 +56,9 @@ export var InputHolder = React.createClass({
                 var element = StringToInput[this.props.inputs[key].component];
 
                 components.push(
-                  <div key={key}>
+                    <div key={key}>
+                  <UIBox id={key} removeComponent={this.removeInputComponent}
+                   title={(this.props.inputs[key].name===undefined ? "" : this.props.inputs[key].name+" ")+key} key={key}>
                   {React.createElement(element, {
                     value: this.props.inputs[key].value,
                     onUserInput: this.props.handleInputValueChange,
@@ -61,8 +71,9 @@ export var InputHolder = React.createClass({
                     selectedModel: this.props.selectedModel,
                     handleSolveClick: this.props.handleSolveClick,
                     is_solving: this.props.is_solving,
+                    removeComponent: function(component) { console.log("Remove",component); }
                   })}
-                  </div>
+                  </UIBox></div>
                 );
                 if (! (key in layoutKeys)) {
                   layout.push({i:key,w:2,h:1,x:0,y:Infinity});
@@ -74,8 +85,8 @@ export var InputHolder = React.createClass({
         for (let i = 0; i < allKeys.length; i++) {
             key = allKeys[i];
             element = OutputStringToComponent[this.props.outputs[key].component];
-            components.push(
-              <div key={key}>
+            components.push(<div key={key}>
+              <UIBox id={key} removeComponent={this.removeOutputComponent} title={this.props.outputs[key].name} key={key}>
               {React.createElement(element, {
                 result: this.props.result,
                 layout: this.props.layout,
@@ -89,7 +100,7 @@ export var InputHolder = React.createClass({
                 setOutputComponentParameter: this.props.setOutputComponentParameter,
                 selectedParameters: this.props.outputs[key].parameters,
               })}
-              </div>
+              </UIBox></div>
             );
             if (! (key in layoutKeys)) {
               layout.push({w:3,h:2,x:0,y:Infinity,i:key});

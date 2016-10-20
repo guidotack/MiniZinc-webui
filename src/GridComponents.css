@@ -1,0 +1,40 @@
+.UIBox {
+    border: 2px solid #9b59b6;
+    vertical-align: top;
+    height: 100%;
+}
+
+.UIBox ~ .UIBox {
+    margin-left: 10px;
+}
+
+.UIBox .closeButton {
+    position: absolute;
+    right: 2px;
+    top: 0;
+    color: rgba(0,0,0,0.3);
+    font-size: 10px;
+}
+
+.container {
+    background-color: rgba(0,0,0,0.1);
+    color: black;
+    position: relative;
+}
+
+.container .name {
+    display: inline-block;
+    font-size: 20px;
+    padding: 20px;
+}
+
+.UIBox .value {
+    display: inline-block;
+    padding: 10px;
+    font-size: 35px;
+}
+
+.UIBox input {
+    width: 80%;
+    margin: 5px;
+}

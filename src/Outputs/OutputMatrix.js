@@ -32,10 +32,7 @@ export var OutputMatrix1D = React.createClass({
             }
         }
 
-        return <div className="Output 1D_Matrix Matrix">
-            <div className="container dragHandle">
-                <div className="name">1D Matrix {this.props.id}</div>
-            </div>
+        return <div className="1D_Matrix Matrix">
             <div className="parameters">
                 <DropDownBar name={"resultType"} options={this.props.outputArgs}
                     selectedOption={this.props.selectedParameters["resultType"] || ""}
@@ -88,10 +85,7 @@ export var OutputMatrix2D = React.createClass({
             }
         }
 
-        return <div className="Output 2D_Matrix Matrix">
-            <div className="container dragHandle">
-                <div className="name">2D Matrix {this.props.id}</div>
-            </div>
+        return <div className="2D_Matrix Matrix">
             <div className="parameters">
                 <DropDownBar name={"resultType"} options={this.props.outputArgs}
                     selectedOption={this.props.selectedParameters["resultType"] || ""}

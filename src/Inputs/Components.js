@@ -16,12 +16,7 @@ export var InputSolve = React.createClass({
 
     render: function() {
         return (
-            <div className="Input SolverControl">
-                <div className="container dragHandle">
-                    <div className="name">Solver Control</div>
-                </div>
-                <button onClick={this.handleSolveClick} type="button">{ this.props.is_solving ? "Stop" : "Solve"}</button>
-            </div>
+            <button onClick={this.handleSolveClick} type="button">{ this.props.is_solving ? "Stop" : "Solve"}</button>
         )
     }
 });
@@ -52,15 +47,9 @@ export var InputFile = React.createClass({
     
     render: function() {
         return (
-            <div className="Input File">
-                <div className="container dragHandle">
-                    <div className="name">File input</div>
-                </div>
             <DropDownBar name={"filename"} options={this.props.dataFiles}
                 selectedOption={this.props.selectedParameters["filename"] || ""}
                 handleOptionChange={this.setInputComponentParameter} default_value="Choose file" />
-            
-            </div>
         )
     }
 });
@@ -88,12 +77,11 @@ export var InputRange = React.createClass({ //slider
 
     render: function() {
         return (
-            <div className="Input Range">
-                <div className="container dragHandle">
-                    <div className="name">{this.props.id}</div>
-                    <div className="value">{this.props.value}</div>
-                </div>
-                <input onChange={this.onChange} value={this.props.value} type="range" min={this.props.min} max={this.props.max}></input>
+            <div>
+            <div className="container">
+                <div className="value">{this.props.value}</div>
+            </div>
+            <input onChange={this.onChange} value={this.props.value} type="range" min={this.props.min} max={this.props.max}></input>
             </div>
         );
     }
@@ -121,12 +109,7 @@ export var InputTextField = React.createClass({ //text Field
 
     render: function() {
         return (
-            <div className="Input TextField">
-                <div className="container dragHandle">
-                    <div className="name">{this.props.id}</div>
-                </div>
-                <TextField placeholder={"Enter a number"} onTextChange={this.onChange} value={this.props.value || ""} />
-            </div>
+            <TextField placeholder={"Enter a number"} onTextChange={this.onChange} value={this.props.value || ""} />
         );
     }
 });
@@ -196,10 +179,7 @@ export var InputMatrix1D = React.createClass({
             boxes.push(<TextField key={i} id={i.toString()} onTextChange={this.onChange} value={this.props.value[i] || ""} />)
         }
 
-        return <div className="Input Matrix 1D">
-            <div className="container dragHandle">
-                <div className="name">{this.props.id}</div>
-            </div>
+        return <div className="Matrix 1D">
             <div className="Parameters">
                 <TextField id={"cols"} placeholder={"Length"} onTextChange={this.setInputComponentParameter} value={this.props.selectedParameters["cols"] || ""} />
             </div>
@@ -277,10 +257,7 @@ export var InputMatrix2D = React.createClass({
             rows.push(<div key={i} className="row">{boxes}</div>)
         }
 
-        return <div className="Input Matrix 2D">
-            <div className="container dragHandle">
-                <div className="name">{this.props.id}</div>
-            </div>
+        return <div className="Matrix 2D">
             <div className="Parameters">
                 <TextField id={"rows"} placeholder={"Rows"} onTextChange={this.setInputComponentParameter} value={this.props.selectedParameters["rows"] || ""} />
                 <TextField id={"cols"} placeholder={"Columns"} onTextChange={this.setInputComponentParameter} value={this.props.selectedParameters["cols"] || ""} />

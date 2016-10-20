@@ -1,5 +1,5 @@
 import { SELECT_ARGUMENT, DESELECT_ARGUMENT, SELECT_MODEL, CHANGE_ARGUMENT_LINK,
-    ADD_OUTPUT_COMPONENT, CHANGE_INPUT_COMPONENT_VALUE, ADD_RESULT, SET_RESULTS,
+    ADD_OUTPUT_COMPONENT, REMOVE_OUTPUT_COMPONENT, CHANGE_INPUT_COMPONENT_VALUE, ADD_RESULT, SET_RESULTS,
     SET_MODELS, SET_ARGUMENTS, SET_DATA, RESET_APPLICATION, RESTORE_STATE, SET_DEVELOPMENT_MODE,
     SET_OUTPUT_COMPONENT_PARAMETER, SET_INPUT_COMPONENT_PARAMETER, SET_LAYOUT, SET_SELECTED_RESULT, SET_REQUEST_SID } from './Actions';
 import { combineReducers } from 'redux';
@@ -50,15 +50,21 @@ function inputs(state = { }, action) {
     switch (action.type) {
         case CHANGE_ARGUMENT_LINK:
             if (!action.isOutput)
-                return {
-                    ...state,
+                if (action.componentName===null) {
+                    let newState = Object.assign({}, state);
+                    delete newState[action.argName];
+                    return newState;
+                } else {
+                    return {
+                        ...state,
 
-                    [action.argName]: {
-                        component: action.componentName,
-                        type: action.argType,
-                        value: action.defaultValue,
-                        isOutput: action.isOutput,
-                        parameters: {}
+                        [action.argName]: {
+                            component: action.componentName,
+                            type: action.argType,
+                            value: action.defaultValue,
+                            isOutput: action.isOutput,
+                            parameters: {}
+                        }
                     }
                 }
             else
@@ -118,6 +124,10 @@ function outputs(state = {}, action) {
                     // TODO: value?
                 }
             }
+        case REMOVE_OUTPUT_COMPONENT:
+            let newState = Object.assign({}, state);
+            delete newState[action.outputName];
+            return newState;
         case SET_OUTPUT_COMPONENT_PARAMETER:
             return {
                 ...state,

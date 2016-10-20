@@ -81,10 +81,7 @@ export var OutputScatterPlot = React.createClass({
 
 		var chartOptions = { legend: 'none' };
 
-        return <div className="Output Scatter_Plot Chart">
-            <div className="container dragHandle">
-                <div className="name">Scatter Plot {this.props.id}</div>
-            </div>
+        return <div className="Scatter_Plot Chart">
             <div className="parameters">
             <DropDownBar name={"resultType"} options={this.props.outputArgs}
                 selectedOption={this.props.selectedParameters["resultType"] || ""}
@@ -178,10 +175,7 @@ export var OutputLineChart = React.createClass({
 
 		var chartOptions = { legend: 'none' };
 
-        return <div className="Output Line_Plot Chart">
-            <div className="container dragHandle">
-                <div className="name">Line Chart {this.props.id}</div>
-            </div>
+        return <div className="Line_Plot Chart">
             <div className="parameters">
             <DropDownBar name={"resultType"} options={this.props.outputArgs}
                 selectedOption={this.props.selectedParameters["resultType"] || ""}
@@ -229,8 +223,6 @@ export var OutputGanttChart = React.createClass({
                 this.props.selectedResult;
             var currentResult = this.props.result[currentResultNumber];
 
-            console.log("Construct Gantt chart", currentResult);
-
             if (currentResult != null) {
                 //console.log(currentResult);
                 //var duration = [[1,2],[3,4]];
@@ -276,8 +268,6 @@ export var OutputGanttChart = React.createClass({
             }
         }
 
-        console.log("Gantt chart rows", chart_rows);
-
         var chartHeight = 300;
         var chartWidth  = 600;
         
@@ -290,10 +280,7 @@ export var OutputGanttChart = React.createClass({
             chartWidth  = "95%";
         }
 
-        return <div className="Output Gantt_Chart Chart">
-            <div className="container dragHandle">
-                <div className="name">Gantt Chart {this.props.id}</div>
-            </div>
+        return <div className="Gantt_Chart Chart">
             <div className="parameters">
             <DropDownBar name={"machines"} options={this.props.inputArgs.concat(this.props.outputArgs)} //LINK TO INPUT VARIABLE
                 selectedOption={this.props.selectedParameters["machines"] || ""}
@@ -397,10 +384,7 @@ export var OutputTimelineChart = React.createClass({
             chartWidth  = "95%";
         }
 
-        return <div className="Output Timeline_Chart Chart">
-            <div className="container dragHandle">
-                <div className="name">Timeline {this.props.id}</div>
-            </div>
+        return <div className="Timeline_Chart Chart">
             <div className="parameters">
             <DropDownBar name={"machines"} options={this.props.inputArgs.concat(this.props.outputArgs)} //LINK TO INPUT VARIABLE
                 selectedOption={this.props.selectedParameters["machines"] || ""}

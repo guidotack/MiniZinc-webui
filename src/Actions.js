@@ -3,6 +3,7 @@ export const DESELECT_ARGUMENT = 'DESELECT_ARGUMENT';
 export const SELECT_MODEL = 'SELECT_MODEL';
 export const CHANGE_ARGUMENT_LINK = 'CHANGE_ARGUMENT_LINK';
 export const ADD_OUTPUT_COMPONENT = 'ADD_OUTPUT_COMPONENT';
+export const REMOVE_OUTPUT_COMPONENT = 'REMOVE_OUTPUT_COMPONENT';
 export const CHANGE_INPUT_COMPONENT_VALUE = 'CHANGE_INPUT_COMPONENT_VALUE';
 export const ADD_RESULT = 'ADD_RESULT';
 export const SET_RESULTS = 'SET_RESULTS';
@@ -43,6 +44,10 @@ export function changeInputComponentValue(componentID, value) {
 
 export function addOutputComponent(outputName, outputType, componentName, defaultValue) {
     return { type: ADD_OUTPUT_COMPONENT, outputName, outputType, componentName, defaultValue };
+}
+
+export function removeOutputComponent(outputName) {
+    return { type: REMOVE_OUTPUT_COMPONENT, outputName };
 }
 
 export function addResult(result) {

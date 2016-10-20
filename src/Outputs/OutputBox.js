@@ -30,11 +30,8 @@ export var OutputBox = React.createClass({
                 item.push(<div key={1} className="row">{currentSol[currentPara]}</div>)
         }
 
-        return <div className="Output Box">
-            <div className="container">
-                <div className="name">{this.props.id}</div>
-            </div>
-            <div className="parameters">
+        return <div>
+        <div className="parameters">
                 <DropDownBar name={"resultType"} options={this.props.outputArgs}
                     selectedOption={this.props.selectedParameters["resultType"] || ""}
                     handleOptionChange={this.setOutputComponentParameter} />

@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import { InputSelectionBar } from './InputSelectionBar';
-import { changeArgumentLink } from '../Actions';
+import { changeArgumentLink, deselectArgument } from '../Actions';
 
 const mapStateToProps = function(state, ownProps) {
     return {
@@ -14,12 +14,13 @@ const mapStateToProps = function(state, ownProps) {
 
 const mapDispatchToProps = function(dispatch, ownProps) {
     return {
-        handleInputButtonClick: function(selectedArgument, componentName, defaultValue) {
+        handleInputButtonClick: function(selectedArgument, componentName, defaultValue, inputName) {
             if (componentName === "InputFile" || componentName === "InputSolve" || (selectedArgument != null && selectedArgument.argName != null) ) {
                 var argName = !('argName' in selectedArgument) ? componentName : selectedArgument.argName;
                 var argType = !('argType' in selectedArgument) ? "any" : selectedArgument.argType;
                 dispatch(changeArgumentLink(argName, argType,
-                    componentName, defaultValue, false));
+                    componentName, defaultValue, false, inputName));
+                dispatch(deselectArgument(argName, argType));
             }
         },
         handleOutputButtonClick: function(selectedArgument, componentName, defaultValue, outputName) {
